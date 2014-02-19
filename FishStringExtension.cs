@@ -1,0 +1,785 @@
+﻿using System;
+using System.Collections.Generic;
+using System.FishExtension;
+using System.FishExtension.Resources;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+
+namespace System
+{
+	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+	public static class FishStringExtension
+	{
+		#region char
+
+		/// <summary>
+		/// 转换为BYTE
+		/// </summary>
+		/// <param name="code"></param>
+		/// <returns></returns>
+		public static byte ToHexByte(this char code)
+		{
+			if (code >= 'A' && code <= 'F') return (byte)(10 + (code - 'A'));
+			if (code >= 'a' && code <= 'f') return (byte)(10 + (code - 'a'));
+			if (code >= '0' && code <= '9') return (byte)(code - '0');
+			return 0;
+		}
+
+		#endregion
+
+		#region Common
+
+		/// <summary>
+		/// 判断当前字符串是否为空或长度为零
+		/// </summary>
+		/// <param name="str">字符串</param>
+		/// <returns>true为空或长度为零</returns>
+		public static bool IsNullOrEmpty(this string str)
+		{
+			return string.IsNullOrEmpty(str);
+		}
+
+		/// <summary>
+		/// 将字符串分割成行数组
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string[] ToLines(this string value)
+		{
+			if (String.IsNullOrEmpty(value))
+				return null;
+
+			return value.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+		}
+
+		/// <summary>
+		/// 替换模板字符
+		/// </summary>
+		/// <param name="template">模板内容</param>
+		/// <param name="tags">标签数组</param>
+		/// <param name="dest">内容数组</param>
+		/// <returns>替换后的结果</returns>
+		public static string TemplateTagReplace(this string template, string[] tags, string[] dest)
+		{
+			if (tags.Length != dest.Length) throw new InvalidOperationException("数组长度必须一样.");
+
+			for (int i = 0; i < tags.Length; i++)
+			{
+				template = template.Replace(tags[i], dest[i]);
+			}
+
+			return template;
+		}
+
+		static readonly Regex ExpressConvertor = new Regex(@"(\r|\n|'|""|\\|/)");
+
+		/// <summary>
+		/// 将字符串转义为表达式
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转义后的结果</returns>
+		public static string EncodeToJsExpression(this string value)
+		{
+			if (value.IsNullOrEmpty()) return string.Empty;
+
+			return ExpressConvertor.Replace(value, (s) =>
+			{
+				if (s.Value == "\r") return "\\r";
+				if (s.Value == "\n") return "\\n";
+				return string.Concat("\\", s.Value);
+			});
+		}
+
+		static readonly Regex ExpressReConvertor = new Regex(@"\\(r|n|'|""|\|/|u([a-fA-F0-9]{4}))");
+
+		/// <summary>
+		/// 将字符串从JS的转义中转换
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string DecodeFromJsExpression(this string value)
+		{
+			if (value.IsNullOrEmpty()) return string.Empty;
+
+			return ExpressReConvertor.Replace(value, (s) =>
+			{
+				var key = s.Groups[1].Value;
+
+				if (key == "r") return "\r";
+				if (key == "n") return "\n";
+				if (key[0] == 'u')
+				{
+					return ((char)s.Groups[2].Value.ToInt32(true)).ToString();
+				}
+				return key;
+			});
+		}
+
+		/// <summary>
+		/// 为字符串设定默认值
+		/// </summary>
+		/// <param name="value">要设置的值</param>
+		/// <param name="defaultValue">如果要设定的值为空，则返回此默认值</param>
+		/// <returns>设定后的结果</returns>
+		public static string DefaultForEmpty(this string value, string defaultValue)
+		{
+			return string.IsNullOrEmpty(value) ? defaultValue : value;
+		}
+
+		/// <summary>
+		/// 使用指定参数来对当前字符串进行格式化
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="args">The args.</param>
+		/// <returns></returns>
+		[StringFormatMethod("value")]
+		public static string FormatWith(this string value, params object[] args)
+		{
+			if (value == null) throw new ArgumentNullException("value");
+			else if (value.Length == 0) return string.Empty;
+			else if (args.Length == 0) return value;
+			else return string.Format(value, args);
+		}
+
+		static readonly Regex _emailReg = new Regex(@"^\w+[\.\-_0-9a-z]+@[0-9a-z]+([\-_\.][0-9a-z]+)*\.[a-z]{2,3}$", RegexOptions.IgnoreCase);
+
+		/// <summary>
+		/// 判断一个字符串是否是邮件地址
+		/// </summary>
+		/// <param name="value">地址</param>
+		/// <returns>如果是，则返回 true</returns>
+		public static bool IsEmail(this string value)
+		{
+			return !value.IsNullOrEmpty() && _emailReg.IsMatch(value);
+		}
+
+		/// <summary>
+		/// 比较两个字符串在忽略大小写的情况下是否相等
+		/// </summary>
+		/// <param name="value">字符串1</param>
+		/// <param name="compareTo">要比较的字符串</param>
+		/// <returns>是否相等</returns>
+		public static bool IsIgnoreCaseEqualTo(this string value, string compareTo)
+		{
+			return string.Compare(value, compareTo, true) == 0;
+		}
+
+		/// <summary>
+		/// 按照字节截取字符串
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <param name="byteLength">字节长度，一个汉字两个字节</param>
+		/// <returns>截取后的字符串</returns>
+		/// <exception cref="System.ArgumentException">指定了截取后的省略字符串，但要截取的字符串过短，不足以容纳省略字符串</exception>
+		public static string GetSubString(this string value, int byteLength)
+		{
+			return GetSubString(value, byteLength, string.Empty);
+		}
+		/// <summary>
+		/// 按照字节截取字符串
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <param name="byteLength">字节长度，一个汉字两个字节</param>
+		/// <param name="tailString">如果截取了，那么省略字符串</param>
+		/// <returns>截取后的字符串</returns>
+		/// <exception cref="System.ArgumentException">指定了截取后的省略字符串，但要截取的字符串过短，不足以容纳省略字符串</exception>
+		public static string GetSubString(this string value, int byteLength, string tailString)
+		{
+			if (value.IsNullOrEmpty()) return value;
+			tailString = tailString ?? "";
+			var tailLength = tailString.Select(s => (int)s > 255 ? 2 : 1).Sum();
+
+			if (tailLength > 0) byteLength -= tailLength;
+			if (byteLength < 1) throw new ArgumentException(SR.StringExtract_GetSubString_LengthError);
+
+			var currentLength = 0;
+			var wordPosition = 0;
+			while (currentLength < byteLength && wordPosition < value.Length) currentLength += value[wordPosition++] > 255 ? 2 : 1;
+			if (wordPosition == value.Length) return value;
+			else return value.Substring(0, wordPosition) + tailString;
+		}
+
+		/// <summary>
+		/// 确认字符串是以指定字符串结尾的
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <param name="ending">结尾</param>
+		/// <returns></returns>
+		public static string EnsureEndWith(this string value, string ending)
+		{
+			if (value == null || value.EndsWith(ending)) return value;
+			return value + ending;
+		}
+
+		/// <summary>
+		/// 获得指定字符串的字节长度
+		/// </summary>
+		/// <param name="value">值</param>
+		/// <returns><see cref="T:System.Int32"/></returns>
+		public static int GetByteCount(this string value)
+		{
+			return GetByteCount(value, Encoding.Unicode);
+		}
+
+		/// <summary>
+		/// 获得指定字符串的字节长度
+		/// </summary>
+		/// <param name="value">值</param>
+		/// <param name="encoding">编码</param>
+		/// <returns><see cref="T:System.Int32"/></returns>
+		public static int GetByteCount(this string value, Encoding encoding)
+		{
+			if (value.IsNullOrEmpty()) return 0;
+			return encoding.GetByteCount(value);
+		}
+
+		/// <summary>
+		/// 转换为字节数组
+		/// </summary>
+		/// <param name="value">字符串值</param>
+		/// <returns>结果字节数组</returns>
+		public static byte[] ToBytes(this string value)
+		{
+			return ToBytes(value, null);
+		}
+		/// <summary>
+		/// 转换为字节数组
+		/// </summary>
+		/// <param name="value">字符串值</param>
+		/// <param name="encoding">使用的编码</param>
+		/// <returns>结果字节数组</returns>
+		public static byte[] ToBytes(this string value, Encoding encoding)
+		{
+			return value.IsNullOrEmpty() ? new byte[] { } :
+				(encoding ?? Encoding.Unicode).GetBytes(value);
+		}
+
+		/// <summary>
+		/// 返回指定的字符串中是否包含另外一个子字符串
+		/// </summary>
+		/// <param name="str">字符串</param>
+		/// <param name="key">关键字</param>
+		/// <param name="comparison">比较方式</param>
+		/// <returns>包含为true， 否则为false</returns>
+		public static bool Contains(this string str, string key, StringComparison comparison)
+		{
+			return str.IndexOf(key, comparison) != -1;
+		}
+
+
+		/// <summary>
+		/// 按照标签分割并枚举
+		/// </summary>
+		/// <param name="text">文本</param>
+		/// <param name="startTag">开始标签</param>
+		/// <param name="endTag">结束标签</param>
+		/// <param name="startPos">开始位置。默认为0</param>
+		/// <returns>符合要求的代码片段</returns>
+		public static IEnumerable<string> SplitByTag(this string text, string startTag, string endTag, int startPos = 0)
+		{
+			var index = 0;
+			while ((index = text.IndexOf(startTag, startPos, StringComparison.OrdinalIgnoreCase)) != -1)
+			{
+				var endIndex = text.IndexOf(endTag, index + startTag.Length, StringComparison.OrdinalIgnoreCase);
+				if (endIndex == -1) yield break;
+
+				var str = text.Substring(index, endIndex - index + endTag.Length);
+				startPos = endIndex + endTag.Length + 1;
+				yield return str;
+			}
+		}
+
+		/// <summary>
+		/// 对字符串进行正则表达式匹配，并返回所有匹配的字符串数组
+		/// </summary>
+		/// <param name="text">字符串</param>
+		/// <param name="pattern">正则表达式模式</param>
+		/// <param name="options">选项</param>
+		/// <returns>如果匹配失败，则返回false</returns>
+		public static string[] RegMatch(this string text, string pattern, RegexOptions options = RegexOptions.IgnoreCase)
+		{
+			var m = Regex.Match(text, pattern, options);
+			if (!m.Success) return null;
+
+			return m.Groups.Cast<Group>().Select(s => s.Value).ToArray();
+		}
+
+		/// <summary>
+		/// 对字符串进行正则表达式匹配，并返回所有匹配的字符串数组
+		/// </summary>
+		/// <param name="text">字符串</param>
+		/// <param name="pattern">正则表达式模式</param>
+		/// <param name="options">选项</param>
+		/// <returns>如果匹配失败，则返回false</returns>
+		public static List<string[]> RegMatches(this string text, string pattern, RegexOptions options = RegexOptions.IgnoreCase)
+		{
+			var m = Regex.Matches(text, pattern, options);
+
+			return m.Cast<Match>().Select(s => s.Groups.Cast<Group>().Select(x => x.Value).ToArray()).ToList();
+		}
+
+
+		#endregion
+
+		#region 流操作
+
+
+
+		#endregion
+
+		#region MD5
+
+		/// <summary>
+		/// 计算指定字符串的MD5值
+		/// </summary>
+		/// <param name="key">要计算Hash的字符串</param>
+		/// <returns>字符串的Hash</returns>
+		public static string MD5(this string key)
+		{
+			return key.MD5(System.Text.Encoding.UTF8);
+		}
+
+		/// <summary>
+		/// 计算指定字符串的MD5值
+		/// </summary>
+		/// <param name="key">要计算Hash的字符串</param>
+		/// <param name="encoding">计算Hash的编码方法</param>
+		/// <returns>字符串的Hash</returns>
+		public static string MD5(this string key, string encoding)
+		{
+			return key.MD5(System.Text.Encoding.GetEncoding(encoding));
+		}
+
+		/// <summary>
+		/// 计算指定字符串的MD5值
+		/// </summary>
+		/// <param name="key">要计算Hash的字符串</param>
+		/// <param name="encoding">计算Hash的编码方法</param>
+		/// <returns>字符串的Hash</returns>
+		public static string MD5(this string key, System.Text.Encoding encoding)
+		{
+			if (key == null) throw new ArgumentNullException();
+
+			var md5 = System.Security.Cryptography.MD5CryptoServiceProvider.Create();
+			var has = md5.ComputeHash(encoding.GetBytes(key));
+			return BitConverter.ToString(has).Replace("-", "").ToUpper();
+		}
+
+		#endregion
+
+		#region ToInt32
+
+		/// <summary>
+		/// 将字符串转换为Int值
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.Int32"/></returns>
+		public static int ToInt32(this string value, int defaultValue)
+		{
+			int temp;
+			return int.TryParse(value, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 将字符串转换为Int值
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <returns>转换后的 <see cref="System.Int32"/></returns>
+		public static int ToInt32(this string value, bool allowHex = false)
+		{
+			int temp;
+			return int.TryParse(value, allowHex ? NumberStyles.AllowHexSpecifier : NumberStyles.Any, null, out temp) ? temp : 0;
+		}
+
+
+		/// <summary>
+		/// 将字符串转换为Int值
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.Int32"/></returns>
+		public static int? ToInt32Nullable(this string value, int? defaultValue, bool allowHex = false)
+		{
+			int temp;
+			return int.TryParse(value, allowHex ? NumberStyles.AllowHexSpecifier : NumberStyles.Any, null, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 将字符串转换为Int值
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <returns>转换后的 <see cref="System.Int32"/></returns>
+		public static int? ToInt32Nullable(this string value)
+		{
+			int temp;
+			return int.TryParse(value, out temp) ? (int?)temp : null;
+		}
+
+		static char[] StringSpliter = new char[] { ',', '|', '\\', '/', ':', ';', '_', '#', '$', '%', '@', '!', '^', '&', '*' };
+
+		/// <summary>
+		/// 将字符串分割为整数数组
+		/// </summary>
+		/// <param name="value">要分割的字符串</param>
+		/// <returns>返回最终的 <see cref="System.Int32"/>数组</returns>
+		public static int[] SplitAsIntArray(this string value)
+		{
+			if (string.IsNullOrEmpty(value)) return new int[0];
+			return value.Split(StringSpliter, StringSplitOptions.RemoveEmptyEntries)
+				.Select(s => s.ToInt32()).ToArray();
+		}
+
+		#endregion
+
+		#region ToInt64
+
+		/// <summary>
+		/// 将字符串转换为Int值
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.Int64"/></returns>
+		public static long ToInt64(this string value, long defaultValue)
+		{
+			long temp;
+			return long.TryParse(value, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 将字符串转换为Int值
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <returns>转换后的 <see cref="System.Int64"/></returns>
+		public static long ToInt64(this string value)
+		{
+			long temp;
+			return long.TryParse(value, out temp) ? temp : 0;
+		}
+
+
+		/// <summary>
+		/// 将字符串转换为Int值
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.Int64"/></returns>
+		public static long? ToInt64Nullable(this string value, long? defaultValue)
+		{
+			long temp;
+			return long.TryParse(value, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 将字符串转换为Int值
+		/// </summary>
+		/// <param name="value">字符串</param>
+		/// <returns>转换后的 <see cref="System.Int64"/></returns>
+		public static long? ToInt64Nullable(this string value)
+		{
+			long temp;
+			return long.TryParse(value, out temp) ? (int?)temp : null;
+		}
+
+		#endregion
+
+		#region ToSingle
+
+		/// <summary>
+		/// 转换字符串为浮点数.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.Single"/></returns>
+		public static float ToSingle(this string value, float defaultValue)
+		{
+			float temp;
+			return float.TryParse(value, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 转换字符串为浮点数.如果转换失败,则返回 0.0
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.Single"/></returns>
+		public static float ToSingle(this string value)
+		{
+			float temp;
+			return float.TryParse(value, out temp) ? temp : 0.0f;
+		}
+
+		/// <summary>
+		/// 转换字符串为浮点数.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.Single"/></returns>
+		public static float? ToSingleNullable(this string value, float? defaultValue)
+		{
+			float temp;
+			return float.TryParse(value, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 转换字符串为浮点数.如果转换失败,则返回 0.0
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.Single"/></returns>
+		public static float? ToSingleNullable(this string value)
+		{
+			float temp;
+			return float.TryParse(value, out temp) ? (float?)temp : null;
+		}
+
+		#endregion
+
+		#region ToDateTime
+
+		/// <summary>
+		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
+		public static DateTime ToDateTime(this string value, DateTime defaultValue)
+		{
+			DateTime temp;
+			return DateTime.TryParse(value, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 转换字符串为日期时间.如果转换失败,则返回 <see cref="F:System.DataTime.MinValue"/>
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
+		public static DateTime ToDateTime(this string value)
+		{
+			DateTime temp;
+			return DateTime.TryParse(value, out temp) ? temp : DateTime.MinValue;
+		}
+
+		/// <summary>
+		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
+		public static DateTime? ToDateTimeNullable(this string value, DateTime? defaultValue)
+		{
+			DateTime temp;
+			return DateTime.TryParse(value, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 转换字符串为日期时间.如果转换失败,则返回 <see cref="F:System.DataTime.MinValue"/>
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
+		public static DateTime? ToDateTimeNullable(this string value)
+		{
+			DateTime temp;
+			return DateTime.TryParse(value, out temp) ? (DateTime?)temp : null;
+		}
+
+		#endregion
+
+		#region ToDouble
+
+		/// <summary>
+		/// 转换字符串为双精度数.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.Double"/></returns>
+		public static double ToDouble(this string value, double defaultValue)
+		{
+			double temp;
+			return double.TryParse(value, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 转换字符串为双精度数.如果转换失败,则返回 0.0
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.Double"/></returns>
+		public static double ToDouble(this string value)
+		{
+			double temp;
+			return double.TryParse(value, out temp) ? temp : 0.0;
+		}
+
+
+		/// <summary>
+		/// 转换字符串为双精度数.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.Double"/></returns>
+		public static double? ToDoubleNullable(this string value, double? defaultValue)
+		{
+			double temp;
+			return double.TryParse(value, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 转换字符串为双精度数.如果转换失败,则返回 0.0
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.Double"/></returns>
+		public static double? ToDoubleNullable(this string value)
+		{
+			double temp;
+			return double.TryParse(value, out temp) ? (double?)temp : 0.0;
+		}
+
+
+		#endregion
+
+		#region ToDecimal
+
+		/// <summary>
+		/// 转换字符串为双精度数.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.Double"/></returns>
+		public static decimal ToDecimal(this string value, decimal defaultValue)
+		{
+			decimal temp;
+			return decimal.TryParse(value, out temp) ? temp : defaultValue;
+		}
+
+		/// <summary>
+		/// 转换字符串为双精度数.如果转换失败,则返回 0.0
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.Double"/></returns>
+		public static decimal ToDecimal(this string value)
+		{
+			decimal temp;
+			return decimal.TryParse(value, out temp) ? temp : 0.0m;
+		}
+
+		/// <summary>
+		/// 转换字符串为双精度数.如果转换失败,则返回 0.0
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.Double"/></returns>
+		public static decimal? ToDecimalNullable(this string value)
+		{
+			decimal temp;
+			return decimal.TryParse(value, out temp) ? (decimal?)temp : null;
+		}
+
+		#endregion
+
+		#region ToPoint
+
+		/// <summary>
+		/// 将字符串转换为坐标点格式
+		/// </summary>
+		/// <param name="location">字符串</param>
+		/// <returns><see cref="T:System.Drawing.Point"/></returns>
+		public static System.Drawing.Point ParseToPoint(this string location)
+		{
+			if (string.IsNullOrEmpty(location))
+				return System.Drawing.Point.Empty;
+
+			var pts = location.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+			if (pts.Length < 2) return System.Drawing.Point.Empty;
+
+			return new System.Drawing.Point(pts[0].ToInt32(), pts[1].ToInt32());
+		}
+
+		#endregion
+
+		#region 对象扩展
+
+		/// <summary>
+		/// 转换为文件夹对象
+		/// </summary>
+		/// <param name="folder">文件夹路径</param>
+		/// <returns>对应的文件夹信息对象</returns>
+		public static System.IO.DirectoryInfo AsDirectoryInfo(this string folder)
+		{
+			return new System.IO.DirectoryInfo(folder);
+		}
+
+		/// <summary>
+		/// 转换为文件信息对象
+		/// </summary>
+		/// <param name="filePath">文件路径</param>
+		/// <returns><see cref="T:System.IO.FileInfo"/></returns>
+		public static System.IO.FileInfo AsFileInfo(this string filePath)
+		{
+			return new System.IO.FileInfo(filePath);
+		}
+
+		#endregion
+
+		#region ToByte[]
+
+		/// <summary>
+		/// 将Base64格式的字符串转换为字节数组
+		/// </summary>
+		/// <param name="base64String">要转换的Base64字符串</param>
+		/// <returns>字节数组</returns>
+		public static byte[] ConvertBase64ToBytes(this string base64String)
+		{
+			if (base64String.IsNullOrEmpty()) return null;
+
+			return Convert.FromBase64String(base64String);
+		}
+
+
+		/// <summary>
+		/// 压缩数据组
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns></returns>
+		public static byte[] Compress(this string source)
+		{
+			using (var ms = new System.IO.MemoryStream())
+			using (var gzip = new System.IO.Compression.GZipStream(ms, IO.Compression.CompressionMode.Compress))
+			using (var sw = new System.IO.StreamWriter(gzip, System.Text.Encoding.UTF8))
+			{
+				sw.Write(source);
+				sw.Close();
+				return ms.ToArray();
+			}
+		}
+
+		/// <summary>
+		/// 解压缩数据组
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns></returns>
+		public static string DecompressAsString(this byte[] source)
+		{
+			using (var ms = new System.IO.MemoryStream(source))
+			using (var gzip = new System.IO.Compression.GZipStream(ms, IO.Compression.CompressionMode.Decompress))
+			using (var sr = new System.IO.StreamReader(gzip, System.Text.Encoding.UTF8, true))
+			{
+				return sr.ReadToEnd();
+			}
+		}
+
+		#endregion
+
+		#region 其它对象到字符串转换
+
+		/// <summary>
+		/// 将坐标点转换为字符串格式
+		/// </summary>
+		/// <param name="point">坐标点位置</param>
+		/// <returns>字符串格式</returns>
+		public static string ToStringFormat(this System.Drawing.Point point)
+		{
+			return point.X + "," + point.Y;
+		}
+
+		#endregion
+	}
+}
