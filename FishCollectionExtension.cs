@@ -30,9 +30,122 @@ namespace System
 			return dic;
 		}
 
+		public static string GetValue(this NameValueCollection collection, string key)
+		{
+			return GetValue(collection, key, string.Empty);
+		}
+
+		public static string GetValue(this NameValueCollection collection, string key, string defaultValue)
+		{
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentNullException("key");
+
+			if (collection == null)
+				return defaultValue;
+
+			var e = collection[key];
+
+			if (e == null)
+				return defaultValue;
+
+			return e;
+		}
+
+
 		#endregion
 
 		#region 列表
+
+		public static int IndexOf<T>(this IList<T> source, T target, int pos, int length)
+	where T : IEquatable<T>
+		{
+			for (int i = pos; i < pos + length; i++)
+			{
+				if (source[i].Equals(target))
+					return i;
+			}
+
+			return -1;
+		}
+
+		public static int StartsWith<T>(this IList<T> source, T[] mark)
+			where T : IEquatable<T>
+		{
+			return source.StartsWith(0, source.Count, mark);
+		}
+
+		public static int StartsWith<T>(this IList<T> source, int offset, int length, T[] mark)
+			where T : IEquatable<T>
+		{
+			int pos = offset;
+			int endOffset = offset + length - 1;
+
+			for (int i = 0; i < mark.Length; i++)
+			{
+				int checkPos = pos + i;
+
+				if (checkPos > endOffset)
+					return i;
+
+				if (!source[checkPos].Equals(mark[i]))
+					return -1;
+			}
+
+			return mark.Length;
+		}
+
+		public static bool EndsWith<T>(this IList<T> source, T[] mark)
+			where T : IEquatable<T>
+		{
+			return source.EndsWith(0, source.Count, mark);
+		}
+
+		public static bool EndsWith<T>(this IList<T> source, int offset, int length, T[] mark)
+			where T : IEquatable<T>
+		{
+			if (mark.Length > length)
+				return false;
+
+			for (int i = 0; i < Math.Min(length, mark.Length); i++)
+			{
+				if (!mark[i].Equals(source[offset + length - mark.Length + i]))
+					return false;
+			}
+
+			return true;
+		}
+
+		public static T[] CloneRange<T>(this T[] source, int offset, int length)
+		{
+			T[] target = new T[length];
+			Array.Copy(source, offset, target, 0, length);
+			return target;
+		}
+
+		private static Random m_Random = new Random();
+
+		public static T[] RandomOrder<T>(this T[] source)
+		{
+			var n = source.Length / 2;
+
+			for (var i = 0; i < n; i++)
+			{
+				var x = m_Random.Next(0, source.Length - 1);
+				var y = m_Random.Next(0, source.Length - 1);
+
+				if (x == y)
+					continue;
+
+				var t = source[y];
+
+				//swap position
+				source[y] = source[x];
+				source[x] = t;
+			}
+
+			return source;
+		}
+
 
 		/// <summary>
 		/// 对泛型列表的数据进行分页

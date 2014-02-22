@@ -48,6 +48,7 @@
     <Compile Include="FishCollectionExtension.cs" />
     <Compile Include="FishDateTimeExtension.cs" />
     <Compile Include="FishExtension\Annotations.cs" />
+    <Compile Include="PlatformCompatible.cs" />
     <Compile Include="Xml\FishXmlExtension.cs" />
     <Compile Include="FishObjectExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
