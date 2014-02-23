@@ -1,6 +1,7 @@
 using System;
 
-namespace System.SmartAssembly
+// ReSharper disable once CheckNamespace
+namespace SmartAssembly.Attributes
 {
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Struct)]
 	public sealed class DoNotCaptureVariablesAttribute : Attribute

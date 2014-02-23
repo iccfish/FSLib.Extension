@@ -4,32 +4,33 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6D4588AA-A0FD-4364-972C-22B0AB7938F9}</ProjectGuid>
+    <ProjectGuid>{D702E664-0484-485E-8AE0-453DA0A4CE50}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>System</RootNamespace>
     <AssemblyName>FSLib.Extension</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\_Bin.Debug.Net4\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>..\_Bin.Debug.Net35\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\_Bin.Debug.Net4\FSLib.Extension.XML</DocumentationFile>
+    <DocumentationFile>..\_Bin.Debug.Net35\FSLib.Extension.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\_Bin.Release.Net4\</OutputPath>
-    <DefineConstants>TRACE;NET4</DefineConstants>
+    <OutputPath>..\_Bin.Release.Net35\</OutputPath>
+    <DefineConstants>TRACE;NET35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\_Bin.Release.Net4\FSLib.Extension.XML</DocumentationFile>
+    <DocumentationFile>..\_Bin.Release.Net35\FSLib.Extension.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -40,7 +41,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -56,8 +56,15 @@
     <Compile Include="FishDateTimeExtension.cs" />
     <Compile Include="FishExtension\Annotations.cs" />
     <Compile Include="FSLib_BinarySerializeExtension.cs" />
+    <Compile Include="FSLib_XmlSerializeExtension.cs" />
     <Compile Include="Net\FSLib_Network_WebExtension.cs" />
     <Compile Include="PlatformCompatible.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UriExtension.cs" />
     <Compile Include="FishObjectExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FishExtension\Resources\SR.Designer.cs">
@@ -65,15 +72,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="SmartAssembly\SmartAssembly.Attributes.cs" />
     <Compile Include="FishStringExtension.cs" />
     <Compile Include="Threading\SynchorizonExtension.cs" />
     <Compile Include="FishValueExtension.cs" />
-    <Compile Include="FSLib_XmlSerializeExtension.cs" />
-    <Compile Include="UriExtension.cs" />
     <Compile Include="Windows\Forms\ControlExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,12 +83,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\block_16.png" />
-    <Content Include="Resources\cou_16_block.png" />
-    <Content Include="Resources\tick_16.png" />
+    <None Include="Resources\cou_16_block.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tick_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\block_16.png" />
   </ItemGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
