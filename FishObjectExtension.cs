@@ -708,9 +708,21 @@ namespace System
 		/// </summary>
 		/// <param name="stream">目标流</param>
 		/// <param name="buffer">缓冲数组</param>
-		public static void Write(this Stream stream, byte[] buffer)
+		public static T Write<T>(this T stream, byte[] buffer) where T : Stream
 		{
 			stream.Write(buffer, 0, buffer.Length);
+			return stream;
+		}
+
+		/// <summary>
+		/// 将指定的缓冲数组全部写入流中
+		/// </summary>
+		/// <param name="stream">目标流</param>
+		/// <param name="buffer">缓冲数组</param>
+		public static T Write<T>(this T stream, IEnumerable<byte> buffer) where T : Stream
+		{
+			stream.Write(buffer.ToArray());
+			return stream;
 		}
 
 		/// <summary>
@@ -718,9 +730,10 @@ namespace System
 		/// </summary>
 		/// <param name="stream">当前流</param>
 		/// <param name="value">值</param>
-		public static void Write(this Stream stream, int value)
+		public static T Write<T>(this T stream, int value) where T : Stream
 		{
 			stream.Write(BitConverter.GetBytes(value));
+			return stream;
 		}
 
 		/// <summary>
@@ -728,9 +741,10 @@ namespace System
 		/// </summary>
 		/// <param name="stream">当前流</param>
 		/// <param name="value">值</param>
-		public static void Write(this Stream stream, uint value)
+		public static T Write<T>(this T stream, uint value) where T : Stream
 		{
 			stream.Write(BitConverter.GetBytes(value));
+			return stream;
 		}
 
 		/// <summary>
@@ -738,9 +752,21 @@ namespace System
 		/// </summary>
 		/// <param name="stream">当前流</param>
 		/// <param name="value">值</param>
-		public static void Write(this Stream stream, short value)
+		public static T Write<T>(this T stream, short value) where T : Stream
 		{
 			stream.Write(BitConverter.GetBytes(value));
+				return stream;
+	}
+
+		/// <summary>
+		/// 将目标值写入流中
+		/// </summary>
+		/// <param name="stream">当前流</param>
+		/// <param name="value">值</param>
+		public static T Write<T>(this T stream, ushort value) where T : Stream
+		{
+			stream.Write(BitConverter.GetBytes(value));
+			return stream;
 		}
 
 		/// <summary>
@@ -748,9 +774,10 @@ namespace System
 		/// </summary>
 		/// <param name="stream">当前流</param>
 		/// <param name="value">值</param>
-		public static void Write(this Stream stream, ushort value)
+		public static T Write<T>(this T stream, long value) where T : Stream
 		{
 			stream.Write(BitConverter.GetBytes(value));
+			return stream;
 		}
 
 		/// <summary>
@@ -758,19 +785,10 @@ namespace System
 		/// </summary>
 		/// <param name="stream">当前流</param>
 		/// <param name="value">值</param>
-		public static void Write(this Stream stream, long value)
+		public static T Write<T>(this T stream, ulong value) where T : Stream
 		{
 			stream.Write(BitConverter.GetBytes(value));
-		}
-
-		/// <summary>
-		/// 将目标值写入流中
-		/// </summary>
-		/// <param name="stream">当前流</param>
-		/// <param name="value">值</param>
-		public static void Write(this Stream stream, ulong value)
-		{
-			stream.Write(BitConverter.GetBytes(value));
+			return stream;
 		}
 
 		#endregion

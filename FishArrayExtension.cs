@@ -55,21 +55,6 @@ namespace System
 		}
 
 		/// <summary>
-		/// 遍历数组，并对数组执行指定操作
-		/// </summary>
-		/// <typeparam name="T">数组类型</typeparam>
-		/// <param name="array">原数组</param>
-		/// <param name="action">执行的操作</param>
-		/// <exception cref="System.ArgumentNullException">array</exception>
-		public static void ForEach<T>(this T[] array, Action<T> action)
-		{
-			if (array == null) throw new ArgumentNullException("array");
-			if (action == null) throw new ArgumentNullException("action");
-
-			Array.ForEach(array, action);
-		}
-
-		/// <summary>
 		/// 测试一个元素是否在数组中
 		/// </summary>
 		/// <typeparam name="T">数组类型</typeparam>

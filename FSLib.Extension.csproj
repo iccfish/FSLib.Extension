@@ -35,6 +35,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\FSLibCommonExtension.cs" />
     <Compile Include="Diagnostics\FishProcessExtension.cs" />
     <Compile Include="FishArrayExtension.cs" />
     <Compile Include="FishCollectionExtension.cs" />
