@@ -104,6 +104,15 @@ namespace System.Data
 				}
 				throw ex;
 			}
+			finally
+			{
+				if (command.Connection.State != ConnectionState.Closed)
+				{
+					if (closeConnection.HasValue) command.Connection.Close();
+					else if (!alreadyOpen) command.Connection.Close();
+				}
+
+			}
 		}
 
 		/// <summary>
@@ -140,7 +149,7 @@ namespace System.Data
 			{
 
 				if (closeConnection.HasValue && closeConnection.Value) command.Connection.Close();
-				else if (!alreadyOpen) command.Connection.Close();	
+				else if (!alreadyOpen) command.Connection.Close();
 			}
 			if (e != null)
 			{
