@@ -77,9 +77,9 @@ namespace System
 		/// </summary>
 		/// <param name="dt">要表示的时间</param>
 		/// <returns>类型为 <see cref="T:System.Int64"/> 格式的数值</returns>
-		public static long ToJsTicks(this DateTime dt)
+		public static uint ToJsTicks(this DateTime dt)
 		{
-			return (long)Math.Floor((dt.ToUniversalTime() - JsTicksStartBase).Ticks / 10000.0);
+			return (uint)Math.Floor((dt.ToUniversalTime() - JsTicksStartBase).Ticks / 10000.0);
 		}
 
 		/// <summary>
