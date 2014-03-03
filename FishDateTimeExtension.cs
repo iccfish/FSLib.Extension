@@ -119,5 +119,65 @@ namespace System
 			return dt.AddDays(DateTime.DaysInMonth(dt.Year, dt.Month) - dt.Day);
 		}
 
+		/// <summary>
+		/// 将时间精确到毫秒
+		/// </summary>
+		/// <param name="dt"></param>
+		/// <returns></returns>
+		public static DateTime TrimToMilliSecond(this DateTime dt)
+		{
+			var ticks = dt.Ticks;
+			ticks -= ticks % 10000;
+			return new DateTime(ticks);
+		}
+
+		/// <summary>
+		/// 将时间精确到秒
+		/// </summary>
+		/// <param name="dt"></param>
+		/// <returns></returns>
+		public static DateTime TrimToSecond(this DateTime dt)
+		{
+			var ticks = dt.Ticks;
+			ticks -= ticks % (10000 * 1000);
+			return new DateTime(ticks);
+		}
+
+		/// <summary>
+		/// 将时间精确到分钟
+		/// </summary>
+		/// <param name="dt"></param>
+		/// <returns></returns>
+		public static DateTime TrimToMinute(this DateTime dt)
+		{
+			var ticks = dt.Ticks;
+			ticks -= ticks % (10000 * 1000 * 60);
+			return new DateTime(ticks);
+		}
+
+
+		/// <summary>
+		/// 将时间精确到小时
+		/// </summary>
+		/// <param name="dt"></param>
+		/// <returns></returns>
+		public static DateTime TrimToHour(this DateTime dt)
+		{
+			var ticks = dt.Ticks;
+			ticks -= ticks % (10000L * 1000 * 60 * 60);
+			return new DateTime(ticks);
+		}
+
+		/// <summary>
+		/// 将时间精确到天
+		/// </summary>
+		/// <param name="dt"></param>
+		/// <returns></returns>
+		public static DateTime TrimToDay(this DateTime dt)
+		{
+			var ticks = dt.Ticks;
+			ticks -= ticks % (10000L * 1000 * 60 * 60 * 24);
+			return new DateTime(ticks);
+		}
 	}
 }
