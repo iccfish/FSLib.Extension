@@ -21,20 +21,32 @@ namespace System.Windows.Forms
 		/// <summary>
 		/// 保持指定的控件始终居中
 		/// </summary>
-		/// <param name="control"></param>
-		public static void KeepCenter(this Control control)
+		/// <param name="control">要保持居中的控件</param>
+		/// <param name="parentControl">相对位置的父控件，默认为上级控件</param>
+		public static T KeepCenter<T>(this T control, Control parentControl = null) where T : Control
 		{
 			if (control == null || control.Parent == null)
 			{
-				return;
+				return control;
 			}
-			control.Parent.SizeChanged += (s, e) =>
+			parentControl = parentControl ?? control.Parent;
+
+			parentControl.SizeChanged += (s, e) =>
 			{
-				if (control.Parent == null)
+				if (parentControl == null)
 					return;
 
-				control.Location = new Point((control.Parent.Width - control.Width) / 2, (control.Parent.Height - control.Height) / 2);
+				var location = new Point((parentControl.Width - control.Width) / 2, (parentControl.Height - control.Height) / 2);
+				if (!(parentControl is Form))
+					location.Offset(parentControl.Location);
+				control.Location = location;
 			};
+			var loc = new Point((parentControl.Width - control.Width) / 2, (parentControl.Height - control.Height) / 2);
+			if (!(parentControl is Form))
+				loc.Offset(parentControl.Location);
+			control.Location = loc;
+
+			return control;
 		}
 
 		#region CheckedListBox
