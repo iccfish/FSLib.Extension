@@ -73,7 +73,6 @@
     <Compile Include="Threading\SynchorizonExtension.cs" />
     <Compile Include="FishValueExtension.cs" />
     <Compile Include="FSLib_XmlSerializeExtension.cs" />
-    <Compile Include="UriExtension.cs" />
     <Compile Include="Windows\Forms\ControlExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>

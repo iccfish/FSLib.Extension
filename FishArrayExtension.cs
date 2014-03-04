@@ -491,11 +491,11 @@ namespace System
 		/// 将字节数组转换为字符串形式
 		/// </summary>
 		/// <param name="buffer">字节数组</param>
-		/// <param name="addSeperator">是否添加分隔符</param>
+		/// <param name="seperator">分隔符</param>
 		/// <returns><see cref="T:System.String"/></returns>
-		public static string ToString(this byte[] buffer, bool addSeperator)
+		public static string ToString(this byte[] buffer, char seperator = '\0')
 		{
-			return ToString(buffer, 0, addSeperator);
+			return ToString(buffer, 0, seperator);
 		}
 
 		/// <summary>
@@ -505,7 +505,7 @@ namespace System
 		/// <returns><see cref="T:System.String"/></returns>
 		public static string ToString(this byte[] buffer)
 		{
-			return ToString(buffer, 0, buffer.Length, true);
+			return ToString(buffer, 0, buffer.Length);
 		}
 
 		/// <summary>
@@ -516,7 +516,7 @@ namespace System
 		/// <returns><see cref="T:System.String"/></returns>
 		public static string ToString(this byte[] buffer, int offset)
 		{
-			return ToString(buffer, offset, true);
+			return ToString(buffer, offset);
 		}
 
 		/// <summary>
@@ -526,9 +526,9 @@ namespace System
 		/// <param name="offset">数据偏移</param>
 		/// <param name="addSeperator">是否添加分隔符</param>
 		/// <returns><see cref="T:System.String"/></returns>
-		public static string ToString(this byte[] buffer, int offset, bool addSeperator)
+		public static string ToString(this byte[] buffer, int offset, char seperator = '\0')
 		{
-			return ToString(buffer, offset, buffer.Length - offset, addSeperator);
+			return ToString(buffer, offset, buffer.Length - offset, seperator);
 		}
 
 		/// <summary>
@@ -540,7 +540,7 @@ namespace System
 		/// <returns><see cref="T:System.String"/></returns>
 		public static string ToString(this byte[] buffer, int offset, int length)
 		{
-			return ToString(buffer, offset, length, true);
+			return ToString(buffer, offset, length);
 		}
 
 		/// <summary>
@@ -549,14 +549,22 @@ namespace System
 		/// <param name="buffer">字节数组</param>
 		/// <param name="offset">数据偏移</param>
 		/// <param name="length">长度</param>
-		/// <param name="addSeperator">是否添加分隔符</param>
+		/// <param name="seperator">分隔符</param>
 		/// <returns><see cref="T:System.String"/></returns>
-		public static string ToString(this byte[] buffer, int offset, int length, bool addSeperator)
+		public static string ToString(this byte[] buffer, int offset, int length, char seperator = '\0')
 		{
-			var value = BitConverter.ToString(buffer, offset, length);
-			if (addSeperator) return value;
+			if (seperator == '-')
+				return BitConverter.ToString(buffer, offset, length);
 
-			return value.Replace("-", "");
+			var sb = new StringBuilder(buffer.Length * 2 + (seperator == '\0' ? 0 : buffer.Length - 1));
+			foreach (var b in buffer)
+			{
+				sb.Append(b.ToString("H2"));
+				if (seperator != '\0')
+					sb.Append(seperator);
+			}
+
+			return sb.ToString();
 		}
 
 		/// <summary>
