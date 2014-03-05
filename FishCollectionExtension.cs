@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 
 namespace System
@@ -307,6 +308,50 @@ namespace System
 			}
 
 			return -1;
+		}
+
+		/// <summary>
+		/// 添加或更新一个值
+		/// </summary>
+		/// <typeparam name="TKey"></typeparam>
+		/// <typeparam name="TValue"></typeparam>
+		/// <param name="dic"></param>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> dic, TKey key, TValue value)
+		{
+			if (dic.ContainsKey(key))
+				dic[key] = value;
+			else dic.Add(key, value);
+		}
+
+		/// <summary>
+		/// 尝试移除一个键
+		/// </summary>
+		/// <typeparam name="TKey"></typeparam>
+		/// <typeparam name="TValue"></typeparam>
+		/// <param name="dic"></param>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static bool TryRemove<TKey, TValue>(this IDictionary<TKey, TValue> dic, TKey key, out TValue value)
+		{
+			value = default(TValue);
+			if (dic.ContainsKey(key))
+			{
+				lock (dic)
+				{
+					if (dic.ContainsKey(key))
+					{
+						value = dic[key];
+						dic.Remove(key);
+
+						return true;
+					}
+
+				}
+			}
+			return false;
 		}
 
 		#endregion

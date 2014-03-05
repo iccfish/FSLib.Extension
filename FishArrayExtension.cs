@@ -491,77 +491,24 @@ namespace System
 		/// 将字节数组转换为字符串形式
 		/// </summary>
 		/// <param name="buffer">字节数组</param>
-		/// <param name="seperator">分隔符</param>
-		/// <returns><see cref="T:System.String"/></returns>
-		public static string ToString(this byte[] buffer, char seperator = '\0')
-		{
-			return ToString(buffer, 0, seperator);
-		}
-
-		/// <summary>
-		/// 将字节数组转换为字符串形式
-		/// </summary>
-		/// <param name="buffer">字节数组</param>
-		/// <returns><see cref="T:System.String"/></returns>
-		public static string ToString(this byte[] buffer)
-		{
-			return ToString(buffer, 0, buffer.Length);
-		}
-
-		/// <summary>
-		/// 将字节数组转换为字符串形式
-		/// </summary>
-		/// <param name="buffer">字节数组</param>
-		/// <param name="offset">数据偏移</param>
-		/// <returns><see cref="T:System.String"/></returns>
-		public static string ToString(this byte[] buffer, int offset)
-		{
-			return ToString(buffer, offset);
-		}
-
-		/// <summary>
-		/// 将字节数组转换为字符串形式
-		/// </summary>
-		/// <param name="buffer">字节数组</param>
-		/// <param name="offset">数据偏移</param>
-		/// <param name="addSeperator">是否添加分隔符</param>
-		/// <returns><see cref="T:System.String"/></returns>
-		public static string ToString(this byte[] buffer, int offset, char seperator = '\0')
-		{
-			return ToString(buffer, offset, buffer.Length - offset, seperator);
-		}
-
-		/// <summary>
-		/// 将字节数组转换为字符串形式
-		/// </summary>
-		/// <param name="buffer">字节数组</param>
-		/// <param name="offset">数据偏移</param>
-		/// <param name="length">长度</param>
-		/// <returns><see cref="T:System.String"/></returns>
-		public static string ToString(this byte[] buffer, int offset, int length)
-		{
-			return ToString(buffer, offset, length);
-		}
-
-		/// <summary>
-		/// 将字节数组转换为字符串形式
-		/// </summary>
-		/// <param name="buffer">字节数组</param>
 		/// <param name="offset">数据偏移</param>
 		/// <param name="length">长度</param>
 		/// <param name="seperator">分隔符</param>
 		/// <returns><see cref="T:System.String"/></returns>
-		public static string ToString(this byte[] buffer, int offset, int length, char seperator = '\0')
+		public static string ToHexString(this byte[] buffer, int offset = 0, int length = 0, char seperator = '\0', bool upperCase = true)
 		{
 			if (seperator == '-')
 				return BitConverter.ToString(buffer, offset, length);
 
-			var sb = new StringBuilder(buffer.Length * 2 + (seperator == '\0' ? 0 : buffer.Length - 1));
-			foreach (var b in buffer)
+			if (length == 0) length = buffer.Length;
+			var sb = new StringBuilder(length * 2 + (seperator == '\0' ? 0 : length - 1));
+			var endOffset = offset + length;
+			for (int i = offset; i < endOffset; i++)
 			{
-				sb.Append(b.ToString("H2"));
-				if (seperator != '\0')
+				sb.Append(buffer[i].ToString(upperCase ? "X2" : "x2"));
+				if (seperator != '\0' && i < endOffset - 1)
 					sb.Append(seperator);
+
 			}
 
 			return sb.ToString();

@@ -4,6 +4,7 @@ using System.FishExtension;
 using System.FishExtension.Resources;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -764,6 +765,20 @@ namespace System
 			{
 				return sr.ReadToEnd();
 			}
+		}
+
+		/// <summary>
+		/// 将HEX字符串转换为对应的字节数组
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns></returns>
+		public static byte[] ConvertHexStringToBytes(this string source)
+		{
+			if (source.IsNullOrEmpty())
+				return new byte[0];
+
+			var matches = Regex.Matches(source, @"[a-f\d]{2}", RegexOptions.IgnoreCase);
+			return matches.Cast<Match>().Select(s => (byte)((s.Value[0].ToHexByte() << 4) + s.Value[0].ToHexByte())).ToArray();
 		}
 
 		#endregion
