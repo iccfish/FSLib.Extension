@@ -74,6 +74,7 @@
     <Compile Include="FishValueExtension.cs" />
     <Compile Include="FSLib_XmlSerializeExtension.cs" />
     <Compile Include="Windows\Forms\ControlExtensionMethods.cs" />
+    <Compile Include="Xml\FishXmlExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FishExtension\Resources\SR.resx">
@@ -87,6 +88,7 @@
     <Content Include="Resources\cou_16_block.png" />
     <Content Include="Resources\tick_16.png" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\key\muyu.snk</AssemblyOriginatorKeyFile>

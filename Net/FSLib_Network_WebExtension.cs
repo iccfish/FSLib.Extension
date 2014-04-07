@@ -57,29 +57,6 @@ namespace System.Net
 
 		#region 标头扩展
 
-		/// <summary>
-		/// 将字符串转换为对应的标头
-		/// </summary>
-		/// <param name="header">HTTP请求标头</param>
-		/// <returns>对应的标头枚举</returns>
-		public static HttpRequestHeader ToWebRequestHeader(this string header)
-		{
-			HttpRequestHeader headerID;
-			if (!FSLib.Network.NetworkConstration.WebRequestHeaderIDMap.TryGetValue(header, out headerID)) throw new ArgumentOutOfRangeException();
-			else return headerID;
-		}
-
-		/// <summary>
-		/// 将HTTP请求标头转为对应的字符串
-		/// </summary>
-		/// <param name="header">标头</param>
-		/// <returns>对应的字符串</returns>
-		public static string ToWebRequestHeaderString(this HttpRequestHeader header)
-		{
-			int index = (int)header;
-			if (index >= FSLib.Network.NetworkConstration.WebRequestHeaderIDList.Length) throw new ArgumentOutOfRangeException();
-			else return FSLib.Network.NetworkConstration.WebRequestHeaderIDList[index];
-		}
 
 		#endregion
 	}
@@ -114,7 +91,19 @@ namespace FSLib.Network
 			{
 				WebRequestHeaderIDMap.Add(WebRequestHeaderIDList[i], (HttpRequestHeader)i);
 			}
-
 		}
+
+		/// <summary>
+		/// 将字符串转换为对应的标头
+		/// </summary>
+		/// <param name="header">HTTP请求标头</param>
+		/// <returns>对应的标头枚举</returns>
+		public static HttpRequestHeader ToWebRequestHeader(string header)
+		{
+			HttpRequestHeader headerID;
+			if (!WebRequestHeaderIDMap.TryGetValue(header, out headerID)) throw new ArgumentOutOfRangeException();
+			else return headerID;
+		}
+
 	}
 }

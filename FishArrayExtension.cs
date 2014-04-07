@@ -42,7 +42,7 @@ namespace System
 		/// <typeparam name="T">数组类型</typeparam>
 		/// <param name="array">原数组</param>
 		/// <param name="action">执行的操作</param>
-		/// <exception cref="System.ArgumentNullException">array</exception>
+		/// <exception cref="System.ArgumentNullException">array is null</exception>
 		public static void ForEachWithIndex<T>(this T[] array, Action<int, T> action)
 		{
 			if (array == null) throw new ArgumentNullException("array");
