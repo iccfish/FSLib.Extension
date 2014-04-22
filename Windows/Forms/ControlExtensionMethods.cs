@@ -377,6 +377,20 @@ namespace System.Windows.Forms
 
 		#endregion
 
+		#region TextBox
+
+		/// <summary>
+		/// 获得指定的文本框是不是没有输入内容
+		/// </summary>
+		/// <param name="txt"></param>
+		/// <returns></returns>
+		public static bool IsValueEmpty(this TextBox txt)
+		{
+			return txt == null || txt.Text.IsNullOrEmpty();
+		}
+
+		#endregion
+
 		#region 数据绑定
 
 		/// <summary>
