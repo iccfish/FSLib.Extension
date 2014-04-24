@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace System.Windows.Forms
 {
@@ -373,6 +374,79 @@ namespace System.Windows.Forms
 		public static bool IsSelected(this DrawItemState state)
 		{
 			return (state & DrawItemState.Selected) == DrawItemState.Selected;
+		}
+
+		#endregion
+
+		#region LinkLabel
+
+		/// <summary>
+		/// 设置链接的格式化文本，并附上链接。 &lt;!NAME&gt;LINK TEXT&lt;/!&gt;
+		/// </summary>
+		/// <param name="link"></param>
+		/// <param name="text"></param>
+		public static void SetLink(this LinkLabel link, string text)
+		{
+			if (link == null || text == null)
+				return;
+
+			//分析链接
+			var matches = Regex.Matches(text, @"<(/?)!([^>]*)>", RegexOptions.IgnoreCase);
+
+			if (matches.Count == 0)
+			{
+				link.Text = text;
+				link.LinkArea = new LinkArea(0, text.Length);
+			}
+			else
+			{
+				//分析
+				var links = new List<LinkLabel.Link>(matches.Count / 2);
+				LinkLabel.Link tlink = null;
+				var sb = new StringBuilder(text.Length);
+				var lastIndex = 0;
+
+				for (int i = 0; i < matches.Count; i++)
+				{
+					var m = matches[i];
+					var tag = m.Groups[1].Value;
+
+					if (m.Index > lastIndex)
+					{
+						sb.Append(text.Substring(lastIndex, m.Index - lastIndex));
+					}
+
+					if (tag == "/!")
+					{
+						if (tlink != null)
+						{
+							tlink.Length = sb.Length - tlink.Start;
+							links.Add(tlink);
+							tlink = null;
+						}
+					}
+					else
+					{
+						if (tlink == null)
+						{
+							tlink = new LinkLabel.Link()
+								{
+									Start = sb.Length,
+									Name = m.Groups[2].Value ?? ""
+								};
+						}
+					}
+					lastIndex = m.Index + m.Length;
+				}
+				if (lastIndex < text.Length)
+				{
+					sb.Append(text.Substring(lastIndex, text.Length - lastIndex));
+				}
+
+				link.Links.Clear();
+				links.ForEach(_ => link.Links.Add(_));
+			}
+
 		}
 
 		#endregion
