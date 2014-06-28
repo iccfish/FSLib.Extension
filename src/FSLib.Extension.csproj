@@ -16,20 +16,20 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\_Bin.Debug.Net4\</OutputPath>
+    <OutputPath>bin\net4\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\_Bin.Debug.Net4\FSLib.Extension.XML</DocumentationFile>
+    <DocumentationFile>bin\net4\debug\FSLib.Extension.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\_Bin.Release.Net4\</OutputPath>
+    <OutputPath>bin\net4\release\</OutputPath>
     <DefineConstants>TRACE;NET4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\_Bin.Release.Net4\FSLib.Extension.XML</DocumentationFile>
+    <DocumentationFile>bin\net4\release\FSLib.Extension.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -89,10 +89,12 @@
     <Content Include="Resources\cou_16_block.png" />
     <Content Include="Resources\tick_16.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ifish.pfx" />
+  </ItemGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\key\muyu.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>ifish.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
