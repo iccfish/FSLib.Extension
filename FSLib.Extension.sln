@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30516.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSLib.Extension", "src\FSLib.Extension.csproj", "{6D4588AA-A0FD-4364-972C-22B0AB7938F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSLib.Extension.NET35", "src\FSLib.Extension.NET35.csproj", "{D702E664-0484-485E-8AE0-453DA0A4CE50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6D4588AA-A0FD-4364-972C-22B0AB7938F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D4588AA-A0FD-4364-972C-22B0AB7938F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D4588AA-A0FD-4364-972C-22B0AB7938F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D702E664-0484-485E-8AE0-453DA0A4CE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D702E664-0484-485E-8AE0-453DA0A4CE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D702E664-0484-485E-8AE0-453DA0A4CE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D702E664-0484-485E-8AE0-453DA0A4CE50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

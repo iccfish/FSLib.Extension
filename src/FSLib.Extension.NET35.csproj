@@ -17,20 +17,20 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\_Bin.Debug.Net35\</OutputPath>
+    <OutputPath>bin\net35\debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;NET35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\_Bin.Debug.Net35\FSLib.Extension.XML</DocumentationFile>
+    <DocumentationFile>bin\net35\debug\FSLib.Extension.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\_Bin.Release.Net35\</OutputPath>
+    <OutputPath>bin\net35\release\</OutputPath>
     <DefineConstants>TRACE;NET35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\_Bin.Release.Net35\FSLib.Extension.XML</DocumentationFile>
+    <DocumentationFile>bin\net35\release\FSLib.Extension.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -50,6 +50,7 @@
     <Compile Include="Data\FSLibCommonExtension.cs" />
     <Compile Include="Data\OleDb\FSLibOleDbExtension.cs" />
     <Compile Include="Data\SqlClient\FSLib_SqlServerExtension.cs" />
+    <Compile Include="Deferred.cs" />
     <Compile Include="Diagnostics\FishProcessExtension.cs" />
     <Compile Include="FishArrayExtension.cs" />
     <Compile Include="FishCollectionExtension.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="FishValueExtension.cs" />
     <Compile Include="Windows\Forms\ControlExtensionMethods.cs" />
     <Compile Include="Windows\Forms\ListViewExtensionMethods.cs" />
+    <Compile Include="Xml\FishXmlExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FishExtension\Resources\SR.resx">
@@ -89,6 +91,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ifish.pfx" />
     <None Include="Resources\cou_16_block.png" />
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +102,7 @@
   </ItemGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\key\muyu.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>ifish.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
