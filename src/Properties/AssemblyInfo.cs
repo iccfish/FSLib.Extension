@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("FSLib.Extension")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("FSLib.Extension 通用扩展方法库")]
+[assembly: AssemblyDescription("包含大量为.NET编写的扩展方法和函数")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FSLib.Extension")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("鱼的后花园")]
+[assembly: AssemblyProduct("FSLib.Extension 通用扩展方法库")]
+[assembly: AssemblyCopyright("Copyright © 木鱼  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
