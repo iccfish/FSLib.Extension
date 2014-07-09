@@ -91,7 +91,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ifish.pfx" />
+    <None Include="ifish.snk" />
     <None Include="Resources\cou_16_block.png" />
   </ItemGroup>
   <ItemGroup>
@@ -102,7 +102,7 @@
   </ItemGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>ifish.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>ifish.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
