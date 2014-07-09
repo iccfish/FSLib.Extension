@@ -90,11 +90,11 @@
     <Content Include="Resources\tick_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ifish.pfx" />
+    <None Include="ifish.snk" />
   </ItemGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>ifish.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>ifish.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
