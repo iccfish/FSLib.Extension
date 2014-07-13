@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 
 namespace System
 {
+	using FishExtension;
+
 	/// <summary>
 	/// 对象扩展
 	/// </summary>
@@ -672,6 +674,31 @@ namespace System
 			return buffer;
 		}
 
+		/// <summary>
+		/// 读取所有的数据到内存流中
+		/// </summary>
+		/// <param name="stream">要读取的流</param>
+		/// <returns>包含所有数据的 <see cref="MemoryStream"/> </returns>
+		[CanBeNull]
+		public static MemoryStream ReadToEnd([NotNull] this Stream stream)
+		{
+			if (stream == null || !stream.CanRead)
+				return null;
+
+			if (stream is MemoryStream)
+				return stream as MemoryStream;
+
+			var ms = new MemoryStream();
+			var buffer = new byte[0x400];
+			var count = 0;
+			while ((count = stream.Read(buffer, 0, buffer.Length)) > 0)
+				ms.Write(buffer, 0, count);
+			ms.Flush();
+			ms.Seek(0, SeekOrigin.Begin);
+
+			return ms;
+		}
+
 
 		/// <summary>
 		/// 压缩原始流
@@ -755,8 +782,8 @@ namespace System
 		public static T Write<T>(this T stream, short value) where T : Stream
 		{
 			stream.Write(BitConverter.GetBytes(value));
-				return stream;
-	}
+			return stream;
+		}
 
 		/// <summary>
 		/// 将目标值写入流中
