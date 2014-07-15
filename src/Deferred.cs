@@ -37,7 +37,7 @@ namespace System
 			else Context.Post(_ => OnOperationFailed(new DeferredEventArgs(Result, Exception)), null);
 		}
 
-		public void ResolveWith(T result)
+		public void Resolve(T result)
 		{
 			if (Interlocked.Exchange(ref _finished, 2) != 0)
 				return;

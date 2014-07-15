@@ -57,6 +57,7 @@
     <Compile Include="FishDateTimeExtension.cs" />
     <Compile Include="FishExtension\Annotations.cs" />
     <Compile Include="FSLib_BinarySerializeExtension.cs" />
+    <Compile Include="FU.cs" />
     <Compile Include="Net\FSLib_Network_WebExtension.cs" />
     <Compile Include="PlatformCompatible.cs" />
     <Compile Include="FishObjectExtension.cs" />
