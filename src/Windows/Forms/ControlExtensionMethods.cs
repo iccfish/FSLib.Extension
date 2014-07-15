@@ -50,6 +50,33 @@ namespace System.Windows.Forms
 			return control;
 		}
 
+		#region Navigation
+
+		/// <summary>
+		/// 向上级不断地查找到指定类型的控件
+		/// </summary>
+		/// <typeparam name="T">要查找的控件类型</typeparam>
+		/// <param name="control">当前控件</param>
+		/// <returns></returns>
+		public static T Closest<T>(this Control control) where T : Control
+		{
+			if (control == null)
+				return null;
+
+			if (control is T)
+				return control as T;
+
+			do
+			{
+				control = control.Parent; 
+			}
+			while (control != null && !(control is T));
+
+			return control as T;
+		}
+
+		#endregion
+
 		#region CheckedListBox
 
 		/// <summary>
