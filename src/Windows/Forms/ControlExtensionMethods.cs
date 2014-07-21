@@ -509,13 +509,10 @@ namespace System.Windows.Forms
 			if (control == null || controlExpression == null || propertyExpression == null)
 				return;
 
-			if (controlExpression.Body.NodeType != ExpressionType.MemberAccess || !((controlExpression.Body as MemberExpression).Member is PropertyInfo))
+			var controlPropertyName = controlExpression.GetExpressionAccessedMemberName();
+			var sourcePropertyName = propertyExpression.GetExpressionAccessedMemberName();
+			if (string.IsNullOrEmpty(sourcePropertyName) || string.IsNullOrEmpty(controlPropertyName))
 				return;
-			if (propertyExpression.Body.NodeType != ExpressionType.MemberAccess || !((propertyExpression.Body as MemberExpression).Member is PropertyInfo))
-				return;
-
-			var controlPropertyName = ((controlExpression.Body as MemberExpression).Member as PropertyInfo).Name;
-			var sourcePropertyName = ((propertyExpression.Body as MemberExpression).Member as PropertyInfo).Name;
 
 			control.DataBindings.Add(controlPropertyName, source, sourcePropertyName);
 		}
