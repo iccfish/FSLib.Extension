@@ -12,14 +12,33 @@ namespace System.ComponentModel
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public static class FishNotifyPropertyChangeExtension
 	{
-		static Dictionary<WeakReference, List<PropertyChangedEventHandler>> _propertyChangedEvents = new Dictionary<WeakReference, List<PropertyChangedEventHandler>>();
-		static Dictionary<WeakReference, List<PropertyChangingEventHandler>> _propertyChangingEvents = new Dictionary<WeakReference, List<PropertyChangingEventHandler>>();
-
-
-		public static void BindPropertyChanged<T, TP>(this T obi, Expression<Func<T, TP>> expression, PropertyChangedEventHandler handler, object userToken) where T : INotifyPropertyChanged
+		/// <summary>
+		/// 判断事件是否是指定的属性变更引发的
+		/// </summary>
+		/// <typeparam name="TSource"></typeparam>
+		/// <typeparam name="TProp"></typeparam>
+		/// <param name="obj"></param>
+		/// <param name="expression"></param>
+		/// <returns></returns>
+		public static bool IsPropertyOf<TSource, TProp>(this TSource obj, PropertyChangedEventArgs e, Expression<Func<TSource, TProp>> expression)
+			where TSource : INotifyPropertyChanged
 		{
-			var weakReference = new WeakReference(handler);
-
+			return obj != null && expression != null && e.PropertyName == expression.GetExpressionAccessedMemberName();
 		}
+
+		/// <summary>
+		/// 判断事件是否是指定的属性变更引发的
+		/// </summary>
+		/// <typeparam name="TSource"></typeparam>
+		/// <typeparam name="TProp"></typeparam>
+		/// <param name="obj"></param>
+		/// <param name="expression"></param>
+		/// <returns></returns>
+		public static bool IsPropertyOf<TSource, TProp>(this TSource obj, PropertyChangingEventArgs e, Expression<Func<TSource, TProp>> expression)
+			where TSource : INotifyPropertyChanging
+		{
+			return obj != null && expression != null && e.PropertyName == expression.GetExpressionAccessedMemberName();
+		}
+
 	}
 }
