@@ -26,11 +26,12 @@ namespace System
 		/// </summary>
 		public Exception Exception { get; private set; }
 
-		public void Reject(Exception ex = null)
+		public void Reject(Exception ex = null, T result = default(T))
 		{
 			if (Interlocked.Exchange(ref _finished, 1) != 0)
 				return;
 
+			Result = result;
 			Exception = ex;
 			if (Context == null)
 				OnOperationFailed(new DeferredEventArgs(Result, Exception));
