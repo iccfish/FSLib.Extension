@@ -443,7 +443,7 @@ namespace System.Windows.Forms
 						sb.Append(text.Substring(lastIndex, m.Index - lastIndex));
 					}
 
-					if (tag == "/!")
+					if (tag == "/")
 					{
 						if (tlink != null)
 						{
@@ -470,6 +470,7 @@ namespace System.Windows.Forms
 					sb.Append(text.Substring(lastIndex, text.Length - lastIndex));
 				}
 
+				link.Text = sb.ToString();
 				link.Links.Clear();
 				links.ForEach(_ => link.Links.Add(_));
 			}
