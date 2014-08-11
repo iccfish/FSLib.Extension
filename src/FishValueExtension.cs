@@ -76,7 +76,7 @@ namespace System
 			if (sizeDefine == 0) return size.ToString("#0") + " " + SizeDefinitions[sizeDefine];
 			else
 			{
-				return size.ToString("#0." + string.Empty.PadLeft(digits, '#')) + " " + SizeDefinitions[sizeDefine];
+				return size.ToString("#0." + string.Empty.PadLeft(digits, '0')) + " " + SizeDefinitions[sizeDefine];
 			}
 		}
 
