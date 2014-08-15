@@ -68,7 +68,7 @@ namespace System.Windows.Forms
 
 			do
 			{
-				control = control.Parent; 
+				control = control.Parent;
 			}
 			while (control != null && !(control is T));
 
@@ -542,5 +542,145 @@ namespace System.Windows.Forms
 		}
 
 		#endregion
+
+		#region 跨线程回调
+
+		/// <summary>
+		/// 判断指定的控件是否正在销毁中
+		/// </summary>
+		/// <param name="control"></param>
+		/// <returns></returns>
+		public static bool IsHandleAvailable(this Control control)
+		{
+			return control != null && !(control.IsDisposed || control.Disposing);
+		}
+
+		/// <summary>
+		/// 在UI线程上回调指定委托
+		/// </summary>
+		/// <param name="action">委托</param>
+		public static void Invoke(this Control control, Action action)
+		{
+			if (control.InvokeRequired && control.IsHandleAvailable())
+				control.Invoke(action);
+			else action();
+		}
+
+		/// <summary>
+		/// 在UI线程上回调指定委托
+		/// </summary>
+		/// <param name="action">委托</param>
+		/// <param name="p">参数1</param>
+		/// <typeparam name="T">参数类型2</typeparam>
+		public static void Invoke<T>(this Control control, Action<T> action, T p)
+		{
+			if (control.InvokeRequired && control.IsHandleAvailable())
+			{
+				control.Invoke(action, p);
+			}
+			else action(p);
+		}
+
+		/// <summary>
+		/// 在UI线程上回调指定委托
+		/// </summary>
+		/// <param name="action">委托</param>
+		/// <param name="p1">参数1</param>
+		/// <param name="p2">参数2</param>
+		/// <typeparam name="T1">参数类型1</typeparam>
+		/// <typeparam name="T2">参数类型2</typeparam>
+		public static void Invoke<T1, T2>(this Control control, Action<T1, T2> action, T1 p1, T2 p2)
+		{
+			if (control.InvokeRequired && control.IsHandleAvailable())
+			{
+				control.Invoke(action, p1, p2);
+			}
+			else action(p1, p2);
+		}
+
+		/// <summary>
+		/// 在UI线程上回调指定委托
+		/// </summary>
+		/// <param name="action">委托</param>
+		/// <param name="p1">参数1</param>
+		/// <param name="p2">参数2</param>
+		/// <param name="p3">参数3</param>
+		/// <typeparam name="T1">参数类型1</typeparam>
+		/// <typeparam name="T2">参数类型2</typeparam>
+		/// <typeparam name="T3">参数类型3</typeparam>
+		public static void Invoke<T1, T2, T3>(this Control control, Action<T1, T2, T3> action, T1 p1, T2 p2, T3 p3)
+		{
+			if (control.InvokeRequired && control.IsHandleAvailable())
+			{
+				control.Invoke(action, p1, p2, p3);
+			}
+			else action(p1, p2, p3);
+		}
+
+		/// <summary>
+		/// 在UI线程上回调指定委托
+		/// </summary>
+		/// <param name="action">委托</param>
+		/// <param name="p1">参数1</param>
+		/// <param name="p2">参数2</param>
+		/// <param name="p3">参数3</param>
+		/// <param name="p4">参数4</param>
+		/// <typeparam name="T1">参数类型1</typeparam>
+		/// <typeparam name="T2">参数类型2</typeparam>
+		/// <typeparam name="T3">参数类型3</typeparam>
+		/// <typeparam name="T4">参数类型4</typeparam>
+		public static void Invoke<T1, T2, T3, T4>(this Control control, Action<T1, T2, T3, T4> action, T1 p1, T2 p2, T3 p3, T4 p4)
+		{
+			if (control.InvokeRequired && control.IsHandleAvailable())
+			{
+				control.Invoke(action, p1, p2, p3, p4);
+			}
+			else action(p1, p2, p3, p4);
+		}
+
+		/// <summary>
+		/// 在UI上执行操作
+		/// </summary>
+		public static TR Invoke<T1, TR>(this Control control, Func<T1, TR> action, T1 p1)
+		{
+			if (control.InvokeRequired && control.IsHandleAvailable())
+				return (TR)control.Invoke(action, p1);
+			return action(p1);
+		}
+
+		/// <summary>
+		/// 在UI上执行操作
+		/// </summary>
+		public static TR Invoke<T1, T2, TR>(this Control control, Func<T1, T2, TR> action, T1 p1, T2 p2)
+		{
+			if (control.InvokeRequired && control.IsHandleAvailable())
+				return (TR)control.Invoke(action, p1, p2);
+			return action(p1, p2);
+		}
+
+		/// <summary>
+		/// 在UI上执行操作
+		/// </summary>
+		public static TR Invoke<T1, T2, T3, TR>(this Control control, Func<T1, T2, T3, TR> action, T1 p1, T2 p2, T3 p3)
+		{
+			if (control.InvokeRequired && control.IsHandleAvailable())
+				return (TR)control.Invoke(action, p1, p2, p3);
+			return action(p1, p2, p3);
+		}
+
+		/// <summary>
+		/// 在UI上执行操作
+		/// </summary>
+		public static TR Invoke<T1, T2, T3, T4, TR>(this Control control, Func<T1, T2, T3, T4, TR> action, T1 p1, T2 p2, T3 p3, T4 p4)
+		{
+			if (control.InvokeRequired && control.IsHandleAvailable())
+				return (TR)control.Invoke(action, p1, p2, p3, p4);
+			return action(p1, p2, p3, p4);
+		}
+
+
+		#endregion
+
+
 	}
 }
