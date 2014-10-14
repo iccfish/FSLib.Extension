@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinarySerializeHelper.cs" />
+    <Compile Include="ComponentModel\FishNotifyPropertyChangeExtension.cs" />
     <Compile Include="Data\DataSetExtension.cs" />
     <Compile Include="Data\FSLibCommonExtension.cs" />
     <Compile Include="Data\OleDb\FSLibOleDbExtension.cs" />
@@ -55,9 +56,11 @@
     <Compile Include="FishArrayExtension.cs" />
     <Compile Include="FishCollectionExtension.cs" />
     <Compile Include="FishDateTimeExtension.cs" />
+    <Compile Include="FishExpressionExtension.cs" />
     <Compile Include="FishExtension\Annotations.cs" />
     <Compile Include="FSLib_BinarySerializeExtension.cs" />
     <Compile Include="FSLib_XmlSerializeExtension.cs" />
+    <Compile Include="FU.cs" />
     <Compile Include="Net\FSLib_Network_WebExtension.cs" />
     <Compile Include="PlatformCompatible.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -72,6 +75,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reflection\FishReflectionExtensions.cs" />
     <Compile Include="SmartAssembly\SmartAssembly.Attributes.cs" />
     <Compile Include="FishStringExtension.cs" />
     <Compile Include="Threading\SynchorizonExtension.cs" />
