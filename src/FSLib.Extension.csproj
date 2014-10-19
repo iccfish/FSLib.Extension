@@ -82,6 +82,7 @@
     <Compile Include="Xml\FishXmlExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FishExtension\Resources\SR.en.resx" />
     <EmbeddedResource Include="FishExtension\Resources\SR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
