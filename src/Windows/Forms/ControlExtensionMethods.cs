@@ -50,6 +50,16 @@ namespace System.Windows.Forms
 			return control;
 		}
 
+		/// <summary>
+		/// 创建一个批量操作的包装类
+		/// </summary>
+		/// <param name="control"></param>
+		/// <returns></returns>
+		public static IDisposable CreateBatchOperationDispatcher(this Control control)
+		{
+			return new ControlBatchOperationWrap(control);
+		}
+
 		#region Navigation
 
 		/// <summary>
