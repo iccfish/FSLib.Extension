@@ -78,7 +78,9 @@
     <Compile Include="Threading\SynchorizonExtension.cs" />
     <Compile Include="FishValueExtension.cs" />
     <Compile Include="FSLib_XmlSerializeExtension.cs" />
+    <Compile Include="Windows\Forms\ControlBatchOperationWrap.cs" />
     <Compile Include="Windows\Forms\ControlExtensionMethods.cs" />
+    <Compile Include="Windows\Forms\ListViewExtensionMethods.cs" />
     <Compile Include="Xml\FishXmlExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
