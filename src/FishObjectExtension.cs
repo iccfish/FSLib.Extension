@@ -435,6 +435,21 @@ namespace System
 
 		#endregion
 
+		#region Regex
+
+		/// <summary>
+		/// 获得一个匹配结果中指定分组的值
+		/// </summary>
+		/// <param name="match">匹配结果</param>
+		/// <param name="index">指定的索引</param>
+		/// <returns>对应分组的值；如果不成功或索引不对，则返回null</returns>
+		public static string GetGroupValue(this Match match, int index)
+		{
+			return match == null || !match.Success || match.Groups.Count <= index ? null : match.Groups[index].Value;
+		}
+
+		#endregion
+
 		#region IEnumerable
 
 		/// <summary>

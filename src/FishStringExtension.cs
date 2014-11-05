@@ -321,6 +321,52 @@ namespace System
 			return m.Cast<Match>().Select(s => s.Groups.Cast<Group>().Select(x => x.Value).ToArray()).ToList();
 		}
 
+		/// <summary>
+		/// 在字符串中搜索指定的特征字符串并截取其中的一段。
+		/// </summary>
+		/// <param name="text">源字符串</param>
+		/// <param name="beginTag">开始特征字符串</param>
+		/// <param name="endTag">结束特征字符串</param>
+		/// <param name="beginIndex">开始索引</param>
+		/// <param name="comparison">比较类型</param>
+		/// <returns></returns>
+		public static string SearchStringTag(this string text, string beginTag, string endTag, int beginIndex = 0, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+		{
+			return SearchStringTag(text, beginTag, endTag, ref beginIndex, comparison);
+		}
+
+		/// <summary>
+		/// 在字符串中搜索指定的特征字符串并截取其中的一段。
+		/// </summary>
+		/// <param name="text">源字符串</param>
+		/// <param name="beginTag">开始特征字符串</param>
+		/// <param name="endTag">结束特征字符串</param>
+		/// <param name="beginIndex">开始索引</param>
+		/// <param name="comparison">比较类型</param>
+		/// <returns></returns>
+		public static string SearchStringTag(this string text, string beginTag, string endTag, ref int beginIndex, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+		{
+			if (string.IsNullOrEmpty(text) || beginIndex >= text.Length)
+				return string.Empty;
+
+			var startIndex = beginIndex;
+			var endIndex = text.Length;
+
+			if (!string.IsNullOrEmpty(beginTag))
+				startIndex = text.IndexOf(beginTag, startIndex, comparison);
+			if (startIndex == -1)
+				return string.Empty;
+
+			if (!string.IsNullOrEmpty(endTag))
+				endIndex = text.IndexOf(endTag, startIndex + (!string.IsNullOrEmpty(beginTag) ? beginTag.Length : 1), comparison);
+			if (endIndex == -1)
+				return string.Empty;
+
+			beginIndex = endIndex + (!string.IsNullOrEmpty(endTag) ? endTag.Length : 1);
+
+			return text.Substring(startIndex, endIndex - startIndex);
+		}
+
 
 		#endregion
 
