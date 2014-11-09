@@ -364,7 +364,7 @@ namespace System
 
 			beginIndex = endIndex + (!string.IsNullOrEmpty(endTag) ? endTag.Length : 1);
 
-			return text.Substring(startIndex, endIndex - startIndex);
+			return text.Substring(startIndex, endIndex - startIndex + (string.IsNullOrEmpty(endTag) ? 0 : endTag.Length));
 		}
 
 
