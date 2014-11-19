@@ -179,5 +179,46 @@ namespace System
 			ticks -= ticks % (10000L * 1000 * 60 * 60 * 24);
 			return new DateTime(ticks);
 		}
+
+		/// <summary>
+		/// 将TimeSpan偏移指定的小时
+		/// </summary>
+		/// <param name="timeSpan"></param>
+		/// <param name="hours"></param>
+		/// <returns></returns>
+		public static TimeSpan AddHours(this TimeSpan timeSpan, int hours)
+		{
+			return timeSpan.Add(new TimeSpan(hours, 0, 0));
+		}
+
+		/// <summary>
+		/// 将TimeSpan偏移指定的分钟
+		/// </summary>
+		/// <param name="timeSpan"></param>
+		/// <returns></returns>
+		public static TimeSpan AddMinutes(this TimeSpan timeSpan, int minutes)
+		{
+			return timeSpan.Add(new TimeSpan(0, minutes, 0));
+		}
+
+		/// <summary>
+		/// 将TimeSpan偏移指定的秒数
+		/// </summary>
+		/// <param name="timeSpan"></param>
+		/// <returns></returns>
+		public static TimeSpan AddSeconds(this TimeSpan timeSpan, int seconds)
+		{
+			return timeSpan.Add(new TimeSpan(0, 0, seconds));
+		}
+
+		/// <summary>
+		/// 将TimeSpan偏移指定的天
+		/// </summary>
+		/// <param name="timeSpan"></param>
+		/// <returns></returns>
+		public static TimeSpan AddDays(this TimeSpan timeSpan, int days)
+		{
+			return timeSpan.Add(new TimeSpan(days, 0, 0, 0));
+		}
 	}
 }

@@ -4,9 +4,11 @@ using System.FishExtension;
 using System.FishExtension.Resources;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace System
 {
@@ -112,7 +114,7 @@ namespace System
 				if (key == "n") return "\n";
 				if (key[0] == 'u')
 				{
-					return ((char)s.Groups[2].Value.ToInt32(true)).ToString();
+					return ((char)s.Groups[2].Value.ToInt32(style: NumberStyles.AllowHexSpecifier)).ToString();
 				}
 				return key;
 			});
@@ -424,10 +426,10 @@ namespace System
 		/// <param name="value">字符串</param>
 		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.Int32"/></returns>
-		public static int ToInt32(this string value, int defaultValue)
+		public static int ToInt32(this string value, int defaultValue = 0, NumberStyles style = NumberStyles.Any, IFormatProvider provider = null)
 		{
 			int temp;
-			return int.TryParse(value, out temp) ? temp : defaultValue;
+			return int.TryParse(value, style, provider, out temp) ? temp : defaultValue;
 		}
 
 		/// <summary>
@@ -435,34 +437,10 @@ namespace System
 		/// </summary>
 		/// <param name="value">字符串</param>
 		/// <returns>转换后的 <see cref="System.Int32"/></returns>
-		public static int ToInt32(this string value, bool allowHex = false)
+		public static int? ToInt32Nullable(this string value, NumberStyles style = NumberStyles.Any, IFormatProvider provider = null)
 		{
 			int temp;
-			return int.TryParse(value, allowHex ? NumberStyles.AllowHexSpecifier : NumberStyles.Any, null, out temp) ? temp : 0;
-		}
-
-
-		/// <summary>
-		/// 将字符串转换为Int值
-		/// </summary>
-		/// <param name="value">字符串</param>
-		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
-		/// <returns>转换后的 <see cref="System.Int32"/></returns>
-		public static int? ToInt32Nullable(this string value, int? defaultValue, bool allowHex = false)
-		{
-			int temp;
-			return int.TryParse(value, allowHex ? NumberStyles.AllowHexSpecifier : NumberStyles.Any, null, out temp) ? temp : defaultValue;
-		}
-
-		/// <summary>
-		/// 将字符串转换为Int值
-		/// </summary>
-		/// <param name="value">字符串</param>
-		/// <returns>转换后的 <see cref="System.Int32"/></returns>
-		public static int? ToInt32Nullable(this string value)
-		{
-			int temp;
-			return int.TryParse(value, out temp) ? (int?)temp : null;
+			return int.TryParse(value, style, provider, out temp) ? (int?)temp : null;
 		}
 
 		static char[] StringSpliter = new char[] { ',', '|', '\\', '/', ':', ';', '_', '#', '$', '%', '@', '!', '^', '&', '*' };
@@ -472,11 +450,11 @@ namespace System
 		/// </summary>
 		/// <param name="value">要分割的字符串</param>
 		/// <returns>返回最终的 <see cref="System.Int32"/>数组</returns>
-		public static int[] SplitAsIntArray(this string value)
+		public static int[] SplitAsIntArray(this string value, NumberStyles style = NumberStyles.Any, IFormatProvider provider = null)
 		{
 			if (string.IsNullOrEmpty(value)) return new int[0];
 			return value.Split(StringSpliter, StringSplitOptions.RemoveEmptyEntries)
-				.Select(s => s.ToInt32()).ToArray();
+				.Select(s => s.ToInt32(style: style, provider: provider)).ToArray();
 		}
 
 		#endregion
@@ -489,10 +467,10 @@ namespace System
 		/// <param name="value">字符串</param>
 		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.Int64"/></returns>
-		public static long ToInt64(this string value, long defaultValue)
+		public static long ToInt64(this string value, long defaultValue = 0, NumberStyles style = NumberStyles.Any, IFormatProvider provider = null)
 		{
 			long temp;
-			return long.TryParse(value, out temp) ? temp : defaultValue;
+			return long.TryParse(value, style, provider, out temp) ? temp : defaultValue;
 		}
 
 		/// <summary>
@@ -500,34 +478,10 @@ namespace System
 		/// </summary>
 		/// <param name="value">字符串</param>
 		/// <returns>转换后的 <see cref="System.Int64"/></returns>
-		public static long ToInt64(this string value)
+		public static long? ToInt64Nullable(this string value, NumberStyles style = NumberStyles.Any, IFormatProvider provider = null)
 		{
 			long temp;
-			return long.TryParse(value, out temp) ? temp : 0;
-		}
-
-
-		/// <summary>
-		/// 将字符串转换为Int值
-		/// </summary>
-		/// <param name="value">字符串</param>
-		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
-		/// <returns>转换后的 <see cref="System.Int64"/></returns>
-		public static long? ToInt64Nullable(this string value, long? defaultValue)
-		{
-			long temp;
-			return long.TryParse(value, out temp) ? temp : defaultValue;
-		}
-
-		/// <summary>
-		/// 将字符串转换为Int值
-		/// </summary>
-		/// <param name="value">字符串</param>
-		/// <returns>转换后的 <see cref="System.Int64"/></returns>
-		public static long? ToInt64Nullable(this string value)
-		{
-			long temp;
-			return long.TryParse(value, out temp) ? (int?)temp : null;
+			return long.TryParse(value, style, provider, out temp) ? (long?)temp : null;
 		}
 
 		#endregion
@@ -540,44 +494,21 @@ namespace System
 		/// <param name="value">要转换的字符串</param>
 		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.Single"/></returns>
-		public static float ToSingle(this string value, float defaultValue)
+		public static float ToSingle(this string value, float defaultValue = 0.0F, NumberStyles style = NumberStyles.Any, IFormatProvider provider = null)
 		{
 			float temp;
-			return float.TryParse(value, out temp) ? temp : defaultValue;
-		}
-
-		/// <summary>
-		/// 转换字符串为浮点数.如果转换失败,则返回 0.0
-		/// </summary>
-		/// <param name="value">要转换的字符串</param>
-		/// <returns>转换后的 <see cref="System.Single"/></returns>
-		public static float ToSingle(this string value)
-		{
-			float temp;
-			return float.TryParse(value, out temp) ? temp : 0.0f;
+			return float.TryParse(value, style, provider, out temp) ? temp : defaultValue;
 		}
 
 		/// <summary>
 		/// 转换字符串为浮点数.如果转换失败,则返回指定的默认值
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
-		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.Single"/></returns>
-		public static float? ToSingleNullable(this string value, float? defaultValue)
+		public static float? ToSingleNullable(this string value, NumberStyles style = NumberStyles.Any, IFormatProvider provider = null)
 		{
 			float temp;
-			return float.TryParse(value, out temp) ? temp : defaultValue;
-		}
-
-		/// <summary>
-		/// 转换字符串为浮点数.如果转换失败,则返回 0.0
-		/// </summary>
-		/// <param name="value">要转换的字符串</param>
-		/// <returns>转换后的 <see cref="System.Single"/></returns>
-		public static float? ToSingleNullable(this string value)
-		{
-			float temp;
-			return float.TryParse(value, out temp) ? (float?)temp : null;
+			return float.TryParse(value, style, provider, out temp) ? (float?)temp : null;
 		}
 
 		#endregion
@@ -590,21 +521,48 @@ namespace System
 		/// <param name="value">要转换的字符串</param>
 		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
-		public static DateTime ToDateTime(this string value, DateTime defaultValue)
+		public static DateTime ToDateTime(this string value, DateTime defaultValue, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
-			return DateTime.TryParse(value, out temp) ? temp : defaultValue;
+			return DateTime.TryParse(value, formatProvider, styles, out temp) ? temp : defaultValue;
 		}
 
+
 		/// <summary>
-		/// 转换字符串为日期时间.如果转换失败,则返回 <see cref="F:System.DataTime.MinValue"/>
+		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
+		public static DateTime ToDateTime(this string value, DateTime defaultValue, string format, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		{
+			DateTime temp;
+			return DateTime.TryParseExact(value, format, formatProvider, styles, out temp) ? temp : defaultValue;
+		}
+
+
+		/// <summary>
+		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
+		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
+		public static DateTime ToDateTime(this string value, DateTime defaultValue, string[] formats, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		{
+			DateTime temp;
+			return DateTime.TryParseExact(value, formats, formatProvider, styles, out temp) ? temp : defaultValue;
+		}
+
+
+		/// <summary>
+		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
-		public static DateTime ToDateTime(this string value)
+		public static DateTime ToDateTime(this string value, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
-			return DateTime.TryParse(value, out temp) ? temp : DateTime.MinValue;
+			return DateTime.TryParse(value, formatProvider, styles, out temp) ? temp : DateTime.MinValue;
 		}
 
 		/// <summary>
@@ -613,10 +571,10 @@ namespace System
 		/// <param name="value">要转换的字符串</param>
 		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
-		public static DateTime? ToDateTimeNullable(this string value, DateTime? defaultValue)
+		public static DateTime ToDateTime(this string value, string[] format = null, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
-			return DateTime.TryParse(value, out temp) ? temp : defaultValue;
+			return DateTime.TryParseExact(value, format, formatProvider, styles, out temp) ? temp : DateTime.MinValue;
 		}
 
 		/// <summary>
@@ -624,37 +582,190 @@ namespace System
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
-		public static DateTime? ToDateTimeNullable(this string value)
+		public static DateTime ToDateTime(this string value, string format, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		{
+			DateTime temp;
+			return DateTime.TryParseExact(value, format, formatProvider, styles, out temp) ? temp : DateTime.MinValue;
+		}
+
+		/// <summary>
+		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
+		public static DateTime? ToDateTimeNullable(this string value, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
 			return DateTime.TryParse(value, out temp) ? (DateTime?)temp : null;
 		}
+
+
+		/// <summary>
+		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
+		public static DateTime? ToDateTimeNullable(this string value, string format, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		{
+			DateTime temp;
+			return DateTime.TryParseExact(value, format, formatProvider, styles, out temp) ? (DateTime?)temp : null;
+		}
+
+		/// <summary>
+		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
+		/// </summary>
+		/// <param name="value">要转换的字符串</param>
+		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
+		public static DateTime? ToDateTimeNullable(this string value, string[] formats, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		{
+			DateTime temp;
+			return DateTime.TryParseExact(value, formats, formatProvider, styles, out temp) ? (DateTime?)temp : null;
+		}
+
+		/// <summary>
+		/// 将字符串分析为可空Timespan
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static TimeSpan? ToTimeSpanNullable(this string value, IFormatProvider formatProvider = null)
+		{
+			TimeSpan ts;
+			if (TimeSpan.TryParse(value, formatProvider, out ts))
+				return ts;
+
+			return null;
+		}
+
+
+		/// <summary>
+		/// 将字符串分析为可空Timespan
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static TimeSpan? ToTimeSpanNullable(this string value, string format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		{
+			TimeSpan ts;
+			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
+				return ts;
+
+			return null;
+		}
+
+		/// <summary>
+		/// 将字符串分析为可空Timespan
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static TimeSpan? ToTimeSpanNullable(this string value, string[] format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		{
+			TimeSpan ts;
+			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
+				return ts;
+
+			return null;
+		}
+
+
+		/// <summary>
+		/// 将字符串分析为Timespan
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static TimeSpan ToTimeSpan(this string value, TimeSpan timeSpan, IFormatProvider formatProvider = null)
+		{
+			TimeSpan ts;
+			if (TimeSpan.TryParse(value, formatProvider, out ts))
+				return ts;
+
+			return timeSpan;
+		}
+
+
+		/// <summary>
+		/// 将字符串分析为Timespan
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static TimeSpan ToTimeSpan(this string value, TimeSpan timeSpan, string format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		{
+			TimeSpan ts;
+			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
+				return ts;
+
+			return timeSpan;
+		}
+
+		/// <summary>
+		/// 将字符串分析为Timespan
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static TimeSpan ToTimeSpan(this string value, TimeSpan timeSpan, string[] format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		{
+			TimeSpan ts;
+			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
+				return ts;
+
+			return timeSpan;
+		}
+
+		/// <summary>
+		/// 将字符串分析为Timespan
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static TimeSpan ToTimeSpan(this string value, IFormatProvider formatProvider = null)
+		{
+			TimeSpan ts;
+			if (TimeSpan.TryParse(value, formatProvider, out ts))
+				return ts;
+
+			return TimeSpan.Zero;
+		}
+
+
+		/// <summary>
+		/// 将字符串分析为Timespan
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static TimeSpan ToTimeSpan(this string value, string format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		{
+			TimeSpan ts;
+			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
+				return ts;
+
+			return TimeSpan.Zero;
+		}
+
+		/// <summary>
+		/// 将字符串分析为Timespan
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static TimeSpan ToTimeSpan(this string value, string[] format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		{
+			TimeSpan ts;
+			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
+				return ts;
+
+			return TimeSpan.Zero;
+		}
+
 
 		#endregion
 
 		#region ToDouble
 
 		/// <summary>
-		/// 转换字符串为双精度数.如果转换失败,则返回指定的默认值
-		/// </summary>
-		/// <param name="value">要转换的字符串</param>
-		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
-		/// <returns>转换后的 <see cref="System.Double"/></returns>
-		public static double ToDouble(this string value, double defaultValue)
-		{
-			double temp;
-			return double.TryParse(value, out temp) ? temp : defaultValue;
-		}
-
-		/// <summary>
 		/// 转换字符串为双精度数.如果转换失败,则返回 0.0
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.Double"/></returns>
-		public static double ToDouble(this string value)
+		public static double ToDouble(this string value, double defaultValue = 0.0, NumberStyles styles = NumberStyles.Any, IFormatProvider formatProvider = null)
 		{
 			double temp;
-			return double.TryParse(value, out temp) ? temp : 0.0;
+			return double.TryParse(value, styles, formatProvider, out temp) ? temp : 0.0;
 		}
 
 
@@ -662,25 +773,12 @@ namespace System
 		/// 转换字符串为双精度数.如果转换失败,则返回指定的默认值
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
-		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.Double"/></returns>
-		public static double? ToDoubleNullable(this string value, double? defaultValue)
+		public static double? ToDoubleNullable(this string value, NumberStyles styles = NumberStyles.Any, IFormatProvider formatProvider = null)
 		{
 			double temp;
-			return double.TryParse(value, out temp) ? temp : defaultValue;
+			return double.TryParse(value, styles, formatProvider, out temp) ? (double?)temp : null;
 		}
-
-		/// <summary>
-		/// 转换字符串为双精度数.如果转换失败,则返回 0.0
-		/// </summary>
-		/// <param name="value">要转换的字符串</param>
-		/// <returns>转换后的 <see cref="System.Double"/></returns>
-		public static double? ToDoubleNullable(this string value)
-		{
-			double temp;
-			return double.TryParse(value, out temp) ? (double?)temp : 0.0;
-		}
-
 
 		#endregion
 
@@ -692,10 +790,10 @@ namespace System
 		/// <param name="value">要转换的字符串</param>
 		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.Double"/></returns>
-		public static decimal ToDecimal(this string value, decimal defaultValue)
+		public static decimal ToDecimal(this string value, decimal defaultValue = 0m, NumberStyles styles = NumberStyles.Any, IFormatProvider formatProvider = null)
 		{
 			decimal temp;
-			return decimal.TryParse(value, out temp) ? temp : defaultValue;
+			return decimal.TryParse(value, styles, formatProvider, out temp) ? temp : defaultValue;
 		}
 
 		/// <summary>
@@ -703,21 +801,10 @@ namespace System
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.Double"/></returns>
-		public static decimal ToDecimal(this string value)
+		public static decimal? ToDecimalNullable(this string value, NumberStyles styles = NumberStyles.Any, IFormatProvider formatProvider = null)
 		{
 			decimal temp;
-			return decimal.TryParse(value, out temp) ? temp : 0.0m;
-		}
-
-		/// <summary>
-		/// 转换字符串为双精度数.如果转换失败,则返回 0.0
-		/// </summary>
-		/// <param name="value">要转换的字符串</param>
-		/// <returns>转换后的 <see cref="System.Double"/></returns>
-		public static decimal? ToDecimalNullable(this string value)
-		{
-			decimal temp;
-			return decimal.TryParse(value, out temp) ? (decimal?)temp : null;
+			return decimal.TryParse(value, styles, formatProvider, out temp) ? (decimal?)temp : null;
 		}
 
 		#endregion
