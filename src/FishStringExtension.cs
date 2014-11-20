@@ -534,7 +534,7 @@ namespace System
 		/// <param name="value">要转换的字符串</param>
 		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
-		public static DateTime ToDateTime(this string value, DateTime defaultValue, string format, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		public static DateTime ToDateTimeExact(this string value, DateTime defaultValue, string format, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
 			return DateTime.TryParseExact(value, format, formatProvider, styles, out temp) ? temp : defaultValue;
@@ -547,7 +547,7 @@ namespace System
 		/// <param name="value">要转换的字符串</param>
 		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
-		public static DateTime ToDateTime(this string value, DateTime defaultValue, string[] formats, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		public static DateTime ToDateTimeExact(this string value, DateTime defaultValue, string[] formats, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
 			return DateTime.TryParseExact(value, formats, formatProvider, styles, out temp) ? temp : defaultValue;
@@ -569,9 +569,8 @@ namespace System
 		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
-		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
-		public static DateTime ToDateTime(this string value, string[] format = null, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		public static DateTime ToDateTimeExact(this string value, string[] format = null, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
 			return DateTime.TryParseExact(value, format, formatProvider, styles, out temp) ? temp : DateTime.MinValue;
@@ -582,7 +581,7 @@ namespace System
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
-		public static DateTime ToDateTime(this string value, string format, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		public static DateTime ToDateTimeExact(this string value, string format, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
 			return DateTime.TryParseExact(value, format, formatProvider, styles, out temp) ? temp : DateTime.MinValue;
@@ -605,7 +604,7 @@ namespace System
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
-		public static DateTime? ToDateTimeNullable(this string value, string format, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		public static DateTime? ToDateTimeNullableExact(this string value, string format, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
 			return DateTime.TryParseExact(value, format, formatProvider, styles, out temp) ? (DateTime?)temp : null;
@@ -616,7 +615,7 @@ namespace System
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
-		public static DateTime? ToDateTimeNullable(this string value, string[] formats, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
+		public static DateTime? ToDateTimeNullableExact(this string value, string[] formats, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
 			return DateTime.TryParseExact(value, formats, formatProvider, styles, out temp) ? (DateTime?)temp : null;
@@ -642,7 +641,7 @@ namespace System
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public static TimeSpan? ToTimeSpanNullable(this string value, string format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		public static TimeSpan? ToTimeSpanNullableExact(this string value, string format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
 		{
 			TimeSpan ts;
 			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
@@ -656,7 +655,7 @@ namespace System
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public static TimeSpan? ToTimeSpanNullable(this string value, string[] format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		public static TimeSpan? ToTimeSpanNullableExact(this string value, string[] format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
 		{
 			TimeSpan ts;
 			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
@@ -686,7 +685,7 @@ namespace System
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public static TimeSpan ToTimeSpan(this string value, TimeSpan timeSpan, string format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		public static TimeSpan ToTimeSpanExact(this string value, TimeSpan timeSpan, string format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
 		{
 			TimeSpan ts;
 			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
@@ -700,7 +699,7 @@ namespace System
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public static TimeSpan ToTimeSpan(this string value, TimeSpan timeSpan, string[] format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		public static TimeSpan ToTimeSpanExact(this string value, TimeSpan timeSpan, string[] format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
 		{
 			TimeSpan ts;
 			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
@@ -729,7 +728,7 @@ namespace System
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public static TimeSpan ToTimeSpan(this string value, string format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		public static TimeSpan ToTimeSpanExact(this string value, string format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
 		{
 			TimeSpan ts;
 			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
@@ -743,7 +742,7 @@ namespace System
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public static TimeSpan ToTimeSpan(this string value, string[] format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
+		public static TimeSpan ToTimeSpanExact(this string value, string[] format, IFormatProvider formatProvider = null, TimeSpanStyles styles = TimeSpanStyles.None)
 		{
 			TimeSpan ts;
 			if (TimeSpan.TryParseExact(value, format, formatProvider, styles, out ts))
