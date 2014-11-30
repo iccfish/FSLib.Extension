@@ -8,6 +8,12 @@ using System.ComponentModel;
 
 namespace System.Data
 {
+	using Common;
+
+	using Configuration;
+
+	using FishExtension;
+
 	/// <summary>
 	/// 通用数据库的扩展方法
 	/// </summary>
@@ -49,6 +55,32 @@ namespace System.Data
 		public static bool IsOpen(this IDbConnection connection)
 		{
 			return connection != null && connection.State == ConnectionState.Open;
+		}
+
+		/// <summary>
+		/// 通过指定的数据库连接配置创建一个 <see cref="DbConnection"/>
+		/// </summary>
+		/// <param name="setting">连接字符串</param>
+		/// <returns></returns>
+		[CanBeNull]
+		public static DbConnection CreateDbConnection([NotNull] this ConnectionStringSettings setting)
+		{
+			var dbFactory = DbProviderFactories.GetFactory(setting.ProviderName);
+			var conn = dbFactory.CreateConnection();
+			if (conn != null)
+				conn.ConnectionString = setting.ConnectionString;
+			return conn;
+		}
+
+		/// <summary>
+		/// 通过指定的数据库连接配置获得对应的 <see cref="DbProviderFactory"/>
+		/// </summary>
+		/// <param name="setting">连接字符串</param>
+		/// <returns></returns>
+		[NotNull]
+		public static DbProviderFactory GetDbProviderFactory([NotNull] this ConnectionStringSettings setting)
+		{
+			return DbProviderFactories.GetFactory(setting.ProviderName);
 		}
 
 		#endregion

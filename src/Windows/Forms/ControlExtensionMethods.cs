@@ -688,6 +688,56 @@ namespace System.Windows.Forms
 			return action(p1, p2, p3, p4);
 		}
 
+		/// <summary>
+		/// 包装委托为指定控件上跨线程安全的方法
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		public static Action SaveInvoke(this Control control, Action action)
+		{
+			return () =>
+			{
+				if (control == null || !control.InvokeRequired)
+					action();
+				else
+					control.Invoke(action);
+			};
+		}
+
+		/// <summary>
+		/// 包装委托为指定控件上跨线程安全的方法
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		public static EventHandler SaveInvoke(this Control control, EventHandler action)
+		{
+			return (obj, ev) =>
+			{
+				if (control == null || !control.InvokeRequired)
+					action(obj, ev);
+				else
+					control.Invoke(action, obj, ev);
+			};
+		}
+
+		/// <summary>
+		/// 包装委托为指定控件上跨线程安全的方法
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		public static EventHandler<T> SaveInvoke<T>(this Control control, EventHandler<T> action) where T : EventArgs
+		{
+			return (obj, ev) =>
+			{
+				if (control == null || !control.InvokeRequired)
+					action(obj, ev);
+				else
+					control.Invoke(action, obj, ev);
+			};
+		}
 
 		#endregion
 
