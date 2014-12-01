@@ -698,6 +698,8 @@ namespace System.Windows.Forms
 		{
 			return () =>
 			{
+				if (control.IsDisposed)
+					action();
 				if (control == null || !control.InvokeRequired)
 					action();
 				else
@@ -732,10 +734,31 @@ namespace System.Windows.Forms
 		{
 			return (obj, ev) =>
 			{
+				if (control.IsDisposed)
+					action(obj, ev);
 				if (control == null || !control.InvokeRequired)
 					action(obj, ev);
 				else
 					control.Invoke(action, obj, ev);
+			};
+		}
+
+		/// <summary>
+		/// 包装委托为指定控件上跨线程安全的方法
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		public static Action<T> SaveInvoke<T>(this Control control, Action<T> action) where T : EventArgs
+		{
+			return (ev) =>
+			{
+				if (control.IsDisposed)
+					action(ev);
+				if (control == null || !control.InvokeRequired)
+					action(ev);
+				else
+					control.Invoke(action, ev);
 			};
 		}
 
