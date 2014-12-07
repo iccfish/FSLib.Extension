@@ -19,18 +19,20 @@ namespace System
 		/// <returns>转换的结果</returns>
 		public static string MakeDateTimeFriendly(this DateTime dt)
 		{
-			TimeSpan t = DateTime.Now - dt;
+			var now = DateTime.Now;
+			var nowdate = now.Date;
+			var t = DateTime.Now - dt;
 
 			if (t.TotalSeconds < 60) return string.Format(SR.FriendlyTime_Second, t.TotalSeconds > 0 ? (int)t.TotalSeconds : 0);
 			if (t.TotalMinutes < 60) return string.Format(SR.FriendlyTime_Minute, (int)t.TotalMinutes);
-			if (t.TotalHours < 24) return string.Format(SR.FriendlyTime_Hour, (int)t.TotalHours);
+			if (dt >= nowdate) return string.Format(SR.FriendlyTime_Hour, (int)t.TotalHours);
 			if (t.TotalDays < 2)
 			{
-				string prefix = string.Empty;
-				switch ((int)(DateTime.Now.AddHours(-dt.Hour) - dt).TotalDays)
+				var prefix = string.Empty;
+				switch ((int)(nowdate - dt.Date).TotalDays)
 				{
-					case 0: prefix = SR.FriendlyTime_Yesterday; break;
-					case 1: prefix = SR.FriendlyTime_DayBeforeYesterday; break;
+					case 1: prefix = SR.FriendlyTime_Yesterday; break;
+					case 2: prefix = SR.FriendlyTime_DayBeforeYesterday; break;
 					default:
 						break;
 				}
@@ -97,6 +99,17 @@ namespace System
 			}
 			months = months - (beginDate - endDate).TotalDays / DateTime.DaysInMonth(endDate.Year, endDate.Month);
 			return months;
+		}
+
+		/// <summary>
+		/// 获得两个日期之间的天数间隔
+		/// </summary>
+		/// <param name="beginDate"></param>
+		/// <param name="endDate"></param>
+		/// <returns></returns>
+		public static double GetDaysBetween(this DateTime beginDate, DateTime endDate)
+		{
+			return (endDate.Date - beginDate.Date).TotalDays;
 		}
 
 		/// <summary>
