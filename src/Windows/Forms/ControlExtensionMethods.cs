@@ -584,7 +584,7 @@ namespace System.Windows.Forms
 		/// <typeparam name="T">参数类型2</typeparam>
 		public static void Invoke<T>(this Control control, Action<T> action, T p)
 		{
-			if (control.InvokeRequired && control.IsHandleAvailable())
+			if (control.IsHandleAvailable() && control.InvokeRequired)
 			{
 				control.Invoke(action, p);
 			}
@@ -601,7 +601,7 @@ namespace System.Windows.Forms
 		/// <typeparam name="T2">参数类型2</typeparam>
 		public static void Invoke<T1, T2>(this Control control, Action<T1, T2> action, T1 p1, T2 p2)
 		{
-			if (control.InvokeRequired && control.IsHandleAvailable())
+			if (control.IsHandleAvailable() && control.InvokeRequired)
 			{
 				control.Invoke(action, p1, p2);
 			}
@@ -620,7 +620,7 @@ namespace System.Windows.Forms
 		/// <typeparam name="T3">参数类型3</typeparam>
 		public static void Invoke<T1, T2, T3>(this Control control, Action<T1, T2, T3> action, T1 p1, T2 p2, T3 p3)
 		{
-			if (control.InvokeRequired && control.IsHandleAvailable())
+			if (control.IsHandleAvailable() && control.InvokeRequired)
 			{
 				control.Invoke(action, p1, p2, p3);
 			}
@@ -641,7 +641,7 @@ namespace System.Windows.Forms
 		/// <typeparam name="T4">参数类型4</typeparam>
 		public static void Invoke<T1, T2, T3, T4>(this Control control, Action<T1, T2, T3, T4> action, T1 p1, T2 p2, T3 p3, T4 p4)
 		{
-			if (control.InvokeRequired && control.IsHandleAvailable())
+			if (control.IsHandleAvailable() && control.InvokeRequired)
 			{
 				control.Invoke(action, p1, p2, p3, p4);
 			}
@@ -653,7 +653,7 @@ namespace System.Windows.Forms
 		/// </summary>
 		public static TR Invoke<T1, TR>(this Control control, Func<T1, TR> action, T1 p1)
 		{
-			if (control.InvokeRequired && control.IsHandleAvailable())
+			if (control.IsHandleAvailable() && control.InvokeRequired)
 				return (TR)control.Invoke(action, p1);
 			return action(p1);
 		}
@@ -663,7 +663,7 @@ namespace System.Windows.Forms
 		/// </summary>
 		public static TR Invoke<T1, T2, TR>(this Control control, Func<T1, T2, TR> action, T1 p1, T2 p2)
 		{
-			if (control.InvokeRequired && control.IsHandleAvailable())
+			if (control.IsHandleAvailable() && control.InvokeRequired)
 				return (TR)control.Invoke(action, p1, p2);
 			return action(p1, p2);
 		}
@@ -673,7 +673,7 @@ namespace System.Windows.Forms
 		/// </summary>
 		public static TR Invoke<T1, T2, T3, TR>(this Control control, Func<T1, T2, T3, TR> action, T1 p1, T2 p2, T3 p3)
 		{
-			if (control.InvokeRequired && control.IsHandleAvailable())
+			if (control.IsHandleAvailable() && control.InvokeRequired)
 				return (TR)control.Invoke(action, p1, p2, p3);
 			return action(p1, p2, p3);
 		}
@@ -683,7 +683,7 @@ namespace System.Windows.Forms
 		/// </summary>
 		public static TR Invoke<T1, T2, T3, T4, TR>(this Control control, Func<T1, T2, T3, T4, TR> action, T1 p1, T2 p2, T3 p3, T4 p4)
 		{
-			if (control.InvokeRequired && control.IsHandleAvailable())
+			if (control.IsHandleAvailable() && control.InvokeRequired)
 				return (TR)control.Invoke(action, p1, p2, p3, p4);
 			return action(p1, p2, p3, p4);
 		}
