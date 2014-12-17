@@ -38,12 +38,12 @@ namespace System.Windows.Forms
 					return;
 
 				var location = new Point((parentControl.Width - control.Width) / 2, (parentControl.Height - control.Height) / 2);
-				if (!(parentControl is Form))
+				if (!(parentControl.Controls.Contains(control)))
 					location.Offset(parentControl.Location);
 				control.Location = location;
 			};
 			var loc = new Point((parentControl.Width - control.Width) / 2, (parentControl.Height - control.Height) / 2);
-			if (!(parentControl is Form))
+			if (!(parentControl.Controls.Contains(control)))
 				loc.Offset(parentControl.Location);
 			control.Location = loc;
 
