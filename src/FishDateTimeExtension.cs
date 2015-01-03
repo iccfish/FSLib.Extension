@@ -233,5 +233,28 @@ namespace System
 		{
 			return timeSpan.Add(new TimeSpan(days, 0, 0, 0));
 		}
+
+		/// <summary>
+		/// 转换Timespan为友好的显示方式
+		/// </summary>
+		/// <param name="ts"></param>
+		/// <returns></returns>
+		public static string ToFriendlyDisplay(this TimeSpan ts)
+		{
+			//天/时/分/秒/毫秒
+			var arr = new string[] { "", "", "", "", "" };
+			if (ts.Days > 0)
+				arr[0] = string.Format("{0}天", ts.Days);
+			if (ts.Hours > 0)
+				arr[1] = string.Format("{0}时", ts.Hours);
+			if (ts.Minutes > 0)
+				arr[2] = string.Format("{0}分", ts.Minutes);
+			if (ts.Seconds > 0)
+				arr[3] = string.Format("{0}秒", ts.Seconds);
+			if (ts.Milliseconds > 0)
+				arr[4] = string.Format("{0}毫秒", ts.Milliseconds);
+
+			return arr.JoinAsString("");
+		}
 	}
 }
