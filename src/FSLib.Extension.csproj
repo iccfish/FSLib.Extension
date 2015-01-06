@@ -102,6 +102,10 @@
     <Content Include="Resources\tick_16.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="content\App.config.install.xdt" />
+    <None Include="content\App.config.uninstall.xdt" />
+    <None Include="content\Web.config.install.xdt" />
+    <None Include="content\Web.config.uninstall.xdt" />
     <None Include="FSLib.Extension.nuspec" />
     <None Include="ifish.snk" />
   </ItemGroup>
