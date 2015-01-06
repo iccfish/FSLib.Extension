@@ -51,13 +51,16 @@
     <Compile Include="Data\FSLibCommonExtension.cs" />
     <Compile Include="Data\OleDb\FSLibOleDbExtension.cs" />
     <Compile Include="Data\SqlClient\FSLib_SqlServerExtension.cs" />
-    <Compile Include="Deferred.cs" />
+    <Compile Include="FishLib\Deferred.cs" />
     <Compile Include="Diagnostics\FishProcessExtension.cs" />
     <Compile Include="FishArrayExtension.cs" />
     <Compile Include="FishCollectionExtension.cs" />
     <Compile Include="FishDateTimeExtension.cs" />
     <Compile Include="FishExpressionExtension.cs" />
     <Compile Include="FishExtension\Annotations.cs" />
+    <Compile Include="FishLib\DeferredEventArgs.cs" />
+    <Compile Include="FishLib\DeferredProgressEventArgs.cs" />
+    <Compile Include="FishLib\DeferredSource.cs" />
     <Compile Include="FSLib_BinarySerializeExtension.cs" />
     <Compile Include="FU.cs" />
     <Compile Include="Globalization\ChineseLunisolarCalendarExtension.cs" />
@@ -99,6 +102,7 @@
     <Content Include="Resources\tick_16.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="FSLib.Extension.nuspec" />
     <None Include="ifish.snk" />
   </ItemGroup>
   <PropertyGroup>

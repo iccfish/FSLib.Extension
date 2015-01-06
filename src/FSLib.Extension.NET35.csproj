@@ -51,16 +51,21 @@
     <Compile Include="Data\FSLibCommonExtension.cs" />
     <Compile Include="Data\OleDb\FSLibOleDbExtension.cs" />
     <Compile Include="Data\SqlClient\FSLib_SqlServerExtension.cs" />
-    <Compile Include="Deferred.cs" />
     <Compile Include="Diagnostics\FishProcessExtension.cs" />
     <Compile Include="FishArrayExtension.cs" />
     <Compile Include="FishCollectionExtension.cs" />
     <Compile Include="FishDateTimeExtension.cs" />
     <Compile Include="FishExpressionExtension.cs" />
     <Compile Include="FishExtension\Annotations.cs" />
+    <Compile Include="FishLib\Deferred.cs" />
+    <Compile Include="FishLib\DeferredEventArgs.cs" />
+    <Compile Include="FishLib\DeferredProgressEventArgs.cs" />
+    <Compile Include="FishLib\DeferredSource.cs" />
     <Compile Include="FSLib_BinarySerializeExtension.cs" />
     <Compile Include="FSLib_XmlSerializeExtension.cs" />
     <Compile Include="FU.cs" />
+    <Compile Include="Globalization\ChineseLunisolarCalendarExtension.cs" />
+    <Compile Include="IO\PathUtility.cs" />
     <Compile Include="Net\FSLib_Network_WebExtension.cs" />
     <Compile Include="PlatformCompatible.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -86,6 +91,9 @@
     <Compile Include="Xml\FishXmlExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FishExtension\Resources\SR.en.resx">
+      <DependentUpon>SR.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FishExtension\Resources\SR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
@@ -96,6 +104,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="FSLib.Extension.nuspec" />
     <None Include="ifish.snk" />
     <None Include="Resources\cou_16_block.png" />
   </ItemGroup>

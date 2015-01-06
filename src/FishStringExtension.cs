@@ -621,6 +621,8 @@ namespace System
 			return DateTime.TryParseExact(value, formats, formatProvider, styles, out temp) ? (DateTime?)temp : null;
 		}
 
+#if NET4
+
 		/// <summary>
 		/// 将字符串分析为可空Timespan
 		/// </summary>
@@ -708,6 +710,7 @@ namespace System
 			return timeSpan;
 		}
 
+
 		/// <summary>
 		/// 将字符串分析为Timespan
 		/// </summary>
@@ -750,6 +753,7 @@ namespace System
 
 			return TimeSpan.Zero;
 		}
+#endif
 
 
 		#endregion
