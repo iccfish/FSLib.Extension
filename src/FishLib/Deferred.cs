@@ -4,6 +4,11 @@
 
 	public class Deferred<T> : DeferredSource<T>
 	{
+		public Deferred(bool captureContext = true)
+			: base(captureContext)
+		{
+			
+		}
 		/// <summary>
 		/// 标记为任务失败
 		/// </summary>

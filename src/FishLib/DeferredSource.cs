@@ -6,9 +6,10 @@ namespace System.FishLib
 	{
 		protected int _finished;
 
-		public DeferredSource()
+		public DeferredSource(bool captureContext = true)
 		{
-			Context = SynchronizationContext.Current;
+			if (captureContext)
+				Context = SynchronizationContext.Current;
 		}
 
 		/// <summary>
@@ -150,11 +151,11 @@ namespace System.FishLib
 			if (handler == null)
 				return;
 
-			if(Context==null)
+			if (Context == null)
 				handler(this, EventArgs.Empty);
 			else Context.Post(() => handler(this, EventArgs.Empty));
 		}
-		void TriggerHandler<T>(EventHandler<T> handler, T evargs) where T:EventArgs
+		void TriggerHandler<T>(EventHandler<T> handler, T evargs) where T : EventArgs
 		{
 			if (handler == null)
 				return;
