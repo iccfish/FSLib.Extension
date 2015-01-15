@@ -860,7 +860,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// 对指定的数据进行条件判断，如果大于0则执行
+		/// 对指定的数据进行条件判断，如果不为空字符串则执行
 		/// </summary>
 		/// <param name="value">值</param>
 		/// <param name="action">执行方法</param>
@@ -870,7 +870,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// 对指定的数据进行条件判断，如果大于0则执行
+		/// 对指定的数据进行条件判断，如果不为null则执行
 		/// </summary>
 		/// <param name="value">值</param>
 		/// <param name="action">执行方法</param>
@@ -880,13 +880,13 @@ namespace System
 		}
 
 		/// <summary>
-		/// 对指定的数据进行条件判断，如果大于0则执行
+		/// 对指定的数据进行条件判断，如果不为空序列则执行
 		/// </summary>
 		/// <param name="value">值</param>
 		/// <param name="action">执行方法</param>
 		public static void ExecuteIfNotEmpty<T>(this IEnumerable<T> value, Action<IEnumerable<T>> action)
 		{
-			if (value.Any()) action(value);
+			if (value != null && value.Any()) action(value);
 		}
 
 		/// <summary>

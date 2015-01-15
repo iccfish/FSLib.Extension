@@ -12,6 +12,9 @@ using System.Windows.Forms;
 
 namespace System
 {
+	/// <summary>
+	/// 包含了与字符串相关的一些常用扩展方法
+	/// </summary>
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	public static class FishStringExtension
 	{
@@ -421,7 +424,7 @@ namespace System
 		#region ToInt32
 
 		/// <summary>
-		/// 将字符串转换为Int值
+		/// 将字符串转换为Int值，如果转换失败，则返回0
 		/// </summary>
 		/// <param name="value">字符串</param>
 		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
@@ -433,7 +436,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// 将字符串转换为Int值
+		/// 将字符串转换为Int值，如果转换失败，则返回null
 		/// </summary>
 		/// <param name="value">字符串</param>
 		/// <returns>转换后的 <see cref="System.Int32"/></returns>
@@ -501,7 +504,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// 转换字符串为浮点数.如果转换失败,则返回指定的默认值
+		/// 转换字符串为浮点数.如果转换失败,则返回null
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.Single"/></returns>
@@ -520,7 +523,11 @@ namespace System
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <param name="defaultValue">如果转换失败,则返回的默认值</param>
-		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
+		/// <param name="formatProvider">格式</param>
+		/// <param name="styles"></param>
+		/// <returns>
+		/// 转换后的 <see cref="System.DateTime"/>
+		/// </returns>
 		public static DateTime ToDateTime(this string value, DateTime defaultValue, IFormatProvider formatProvider = null, DateTimeStyles styles = DateTimeStyles.None)
 		{
 			DateTime temp;
@@ -588,7 +595,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
+		/// 转换字符串为日期时间.如果转换失败,则返回null
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
@@ -600,7 +607,7 @@ namespace System
 
 
 		/// <summary>
-		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
+		/// 转换字符串为日期时间.如果转换失败,则返回null
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
@@ -611,7 +618,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// 转换字符串为日期时间.如果转换失败,则返回指定的默认值
+		/// 转换字符串为日期时间.如果转换失败,则返回null
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
 		/// <returns>转换后的 <see cref="System.DateTime"/></returns>
@@ -925,7 +932,9 @@ namespace System
 		/// 将坐标点转换为字符串格式
 		/// </summary>
 		/// <param name="point">坐标点位置</param>
-		/// <returns>字符串格式</returns>
+		/// <returns>
+		/// 字符串格式
+		/// </returns>
 		public static string ToStringFormat(this System.Drawing.Point point)
 		{
 			return point.X + "," + point.Y;

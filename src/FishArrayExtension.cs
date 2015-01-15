@@ -20,7 +20,9 @@ namespace System
 		/// <typeparam name="T">数组类型</typeparam>
 		/// <param name="array">原数组</param>
 		/// <param name="filterExpression">过滤比较</param>
-		/// <returns>过滤后的数组</returns>
+		/// <returns>
+		/// 过滤后的数组
+		/// </returns>
 		/// <exception cref="System.ArgumentNullException">array</exception>
 		public static T[] Filter<T>(this T[] array, Func<int, T, bool> filterExpression)
 		{
