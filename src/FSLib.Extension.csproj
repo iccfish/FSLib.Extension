@@ -16,20 +16,20 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\net4\debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET4</DefineConstants>
+    <OutputPath>bin\net40\debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET40;NET_GT_4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\net4\debug\FSLib.Extension.XML</DocumentationFile>
+    <DocumentationFile>bin\net40\debug\FSLib.Extension.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\net4\release\</OutputPath>
-    <DefineConstants>TRACE;NET4</DefineConstants>
+    <OutputPath>bin\net40\release\</OutputPath>
+    <DefineConstants>TRACE;NET40;NET_GT_4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\net4\release\FSLib.Extension.XML</DocumentationFile>
+    <DocumentationFile>bin\net40\release\FSLib.Extension.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -65,6 +65,7 @@
     <Compile Include="FU.cs" />
     <Compile Include="Globalization\ChineseLunisolarCalendarExtension.cs" />
     <Compile Include="IO\PathUtility.cs" />
+    <Compile Include="IO\StreamWithEventsWrapper.cs" />
     <Compile Include="Net\FSLib_Network_WebExtension.cs" />
     <Compile Include="PlatformCompatible.cs" />
     <Compile Include="FishObjectExtension.cs" />

@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D702E664-0484-485E-8AE0-453DA0A4CE50}</ProjectGuid>
+    <ProjectGuid>{25ACFE5E-A634-465B-9B1B-053BEBFF84F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>System</RootNamespace>
     <AssemblyName>FSLib.Extension</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -17,20 +17,22 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\net35\debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET35</DefineConstants>
+    <OutputPath>bin\net45\debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET_GT_4;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\net35\debug\FSLib.Extension.XML</DocumentationFile>
+    <DocumentationFile>bin\net45\debug\FSLib.Extension.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\net35\release\</OutputPath>
-    <DefineConstants>TRACE;NET35</DefineConstants>
+    <OutputPath>bin\net45\release\</OutputPath>
+    <DefineConstants>TRACE;NET_GT_4;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\net35\release\FSLib.Extension.XML</DocumentationFile>
+    <DocumentationFile>bin\net45\release\FSLib.Extension.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,6 +43,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -51,29 +54,23 @@
     <Compile Include="Data\FSLibCommonExtension.cs" />
     <Compile Include="Data\OleDb\FSLibOleDbExtension.cs" />
     <Compile Include="Data\SqlClient\FSLib_SqlServerExtension.cs" />
+    <Compile Include="FishLib\Deferred.cs" />
     <Compile Include="Diagnostics\FishProcessExtension.cs" />
     <Compile Include="FishArrayExtension.cs" />
     <Compile Include="FishCollectionExtension.cs" />
     <Compile Include="FishDateTimeExtension.cs" />
     <Compile Include="FishExpressionExtension.cs" />
     <Compile Include="FishExtension\Annotations.cs" />
-    <Compile Include="FishLib\Deferred.cs" />
     <Compile Include="FishLib\DeferredEventArgs.cs" />
     <Compile Include="FishLib\DeferredProgressEventArgs.cs" />
     <Compile Include="FishLib\DeferredSource.cs" />
     <Compile Include="FSLib_BinarySerializeExtension.cs" />
-    <Compile Include="FSLib_XmlSerializeExtension.cs" />
     <Compile Include="FU.cs" />
     <Compile Include="Globalization\ChineseLunisolarCalendarExtension.cs" />
     <Compile Include="IO\PathUtility.cs" />
     <Compile Include="IO\StreamWithEventsWrapper.cs" />
     <Compile Include="Net\FSLib_Network_WebExtension.cs" />
     <Compile Include="PlatformCompatible.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="FishObjectExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FishExtension\Resources\SR.Designer.cs">
@@ -81,39 +78,40 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Reflection\FishReflectionExtensions.cs" />
     <Compile Include="SmartAssembly\SmartAssembly.Attributes.cs" />
     <Compile Include="FishStringExtension.cs" />
     <Compile Include="Threading\SynchorizonExtension.cs" />
     <Compile Include="FishValueExtension.cs" />
+    <Compile Include="FSLib_XmlSerializeExtension.cs" />
     <Compile Include="Windows\Forms\ControlBatchOperationWrap.cs" />
     <Compile Include="Windows\Forms\ControlExtensionMethods.cs" />
     <Compile Include="Windows\Forms\ListViewExtensionMethods.cs" />
     <Compile Include="Xml\FishXmlExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FishExtension\Resources\SR.en.resx">
-      <DependentUpon>SR.resx</DependentUpon>
-    </EmbeddedResource>
+    <EmbeddedResource Include="FishExtension\Resources\SR.en.resx" />
     <EmbeddedResource Include="FishExtension\Resources\SR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\block_16.png" />
+    <Content Include="Resources\cou_16_block.png" />
+    <Content Include="Resources\tick_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="content\App.config.install.xdt" />
+    <None Include="content\App.config.uninstall.xdt" />
+    <None Include="content\Web.config.install.xdt" />
+    <None Include="content\Web.config.uninstall.xdt" />
     <None Include="FSLib.Extension.nuspec" />
     <None Include="ifish.snk" />
-    <None Include="Resources\cou_16_block.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\tick_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\block_16.png" />
   </ItemGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
