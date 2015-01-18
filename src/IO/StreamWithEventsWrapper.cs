@@ -7,7 +7,9 @@ namespace System.IO
 {
 	using System.Runtime.InteropServices.ComTypes;
 	using System.Threading;
-	using System.Threading.Tasks;
+#if NET_GT_4
+	using Threading.Tasks;
+#endif
 
 	/// <summary>
 	/// 包装现有Stream以提供进度变化通知的类
