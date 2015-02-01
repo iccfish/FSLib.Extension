@@ -20,7 +20,7 @@ namespace System.ComponentModel
 		/// <param name="obj"></param>
 		/// <param name="expression"></param>
 		/// <returns></returns>
-		public static bool IsPropertyOf<TSource, TProp>(this TSource obj, PropertyChangedEventArgs e, Expression<Func<TSource, TProp>> expression)
+		public static bool IsPropertyOf<TSource, TProp>(this PropertyChangedEventArgs e, TSource obj, Expression<Func<TSource, TProp>> expression)
 			where TSource : INotifyPropertyChanged
 		{
 			return obj != null && expression != null && e.PropertyName == expression.GetExpressionAccessedMemberName();
@@ -34,7 +34,7 @@ namespace System.ComponentModel
 		/// <param name="obj"></param>
 		/// <param name="expression"></param>
 		/// <returns></returns>
-		public static bool IsPropertyOf<TSource, TProp>(this TSource obj, PropertyChangingEventArgs e, Expression<Func<TSource, TProp>> expression)
+		public static bool IsPropertyOf<TSource, TProp>(this PropertyChangingEventArgs e, TSource obj, Expression<Func<TSource, TProp>> expression)
 			where TSource : INotifyPropertyChanging
 		{
 			return obj != null && expression != null && e.PropertyName == expression.GetExpressionAccessedMemberName();
