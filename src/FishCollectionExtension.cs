@@ -359,6 +359,19 @@ namespace System
 		#region Enumerable
 
 		/// <summary>
+		/// 将指定的序列转换为目标序列
+		/// </summary>
+		/// <typeparam name="TIn"></typeparam>
+		/// <typeparam name="TOut"></typeparam>
+		/// <param name="src"></param>
+		/// <param name="targetObj"></param>
+		/// <returns></returns>
+		public static IEnumerable<TOut> CastToAnonymousType<TIn, TOut>(this IEnumerable<TIn> src, TOut targetObj)
+		{
+			return src.Cast<TOut>();
+		}
+
+		/// <summary>
 		/// 对队列进行过滤, 去除为空的项目
 		/// </summary>
 		/// <typeparam name="T">队列类型</typeparam>
