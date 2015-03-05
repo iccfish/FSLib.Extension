@@ -628,7 +628,7 @@ namespace System
 			return DateTime.TryParseExact(value, formats, formatProvider, styles, out temp) ? (DateTime?)temp : null;
 		}
 
-#if NET4
+#if NET40
 
 		/// <summary>
 		/// 将字符串分析为可空Timespan
