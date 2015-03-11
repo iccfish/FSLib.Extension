@@ -406,6 +406,26 @@ namespace System
 			return new HashSet<T>(source, comparer);
 		}
 
+
+		/// <summary>
+		/// 生成两个序列的交叉
+		/// </summary>
+		/// <typeparam name="T1">序列1类型</typeparam>
+		/// <typeparam name="T2">序列2类型</typeparam>
+		/// <param name="t1">序列1</param>
+		/// <param name="t2">序列2</param>
+		/// <returns></returns>
+		public static IEnumerable<KeyValuePair<T1, T2>> CrossJoin<T1, T2>(this IEnumerable<T1> t1, IEnumerable<T2> t2)
+		{
+			foreach (var t in t1)
+			{
+				foreach (var tt in t2)
+				{
+					yield return new KeyValuePair<T1, T2>(t, tt);
+				}
+			}
+		}
+
 		/// <summary>
 		/// 将指定的可遍历序列转换为一个队列
 		/// </summary>
