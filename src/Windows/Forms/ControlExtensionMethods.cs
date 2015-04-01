@@ -227,7 +227,7 @@ namespace System.Windows.Forms
 		/// <param name="enableFile">是否允许文件</param>
 		/// <param name="fileExtensions">允许的文件类型</param>
 		/// <returns>如果至少一个符合要求，则返回true，否则返回false</returns>
-		public static bool HasAvailableFileItem(this DataObject data, bool enableFolder, bool enableFile, params string[] fileExtensions)
+		public static bool HasAvailableFileItem(this DataObject data, bool enableFolder, bool enableFile, HashSet<string> fileExtensions = null)
 		{
 			if (!data.ContainsFileDropList()) return false;
 
@@ -235,7 +235,7 @@ namespace System.Windows.Forms
 				s =>
 					(enableFolder && System.IO.Directory.Exists(s))
 					||
-					(enableFile && System.IO.File.Exists(s) && (fileExtensions.IsEmpty() || fileExtensions.Contains(System.IO.Path.GetExtension(s).Trim('.'))))
+					(enableFile && System.IO.File.Exists(s) && (fileExtensions == null || fileExtensions.Count == 0 || fileExtensions.Contains("*") || fileExtensions.Contains(System.IO.Path.GetExtension(s).Trim('.'))))
 					);
 		}
 
@@ -248,7 +248,7 @@ namespace System.Windows.Forms
 		/// <param name="enableFile">是否允许文件</param>
 		/// <param name="fileExtensions">允许的文件类型</param>
 		/// <returns>返回符合要求的文件列表</returns>
-		public static IEnumerable<string> GetAvailableFileItem(this DataObject data, bool enableFolder, bool enableFile, params string[] fileExtensions)
+		public static IEnumerable<string> GetAvailableFileItem(this DataObject data, bool enableFolder, bool enableFile, HashSet<string> fileExtensions = null)
 		{
 			if (!data.ContainsFileDropList()) return null;
 
@@ -256,7 +256,7 @@ namespace System.Windows.Forms
 				s =>
 					(enableFolder && System.IO.Directory.Exists(s))
 					||
-					(enableFile && System.IO.File.Exists(s) && (fileExtensions.IsEmpty() || fileExtensions.Contains(System.IO.Path.GetExtension(s).Trim('.'))))
+					(enableFile && System.IO.File.Exists(s) && (fileExtensions == null || fileExtensions.Count == 0 || fileExtensions.Contains("*") || fileExtensions.Contains(System.IO.Path.GetExtension(s).Trim('.'))))
 					);
 		}
 
@@ -467,10 +467,10 @@ namespace System.Windows.Forms
 						if (tlink == null)
 						{
 							tlink = new LinkLabel.Link()
-								{
-									Start = sb.Length,
-									Name = m.Groups[2].Value ?? ""
-								};
+							{
+								Start = sb.Length,
+								Name = m.Groups[2].Value ?? ""
+							};
 						}
 					}
 					lastIndex = m.Index + m.Length;
