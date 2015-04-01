@@ -57,6 +57,7 @@
     <Compile Include="FishDateTimeExtension.cs" />
     <Compile Include="FishExpressionExtension.cs" />
     <Compile Include="FishExtension\Annotations.cs" />
+    <Compile Include="FishLib\CollectionUtility.cs" />
     <Compile Include="FishLib\Deferred.cs" />
     <Compile Include="FishLib\DeferredEventArgs.cs" />
     <Compile Include="FishLib\DeferredProgressEventArgs.cs" />
