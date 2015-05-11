@@ -1,0 +1,38 @@
+﻿namespace System.FishLib.Attributes
+{
+	using System;
+	using System.Linq;
+
+	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+	[AttributeUsage(AttributeTargets.All)]
+	public class SRDescriptionAttribute : System.ComponentModel.DescriptionAttribute
+	{
+
+
+		bool replaced = false;
+
+		public SRDescriptionAttribute(Type resourceType, string description)
+				: base(description)
+		{
+			_resourceType = resourceType;
+		}
+
+		Type _resourceType;
+
+
+		/// <inheritdoc />
+		public override string Description
+		{
+			get
+			{
+				if (!replaced)
+				{
+					replaced = true;
+					var val = LocalizeContext.GetResourceFromResourceManager(_resourceType, base.DescriptionValue);
+					if (!string.IsNullOrEmpty(val)) base.DescriptionValue = val;
+				}
+				return base.Description;
+			}
+		}
+	}
+}

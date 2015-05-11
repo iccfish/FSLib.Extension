@@ -51,6 +51,9 @@
     <Compile Include="Data\FSLibCommonExtension.cs" />
     <Compile Include="Data\OleDb\FSLibOleDbExtension.cs" />
     <Compile Include="Data\SqlClient\FSLib_SqlServerExtension.cs" />
+    <Compile Include="FishLib\Attributes\SRDefaultValueAttribute.cs" />
+    <Compile Include="FishLib\Attributes\SRDescriptionAttribute.cs" />
+    <Compile Include="FishLib\Attributes\SRDisplayNameAttribute.cs" />
     <Compile Include="FishLib\CollectionUtility.cs" />
     <Compile Include="FishLib\Deferred.cs" />
     <Compile Include="Diagnostics\FishProcessExtension.cs" />
@@ -62,6 +65,7 @@
     <Compile Include="FishLib\DeferredEventArgs.cs" />
     <Compile Include="FishLib\DeferredProgressEventArgs.cs" />
     <Compile Include="FishLib\DeferredSource.cs" />
+    <Compile Include="FishLib\LocalizeContext.cs" />
     <Compile Include="FSLib_BinarySerializeExtension.cs" />
     <Compile Include="FU.cs" />
     <Compile Include="Globalization\ChineseLunisolarCalendarExtension.cs" />
