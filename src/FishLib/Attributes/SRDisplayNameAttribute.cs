@@ -3,6 +3,9 @@
 	using System;
 	using System.Linq;
 
+	/// <summary>
+	/// 支持使用资源文件进行本地化的显示名称属性
+	/// </summary>
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	[AttributeUsage(AttributeTargets.All)]
 	public class SRDisplayNameAttribute : System.ComponentModel.DisplayNameAttribute
