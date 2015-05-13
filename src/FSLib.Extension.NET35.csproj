@@ -57,11 +57,15 @@
     <Compile Include="FishDateTimeExtension.cs" />
     <Compile Include="FishExpressionExtension.cs" />
     <Compile Include="FishExtension\Annotations.cs" />
+    <Compile Include="FishLib\Attributes\SRDefaultValueAttribute.cs" />
+    <Compile Include="FishLib\Attributes\SRDescriptionAttribute.cs" />
+    <Compile Include="FishLib\Attributes\SRDisplayNameAttribute.cs" />
     <Compile Include="FishLib\CollectionUtility.cs" />
     <Compile Include="FishLib\Deferred.cs" />
     <Compile Include="FishLib\DeferredEventArgs.cs" />
     <Compile Include="FishLib\DeferredProgressEventArgs.cs" />
     <Compile Include="FishLib\DeferredSource.cs" />
+    <Compile Include="FishLib\LocalizeContext.cs" />
     <Compile Include="FSLib_BinarySerializeExtension.cs" />
     <Compile Include="FSLib_XmlSerializeExtension.cs" />
     <Compile Include="FU.cs" />
