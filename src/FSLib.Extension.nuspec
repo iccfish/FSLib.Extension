@@ -5,7 +5,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">  
 	<metadata>
 		<id>extension.fishlee.net</id>
-		<version>1.2.0.0</version>
+		<version>1.2.1.0</version>
 		<authors>iFish(木鱼)</authors>
 		<title>iFish's Extension Methods Library</title>
 		<summary>A extension methods library for .net 3.5/4/4.5</summary>
