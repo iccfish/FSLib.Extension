@@ -764,6 +764,43 @@ namespace System.Windows.Forms
 
 		#endregion
 
+		#region TreeNode
+
+		/// <summary>
+		/// 判断指定的 <paramref name="currentNode"/> 是否是节点 <paramref name="targetTreeNode"/> 的后代
+		/// </summary>
+		/// <param name="currentNode"></param>
+		/// <param name="targetTreeNode"></param>
+		/// <returns></returns>
+		public static bool IsDescendantOf(this TreeNode currentNode, TreeNode targetTreeNode)
+		{
+			while ((currentNode = currentNode.Parent) != null)
+			{
+				if (currentNode == targetTreeNode)
+					return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// 判断指定的 <paramref name="currentNode"/> 是否是节点 <paramref name="targetTreeNode"/> 的先辈
+		/// </summary>
+		/// <param name="currentNode"></param>
+		/// <param name="targetTreeNode"></param>
+		/// <returns></returns>
+		public static bool IsAncestorOf(this TreeNode currentNode, TreeNode targetTreeNode)
+		{
+			while ((targetTreeNode = targetTreeNode.Parent) != null)
+			{
+				if (currentNode == targetTreeNode)
+					return true;
+			}
+
+			return false;
+		}
+
+		#endregion
 
 	}
 }
