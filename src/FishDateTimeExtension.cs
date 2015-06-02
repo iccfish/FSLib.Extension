@@ -75,13 +75,23 @@ namespace System
 		public static readonly DateTime JsTicksStartBase = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).ToLocalTime();
 
 		/// <summary>
-		/// 获得Javascript中时间刻度
+		/// 获得 <paramref name="dt"/> 对应的Javascript时间刻度
 		/// </summary>
 		/// <param name="dt">要表示的时间</param>
 		/// <returns>类型为 <see cref="T:System.Int64"/> 格式的数值</returns>
 		public static uint ToJsTicks(this DateTime dt)
 		{
 			return (uint)Math.Floor((dt - JsTicksStartBase).Ticks / 10000.0);
+		}
+
+		/// <summary>
+		/// 获得 <paramref name="dt"/> 对应的Unix时间戳
+		/// </summary>
+		/// <param name="dt">要计算时间戳的时间</param>
+		/// <returns>对应的时间刻度</returns>
+		public static uint ToUnixTicks(this DateTime dt)
+		{
+			return dt.ToJsTicks() / 1000;
 		}
 
 		/// <summary>
