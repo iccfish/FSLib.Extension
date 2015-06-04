@@ -51,6 +51,7 @@
     <Compile Include="Data\FSLibCommonExtension.cs" />
     <Compile Include="Data\OleDb\FSLibOleDbExtension.cs" />
     <Compile Include="Data\SqlClient\FSLib_SqlServerExtension.cs" />
+    <Compile Include="FishLib\ApplicationRunTimeContext.cs" />
     <Compile Include="FishLib\Attributes\SRDefaultValueAttribute.cs" />
     <Compile Include="FishLib\Attributes\SRDescriptionAttribute.cs" />
     <Compile Include="FishLib\Attributes\SRDisplayNameAttribute.cs" />
@@ -84,6 +85,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Reflection\FishReflectionExtensions.cs" />
+    <Compile Include="RunTime\CompilerServices\CallerMemberNameAttribute.cs" />
     <Compile Include="SmartAssembly\SmartAssembly.Attributes.cs" />
     <Compile Include="FishStringExtension.cs" />
     <Compile Include="Threading\SynchorizonExtension.cs" />
@@ -115,6 +117,7 @@
     <None Include="FSLib.Extension.nuspec" />
     <None Include="ifish.snk" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ifish.snk</AssemblyOriginatorKeyFile>

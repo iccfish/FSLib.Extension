@@ -250,6 +250,9 @@ namespace System
 		/// <returns></returns>
 		public static T[] GetCustomerAttributes<T>(this ICustomAttributeProvider type, bool inherit) where T : Attribute
 		{
+			if (type == null)
+				return null;
+
 			return type.GetCustomAttributes(typeof(T), inherit).Cast<T>().ToArray();
 		}
 		/// <summary>
@@ -257,10 +260,12 @@ namespace System
 		/// </summary>
 		/// <typeparam name="T">类型</typeparam>
 		/// <param name="type">自定义属性类型</param>
-		/// <param name="inherit">是否继承</param>
 		/// <returns></returns>
 		public static T[] GetCustomerAttributes<T>(this ICustomAttributeProvider type) where T : Attribute
 		{
+			if (type == null)
+				return null;
+
 			return type.GetCustomAttributes(typeof(T), false).Cast<T>().ToArray();
 		}
 
@@ -271,6 +276,9 @@ namespace System
 		/// <returns>如果是调试版本，返回 true；否则返回false。</returns>
 		public static bool IsDebugAssembly(this Assembly assembly)
 		{
+			if (assembly == null)
+				return false;
+
 			var debugAttributes = assembly.GetCustomerAttributes<System.Diagnostics.DebuggableAttribute>();
 			return !debugAttributes.IsEmpty() && debugAttributes[0].IsJITTrackingEnabled;
 		}
