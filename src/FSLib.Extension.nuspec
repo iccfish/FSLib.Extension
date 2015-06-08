@@ -40,15 +40,12 @@
 		
 	<files>
 		<file src="bin\net45\release\*.dll" target="lib\net45" />
-		<file src="bin\net45\release\*.pdb" target="lib\net45" />
 		<file src="bin\net45\release\*.xml" target="lib\net45" />
 
 		<file src="bin\net40\release\*.dll" target="lib\net40" />
-		<file src="bin\net40\release\*.pdb" target="lib\net40" />
 		<file src="bin\net40\release\*.xml" target="lib\net40" />
 			
 		<file src="bin\net35\release\*.dll" target="lib\net35" />
-		<file src="bin\net35\release\*.pdb" target="lib\net35" />
 		<file src="bin\net35\release\*.xml" target="lib\net35" />
 
 		<file src="content\*" target="content\" />
