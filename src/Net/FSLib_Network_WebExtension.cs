@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FSLib.Network;
 
 namespace System.Net
 {
@@ -59,51 +58,5 @@ namespace System.Net
 
 
 		#endregion
-	}
-}
-
-
-namespace FSLib.Network
-{
-	using System.Net;
-
-	public class NetworkConstration
-	{
-		/// <summary>
-		/// WebReqest请求标头列表
-		/// </summary>
-		public static string[] WebRequestHeaderIDList { get; private set; }
-
-		/// <summary>
-		/// WebRequest请求标头映射
-		/// </summary>
-		public static Dictionary<string, HttpRequestHeader> WebRequestHeaderIDMap { get; private set; }
-
-		static NetworkConstration()
-		{
-			WebRequestHeaderIDList = new string[] { 
-				"Cache-Control", "Connection", "Date", "Keep-Alive", "Pragma", "Trailer", "Transfer-Encoding", "Upgrade", "Via", "Warning", "Allow", "Content-Length", "Content-Type", "Content-Encoding", "Content-Language", "Content-Location", 
-				"Content-MD5", "Content-Range", "Expires", "Last-Modified", "Accept", "Accept-Charset", "Accept-Encoding", "Accept-Language", "Authorization", "Cookie", "Expect", "From", "Host", "If-Match", "If-Modified-Since", "If-None-Match", 
-				"If-Range", "If-Unmodified-Since", "Max-Forwards", "Proxy-Authorization", "Referer", "Range", "Te", "Translate", "User-Agent"
-			 };
-			WebRequestHeaderIDMap = new Dictionary<string, HttpRequestHeader>();
-			for (int i = 0; i < WebRequestHeaderIDList.Length; i++)
-			{
-				WebRequestHeaderIDMap.Add(WebRequestHeaderIDList[i], (HttpRequestHeader)i);
-			}
-		}
-
-		/// <summary>
-		/// 将字符串转换为对应的标头
-		/// </summary>
-		/// <param name="header">HTTP请求标头</param>
-		/// <returns>对应的标头枚举</returns>
-		public static HttpRequestHeader ToWebRequestHeader(string header)
-		{
-			HttpRequestHeader headerID;
-			if (!WebRequestHeaderIDMap.TryGetValue(header, out headerID)) throw new ArgumentOutOfRangeException();
-			else return headerID;
-		}
-
 	}
 }
