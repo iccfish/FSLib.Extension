@@ -442,7 +442,7 @@ namespace System
 		/// </summary>
 		/// <typeparam name="T">序列类型</typeparam>
 		/// <param name="source">源序列</param>
-		/// <returns><see cref="System.Collections.Generic.Stack`1"/></returns>
+		/// <returns><see cref="System.Collections.Generic.Stack{T}"/></returns>
 		public static Stack<T> ToStack<T>(this IEnumerable<T> source)
 		{
 			return new Stack<T>(source);
