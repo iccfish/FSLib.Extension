@@ -400,7 +400,7 @@ namespace System
 		/// <typeparam name="T">可枚举类型</typeparam>
 		/// <param name="source">源</param>
 		/// <param name="comparer">要使用的比较器</param>
-		/// <returns><see cref="T:System.Collections.Generic.HashSet`1"/></returns>
+		/// <returns><see cref="T:System.Collections.Generic.HashSet{T}"/></returns>
 		public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer)
 		{
 			return new HashSet<T>(source, comparer);
@@ -431,7 +431,7 @@ namespace System
 		/// </summary>
 		/// <typeparam name="T">序列类型</typeparam>
 		/// <param name="source">源序列</param>
-		/// <returns><see cref="T:System.Collections.Generic.Queue`1"/></returns>
+		/// <returns><see cref="T:System.Collections.Generic.Queue{T}"/></returns>
 		public static Queue<T> ToQueue<T>(this IEnumerable<T> source)
 		{
 			return new Queue<T>(source);
@@ -442,7 +442,7 @@ namespace System
 		/// </summary>
 		/// <typeparam name="T">序列类型</typeparam>
 		/// <param name="source">源序列</param>
-		/// <returns><see cref="System.Collections.Generic.Stack`1"/></returns>
+		/// <returns><see cref="System.Collections.Generic.Stack{T}"/></returns>
 		public static Stack<T> ToStack<T>(this IEnumerable<T> source)
 		{
 			return new Stack<T>(source);
