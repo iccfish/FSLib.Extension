@@ -57,6 +57,8 @@
     <Compile Include="FishDateTimeExtension.cs" />
     <Compile Include="FishExpressionExtension.cs" />
     <Compile Include="FishExtension\Annotations.cs" />
+    <Compile Include="FishLib\ApplicationRunTimeContext.cs" />
+    <Compile Include="FishLib\Attributes\SRCategoryAttribute.cs" />
     <Compile Include="FishLib\Attributes\SRDefaultValueAttribute.cs" />
     <Compile Include="FishLib\Attributes\SRDescriptionAttribute.cs" />
     <Compile Include="FishLib\Attributes\SRDisplayNameAttribute.cs" />
