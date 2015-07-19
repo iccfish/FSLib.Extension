@@ -925,7 +925,6 @@ namespace System
 
 
 		#endregion
-	}
         /// <summary>
         /// True if object is value type.
         /// </summary>
@@ -951,5 +950,6 @@ namespace System
                     return false;
             }
         }
+	}
 
 }
