@@ -5,6 +5,8 @@ using System.Text;
 
 namespace System.FishLib
 {
+	using Security.Cryptography;
+
 	/// <summary>
 	/// 集合辅助类
 	/// </summary>
@@ -56,6 +58,20 @@ namespace System.FishLib
 		public static Dictionary<TKey, TValue> CreateAnymousDictionary<TKey, TValue>(TKey key, TValue value)
 		{
 			return new Dictionary<TKey, TValue>();
+		}
+
+		/// <summary>
+		/// 获得指定长度的随机数组
+		/// </summary>
+		/// <param name="length">随机字节的长度</param>
+		/// <returns></returns>
+		public static byte[] GetRandomBytesBuffer(int length)
+		{
+			var buffer = new byte[length];
+			var generator = new RNGCryptoServiceProvider();
+			generator.GetBytes(buffer);
+
+			return buffer;
 		}
 	}
 }

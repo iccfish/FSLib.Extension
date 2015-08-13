@@ -13,6 +13,28 @@ namespace System.FishLib
 	/// </summary>
 	public class ApplicationRunTimeContext
 	{
+		static ApplicationRunTimeContext()
+		{
+			Type t = Type.GetType("Mono.Runtime");
+			IsMono = t != null;
+
+			IsLinux = Path.DirectorySeparatorChar == '/';
+		}
+
+		/// <summary>
+		/// 获得当前的运行环境是否是Mono
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if this instance is mono; otherwise, <c>false</c>.
+		/// </value>
+		public static bool IsMono { get; private set; }
+
+		/// <summary>
+		/// 获得当前运行的平台是否是Linux
+		/// </summary>
+		public static bool IsLinux { get; private set; }
+
+
 		/// <summary>
 		/// 获得当前进程的主模块
 		/// </summary>

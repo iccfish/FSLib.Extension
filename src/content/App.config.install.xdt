@@ -3,32 +3,32 @@
 
   <!-- If runtime tag is absent -->
   <runtime xdt:Transform="InsertIfMissing">
-    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
-    </assemblyBinding>
+	<assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+	</assemblyBinding>
   </runtime>
 
   <!-- If runtime tag is present, but assembly binding tag is absent -->
   <runtime>
-    <assemblyBinding xdt:Transform="InsertIfMissing" xmlns="urn:schemas-microsoft-com:asm.v1">
-    </assemblyBinding>
+	<assemblyBinding xdt:Transform="InsertIfMissing" xmlns="urn:schemas-microsoft-com:asm.v1">
+	</assemblyBinding>
   </runtime>
 
   <!-- If the binding redirect is already present, the existing entry needs to be removed before inserting the new entry-->
   <runtime>
-    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
-      <dependentAssembly xdt:Transform="Remove"
-          xdt:Locator="Condition(./_defaultNamespace:assemblyIdentity/@name='FSLib.Extension')" >
-      </dependentAssembly>
-    </assemblyBinding>
+	<assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+	  <dependentAssembly xdt:Transform="Remove"
+		  xdt:Locator="Condition(./_defaultNamespace:assemblyIdentity/@name='FSLib.Extension')" >
+	  </dependentAssembly>
+	</assemblyBinding>
   </runtime>
 
   <!-- Inserting the new binding redirect -->
   <runtime>
-    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
-      <dependentAssembly xdt:Transform="Insert">
-        <assemblyIdentity name="FSLib.Extension" publicKeyToken="61d6a007a0eb6994"  />
-        <bindingRedirect oldVersion="1.0.0.0-1.2.2.0" newVersion="1.2.2.0" />
-      </dependentAssembly>
-    </assemblyBinding>
+	<assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+	  <dependentAssembly xdt:Transform="Insert">
+		<assemblyIdentity name="FSLib.Extension" publicKeyToken="61d6a007a0eb6994"  />
+		<bindingRedirect oldVersion="1.0.0.0-1.3.0.0" newVersion="1.3.0.0" />
+	  </dependentAssembly>
+	</assemblyBinding>
   </runtime>
 </configuration>

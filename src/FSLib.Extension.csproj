@@ -11,7 +11,7 @@
     <AssemblyName>FSLib.Extension</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-	<BaseIntermediateOutputPath>obj\net40</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\net40</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,6 +58,7 @@
     <Compile Include="FishLib\Attributes\SRDescriptionAttribute.cs" />
     <Compile Include="FishLib\Attributes\SRDisplayNameAttribute.cs" />
     <Compile Include="FishLib\CollectionUtility.cs" />
+    <Compile Include="FishLib\ConsoleHelper.cs" />
     <Compile Include="FishLib\Deferred.cs" />
     <Compile Include="Diagnostics\FishProcessExtension.cs" />
     <Compile Include="FishArrayExtension.cs" />
@@ -68,7 +69,18 @@
     <Compile Include="FishLib\DeferredEventArgs.cs" />
     <Compile Include="FishLib\DeferredProgressEventArgs.cs" />
     <Compile Include="FishLib\DeferredSource.cs" />
+    <Compile Include="FishLib\Description.cs" />
+    <Compile Include="FishLib\Description`1.cs" />
+    <Compile Include="FishLib\Diagnostics\CodeTimer.cs" />
+    <Compile Include="FishLib\GeneralEventArgs.cs" />
+    <Compile Include="FishLib\IOUtility.cs" />
     <Compile Include="FishLib\LocalizeContext.cs" />
+    <Compile Include="FishLib\MemberDescriptorBase.cs" />
+    <Compile Include="FishLib\Reflection.cs" />
+    <Compile Include="FishLib\StringNaturalComparerWin32.cs" />
+    <Compile Include="FishLib\StringNaturalComparer.cs" />
+    <Compile Include="FishLib\EnumUtility.cs" />
+    <Compile Include="FsLibEnumExtension.cs" />
     <Compile Include="FSLib_BinarySerializeExtension.cs" />
     <Compile Include="FU.cs" />
     <Compile Include="Globalization\ChineseLunisolarCalendarExtension.cs" />
