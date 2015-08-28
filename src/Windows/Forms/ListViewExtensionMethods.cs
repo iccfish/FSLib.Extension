@@ -78,7 +78,7 @@ namespace System.Windows.Forms
 		/// <param name="view"></param>
 		public static void CheckInverse(this ListView view)
 		{
-			view.Items.Cast<ListViewItem>().ForEach(s => s.Checked = !s.Selected);
+			view.Items.Cast<ListViewItem>().ForEach(s => s.Checked = !s.Checked);
 		}
 
 	}
