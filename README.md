@@ -1,4 +1,4 @@
-﻿FSLibExtension.NET
+FSLibExtension.NET
 =====================
 
 
@@ -31,6 +31,9 @@ FSLib.Extension库是一个用于.NET的扩展函数库，所提供的函数和�
 ###3.使用源码自行编译###
 
 在[GitHub的源码主页](https://github.com/iccfish/FSLib.Extension)上，直接下载或克隆后，在Visual Studio中编译再引用，或直接作为项目引用即可。
+
+> 现在的源码已部分应用C#6语法特性，因此需要VisualStudio2015才能安全顺利地编译。
+> 由于本库是一个历史沿用时间很久的库，因此比较杂乱，欢迎Fork并修正后Pull Request。
 
 ###4.源码&文档###
 
