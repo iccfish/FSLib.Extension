@@ -581,7 +581,6 @@ namespace System
 		/// </summary>
 		/// <param name="stream">要读取的流</param>
 		/// <returns>读取的 <see cref="T:System.Int16"/></returns>
-		/// <exception cref="Exception">流读取失败</exception>
 		public static ushort ReadUInt16(this System.IO.Stream stream)
 		{
 			return BitConverter.ToUInt16(stream.ReadBuffer(2), 0);
@@ -592,7 +591,6 @@ namespace System
 		/// </summary>
 		/// <param name="stream">要读取的流</param>
 		/// <returns>读取的 <see cref="T:System.Int32"/></returns>
-		/// <exception cref="Exception">流读取失败</exception>
 		public static uint ReadUInt32(this Stream stream)
 		{
 			return BitConverter.ToUInt32(stream.ReadBuffer(4), 0);
@@ -603,7 +601,6 @@ namespace System
 		/// </summary>
 		/// <param name="stream">要读取的流</param>
 		/// <returns>读取的 <see cref="T:System.Int64"/></returns>
-		/// <exception cref="Exception">流读取失败</exception>
 		public static ulong ReadUInt64(this Stream stream)
 		{
 			return BitConverter.ToUInt64(stream.ReadBuffer(8), 0);
@@ -614,7 +611,6 @@ namespace System
 		/// </summary>
 		/// <param name="stream">要读取的流</param>
 		/// <returns>读取的 <see cref="T:System.Int16"/></returns>
-		/// <exception cref="Exception">流读取失败</exception>
 		public static short ReadInt16(this System.IO.Stream stream)
 		{
 			return BitConverter.ToInt16(stream.ReadBuffer(2), 0);
@@ -625,7 +621,6 @@ namespace System
 		/// </summary>
 		/// <param name="stream">要读取的流</param>
 		/// <returns>读取的 <see cref="T:System.Int32"/></returns>
-		/// <exception cref="Exception">流读取失败</exception>
 		public static int ReadInt32(this Stream stream)
 		{
 			return BitConverter.ToInt32(stream.ReadBuffer(4), 0);
@@ -636,7 +631,6 @@ namespace System
 		/// </summary>
 		/// <param name="stream">要读取的流</param>
 		/// <returns>读取的 <see cref="T:System.Int64"/></returns>
-		/// <exception cref="Exception">流读取失败</exception>
 		public static long ReadInt64(this Stream stream)
 		{
 			return BitConverter.ToInt64(stream.ReadBuffer(8), 0);
@@ -647,7 +641,6 @@ namespace System
 		/// </summary>
 		/// <param name="stream">要读取的流</param>
 		/// <returns>读取的 <see cref="T:System.Int64"/></returns>
-		/// <exception cref="Exception">流读取失败</exception>
 		public static double ReadDouble(this Stream stream)
 		{
 			return BitConverter.ToDouble(stream.ReadBuffer(sizeof(double)), 0);
@@ -672,6 +665,7 @@ namespace System
 		/// </summary>
 		/// <param name="stream">要读取的流</param>
 		/// <param name="length">读取的字节长度</param>
+		/// <param name="readedBytesCount">返回已经读取到的长度</param>
 		/// <returns>缓冲数组</returns>
 		public static byte[] ReadBuffer(this Stream stream, int length, out int readedBytesCount)
 		{
@@ -687,6 +681,7 @@ namespace System
 		/// <param name="stream">要读取的流</param>
 		/// <param name="buffer">缓冲数组</param>
 		/// <returns>缓冲数组</returns>
+		[Obsolete("此函数没有很大的意义，将会被移除。This method will be removed soon due to no means.")]
 		public static byte[] FillBuffer(this Stream stream, byte[] buffer)
 		{
 			if (stream.Read(buffer, 0, buffer.Length) != buffer.Length)
@@ -701,18 +696,20 @@ namespace System
 		/// 读取所有的数据到内存流中
 		/// </summary>
 		/// <param name="stream">要读取的流</param>
+		/// <param name="readBufferSize">读取的缓冲区长度，默认为 4KB</param>
 		/// <returns>包含所有数据的 <see cref="MemoryStream"/> </returns>
 		[CanBeNull]
-		public static MemoryStream ReadToEnd([NotNull] this Stream stream)
+		public static MemoryStream ReadToEnd([NotNull] this Stream stream, int readBufferSize = 0x400)
 		{
-			if (stream == null || !stream.CanRead)
+			if (!stream.CanRead)
 				return null;
 
-			if (stream is MemoryStream)
-				return stream as MemoryStream;
+			var end = stream as MemoryStream;
+			if (end != null)
+				return end;
 
 			var ms = new MemoryStream();
-			var buffer = new byte[0x400];
+			var buffer = new byte[readBufferSize];
 			var count = 0;
 			while ((count = stream.Read(buffer, 0, buffer.Length)) > 0)
 				ms.Write(buffer, 0, count);
@@ -925,31 +922,31 @@ namespace System
 
 
 		#endregion
-        /// <summary>
-        /// True if object is value type.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static bool IsNumericType(this object obj)
-        {
-            switch (Type.GetTypeCode(obj.GetType()))
-            {
-                case TypeCode.Byte:
-                case TypeCode.SByte:
-                case TypeCode.UInt16:
-                case TypeCode.UInt32:
-                case TypeCode.UInt64:
-                case TypeCode.Int16:
-                case TypeCode.Int32:
-                case TypeCode.Int64:
-                case TypeCode.Decimal:
-                case TypeCode.Double:
-                case TypeCode.Single:
-                    return true;
-                default:
-                    return false;
-            }
-        }
+		/// <summary>
+		/// True if object is value type.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static bool IsNumericType(this object obj)
+		{
+			switch (Type.GetTypeCode(obj.GetType()))
+			{
+				case TypeCode.Byte:
+				case TypeCode.SByte:
+				case TypeCode.UInt16:
+				case TypeCode.UInt32:
+				case TypeCode.UInt64:
+				case TypeCode.Int16:
+				case TypeCode.Int32:
+				case TypeCode.Int64:
+				case TypeCode.Decimal:
+				case TypeCode.Double:
+				case TypeCode.Single:
+					return true;
+				default:
+					return false;
+			}
+		}
 	}
 
 }

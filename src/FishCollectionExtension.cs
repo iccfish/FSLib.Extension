@@ -31,11 +31,25 @@ namespace System
 			return dic;
 		}
 
+		/// <summary>
+		/// 从集合中获得指定的键值
+		/// </summary>
+		/// <param name="collection"></param>
+		/// <param name="key"></param>
+		/// <returns></returns>
 		public static string GetValue(this NameValueCollection collection, string key)
 		{
 			return GetValue(collection, key, string.Empty);
 		}
 
+		/// <summary>
+		/// 从集合中获得指定的键值
+		/// </summary>
+		/// <param name="collection"></param>
+		/// <param name="key"></param>
+		/// <param name="defaultValue"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentNullException"></exception>
 		public static string GetValue(this NameValueCollection collection, string key, string defaultValue)
 		{
 			if (string.IsNullOrEmpty(key))
@@ -57,6 +71,15 @@ namespace System
 
 		#region 列表
 
+		/// <summary>
+		/// 在一个序列中查找指定的项出现的位置
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="source"></param>
+		/// <param name="target"></param>
+		/// <param name="pos"></param>
+		/// <param name="length"></param>
+		/// <returns></returns>
 		public static int IndexOf<T>(this IList<T> source, T target, int pos, int length)
 	where T : IEquatable<T>
 		{
@@ -69,12 +92,28 @@ namespace System
 			return -1;
 		}
 
+		/// <summary>
+		/// 判断指定的序列是不是用特定的一部分值开始的
+		/// </summary>
+		/// <typeparam name="T">序列类型</typeparam>
+		/// <param name="source">源序列</param>
+		/// <param name="mark">要查找的目标</param>
+		/// <returns></returns>
 		public static int StartsWith<T>(this IList<T> source, T[] mark)
 			where T : IEquatable<T>
 		{
 			return source.StartsWith(0, source.Count, mark);
 		}
 
+		/// <summary>
+		/// 判断指定的序列是不是用特定的一部分值开始的
+		/// </summary>
+		/// <typeparam name="T">序列类型</typeparam>
+		/// <param name="source">源序列</param>
+		/// <param name="mark">要查找的目标</param>
+		/// <param name="offset">开始查找的位置</param>
+		/// <param name="length">要匹配的长度</param>
+		/// <returns></returns>
 		public static int StartsWith<T>(this IList<T> source, int offset, int length, T[] mark)
 			where T : IEquatable<T>
 		{
@@ -125,6 +164,12 @@ namespace System
 
 		private static Random m_Random = new Random();
 
+		/// <summary>
+		/// 将一个数组内容随机打乱
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="source"></param>
+		/// <returns></returns>
 		public static T[] RandomOrder<T>(this T[] source)
 		{
 			var n = source.Length / 2;
@@ -192,13 +237,14 @@ namespace System
 		/// </summary>
 		/// <typeparam name="T">队列数据类型</typeparam>
 		/// <param name="list">列表</param>
+		/// <param name="random">使用的随机种子。如果使用null，则会新建一个</param>
 		/// <returns>获得的结果</returns>
-		public static T RandomTake<T>(this List<T> list)
+		public static T RandomTake<T>(this List<T> list, Random random = null)
 		{
 			if (list == null || list.Count == 0)
 				return default(T);
 
-			return list[new Random().Next(list.Count)];
+			return list[(random?? new Random()).Next(list.Count)];
 		}
 
 		#endregion
@@ -237,7 +283,7 @@ namespace System
 
 			lock (dic)
 			{
-				if (!dic.ContainsKey(key)) 
+				if (!dic.ContainsKey(key))
 					dic.Add(key, value = initialValueFunc(key));
 			}
 
