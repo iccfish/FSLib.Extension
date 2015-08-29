@@ -71,96 +71,96 @@ namespace System
 
 		#region 列表
 
-		/// <summary>
-		/// 在一个序列中查找指定的项出现的位置
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="source"></param>
-		/// <param name="target"></param>
-		/// <param name="pos"></param>
-		/// <param name="length"></param>
-		/// <returns></returns>
-		public static int IndexOf<T>(this IList<T> source, T target, int pos, int length)
-	where T : IEquatable<T>
-		{
-			for (int i = pos; i < pos + length; i++)
-			{
-				if (source[i].Equals(target))
-					return i;
-			}
+		//	/// <summary>
+		//	/// 在一个序列中查找指定的项出现的位置
+		//	/// </summary>
+		//	/// <typeparam name="T"></typeparam>
+		//	/// <param name="source"></param>
+		//	/// <param name="target"></param>
+		//	/// <param name="pos"></param>
+		//	/// <param name="length"></param>
+		//	/// <returns></returns>
+		//	public static int IndexOf<T>(this IList<T> source, T target, int pos, int length)
+		//where T : IEquatable<T>
+		//	{
+		//		for (int i = pos; i < pos + length; i++)
+		//		{
+		//			if (source[i].Equals(target))
+		//				return i;
+		//		}
 
-			return -1;
-		}
+		//		return -1;
+		//	}
 
-		/// <summary>
-		/// 判断指定的序列是不是用特定的一部分值开始的
-		/// </summary>
-		/// <typeparam name="T">序列类型</typeparam>
-		/// <param name="source">源序列</param>
-		/// <param name="mark">要查找的目标</param>
-		/// <returns></returns>
-		public static int StartsWith<T>(this IList<T> source, T[] mark)
-			where T : IEquatable<T>
-		{
-			return source.StartsWith(0, source.Count, mark);
-		}
+		//	/// <summary>
+		//	/// 判断指定的序列是不是用特定的一部分值开始的
+		//	/// </summary>
+		//	/// <typeparam name="T">序列类型</typeparam>
+		//	/// <param name="source">源序列</param>
+		//	/// <param name="mark">要查找的目标</param>
+		//	/// <returns></returns>
+		//	public static int StartsWith<T>(this IList<T> source, T[] mark)
+		//		where T : IEquatable<T>
+		//	{
+		//		return source.StartsWith(0, source.Count, mark);
+		//	}
 
-		/// <summary>
-		/// 判断指定的序列是不是用特定的一部分值开始的
-		/// </summary>
-		/// <typeparam name="T">序列类型</typeparam>
-		/// <param name="source">源序列</param>
-		/// <param name="mark">要查找的目标</param>
-		/// <param name="offset">开始查找的位置</param>
-		/// <param name="length">要匹配的长度</param>
-		/// <returns></returns>
-		public static int StartsWith<T>(this IList<T> source, int offset, int length, T[] mark)
-			where T : IEquatable<T>
-		{
-			int pos = offset;
-			int endOffset = offset + length - 1;
+		//	/// <summary>
+		//	/// 判断指定的序列是不是用特定的一部分值开始的
+		//	/// </summary>
+		//	/// <typeparam name="T">序列类型</typeparam>
+		//	/// <param name="source">源序列</param>
+		//	/// <param name="mark">要查找的目标</param>
+		//	/// <param name="offset">开始查找的位置</param>
+		//	/// <param name="length">要匹配的长度</param>
+		//	/// <returns></returns>
+		//	public static int StartsWith<T>(this IList<T> source, int offset, int length, T[] mark)
+		//		where T : IEquatable<T>
+		//	{
+		//		int pos = offset;
+		//		int endOffset = offset + length - 1;
 
-			for (int i = 0; i < mark.Length; i++)
-			{
-				int checkPos = pos + i;
+		//		for (int i = 0; i < mark.Length; i++)
+		//		{
+		//			int checkPos = pos + i;
 
-				if (checkPos > endOffset)
-					return i;
+		//			if (checkPos > endOffset)
+		//				return i;
 
-				if (!source[checkPos].Equals(mark[i]))
-					return -1;
-			}
+		//			if (!source[checkPos].Equals(mark[i]))
+		//				return -1;
+		//		}
 
-			return mark.Length;
-		}
+		//		return mark.Length;
+		//	}
 
-		public static bool EndsWith<T>(this IList<T> source, T[] mark)
-			where T : IEquatable<T>
-		{
-			return source.EndsWith(0, source.Count, mark);
-		}
+		//	public static bool EndsWith<T>(this IList<T> source, T[] mark)
+		//		where T : IEquatable<T>
+		//	{
+		//		return source.EndsWith(0, source.Count, mark);
+		//	}
 
-		public static bool EndsWith<T>(this IList<T> source, int offset, int length, T[] mark)
-			where T : IEquatable<T>
-		{
-			if (mark.Length > length)
-				return false;
+		//	public static bool EndsWith<T>(this IList<T> source, int offset, int length, T[] mark)
+		//		where T : IEquatable<T>
+		//	{
+		//		if (mark.Length > length)
+		//			return false;
 
-			for (int i = 0; i < Math.Min(length, mark.Length); i++)
-			{
-				if (!mark[i].Equals(source[offset + length - mark.Length + i]))
-					return false;
-			}
+		//		for (int i = 0; i < Math.Min(length, mark.Length); i++)
+		//		{
+		//			if (!mark[i].Equals(source[offset + length - mark.Length + i]))
+		//				return false;
+		//		}
 
-			return true;
-		}
+		//		return true;
+		//	}
 
-		public static T[] CloneRange<T>(this T[] source, int offset, int length)
-		{
-			T[] target = new T[length];
-			Array.Copy(source, offset, target, 0, length);
-			return target;
-		}
+		//	public static T[] CloneRange<T>(this T[] source, int offset, int length)
+		//	{
+		//		T[] target = new T[length];
+		//		Array.Copy(source, offset, target, 0, length);
+		//		return target;
+		//	}
 
 		private static Random m_Random = new Random();
 
@@ -244,7 +244,7 @@ namespace System
 			if (list == null || list.Count == 0)
 				return default(T);
 
-			return list[(random?? new Random()).Next(list.Count)];
+			return list[(random ?? new Random()).Next(list.Count)];
 		}
 
 		#endregion
