@@ -83,7 +83,16 @@
 		public T FindAttribute<T>()
 				where T : class
 		{
-			return Attributes.FirstOrDefault(s => s is T) as T;
+			Attribute first = null;
+			foreach (var s in Attributes)
+			{
+				if (s is T)
+				{
+					first = s;
+					break;
+				}
+			}
+			return first as T;
 		}
 
 		/// <summary>
