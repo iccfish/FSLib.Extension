@@ -24,7 +24,8 @@ namespace System.Windows.Forms
 		/// </summary>
 		/// <param name="control">要保持居中的控件</param>
 		/// <param name="parentControl">相对位置的父控件，默认为上级控件</param>
-		public static T KeepCenter<T>(this T control, Control parentControl = null) where T : Control
+		/// <param name="topAdjust">垂直方向位置微调，为负的偏移</param>
+		public static T KeepCenter<T>(this T control, Control parentControl = null, int topAdjust = 10) where T : Control
 		{
 			if (control == null || control.Parent == null)
 			{
@@ -37,7 +38,7 @@ namespace System.Windows.Forms
 				if (parentControl == null)
 					return;
 
-				var location = new Point((parentControl.Width - control.Width) / 2, (parentControl.Height - control.Height) / 2);
+				var location = new Point((parentControl.Width - control.Width) / 2, (parentControl.Height - control.Height) / 2 - topAdjust);
 				if (!(parentControl.Controls.Contains(control)))
 					location.Offset(parentControl.Location);
 				control.Location = location;
