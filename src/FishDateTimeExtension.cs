@@ -266,5 +266,32 @@ namespace System
 
 			return arr.JoinAsString("");
 		}
+
+		/// <summary>
+		/// 计算指定的 <see cref="TimeSpan"/> 序列的和
+		/// </summary>
+		/// <param name="timespans"><see cref="TimeSpan"/> 序列</param>
+		/// <returns></returns>
+		public static TimeSpan Sum(this IEnumerable<TimeSpan> timespans)
+		{
+			return timespans.Aggregate(TimeSpan.Zero, (x, y) => x + y);
+		}
+
+
+		/// <summary>
+		/// 计算指定的 <see cref="TimeSpan"/> 序列的和
+		/// </summary>
+		/// <param name="timespans"><see cref="TimeSpan"/> 序列</param>
+		/// <returns></returns>
+		public static TimeSpan? Sum(this IEnumerable<TimeSpan?> timespans)
+		{
+			return timespans.Aggregate((TimeSpan?)null, (x, y) =>
+			{
+				if (y.HasValue)
+					return x.HasValue ? x.Value + y.Value : y.Value;
+				return x;
+			});
+		}
+
 	}
 }

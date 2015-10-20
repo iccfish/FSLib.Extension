@@ -5,31 +5,69 @@ using System.Text;
 
 namespace System.Windows.Forms
 {
-	class ControlBatchOperationWrap : IDisposable
+	using System.Linq.Expressions;
+	using System.Reflection;
+
+	class ControlBatchOperationWrap<T> : IDisposable where T : Control
 	{
+		static Dictionary<Type, object> _updateDispatcher = new Dictionary<Type, object>();
+
+		static Action<T>[] LookupUpdateDispatcher<T>(T obj)
+		{
+			object data;
+			var t = typeof(T);
+
+			if (!_updateDispatcher.TryGetValue(t, out data))
+			{
+				lock (_updateDispatcher)
+				{
+					if (!_updateDispatcher.TryGetValue(t, out data))
+					{
+						//查找方法
+						var mbu = t.GetMethod("BeginUpdate", BindingFlags.Instance | BindingFlags.Public);
+						var meu = t.GetMethod("EndUpdate", BindingFlags.Instance | BindingFlags.Public);
+
+						data = null;
+						if (mbu != null && meu != null)
+						{
+							var mbui = Expression.Parameter(t);
+							var mbue = Expression.Call(mbui, mbu);
+							var mbua = Expression.Lambda<Action<T>>(mbue, mbui).Compile();
+
+							var mbei = Expression.Parameter(t);
+							var mbee = Expression.Call(mbei, meu);
+							var mbea = Expression.Lambda<Action<T>>(mbee, mbei).Compile();
+
+							data = new[] { mbua, mbea };
+						}
+						_updateDispatcher.Add(t, data);
+					}
+				}
+			}
+
+			return data as Action<T>[];
+		}
+
+
 		/// <summary>
 		/// 获得绑定的控件
 		/// </summary>
-		public Control Control { get; private set; }
+		public T Control { get; private set; }
 
 		/// <summary>
-		/// 创建 <see cref="ControlBatchOperationWrap" />  的新实例(ControlBatchOperationWrap)
+		/// 创建 <see cref="ControlBatchOperationWrap{T}" />  的新实例(ControlBatchOperationWrap)
 		/// </summary>
 		/// <param name="control"></param>
-		public ControlBatchOperationWrap(Control control)
+		public ControlBatchOperationWrap(T control)
 		{
 			if (control == null)
-				throw new ArgumentNullException("control");
+				throw new ArgumentNullException(nameof(control));
 
 			Control = control;
 			control.SuspendLayout();
 
-			if (control is ListView)
-				(control as ListView).BeginUpdate();
-			else if (control is ListBox)
-				(control as ListBox).BeginUpdate();
-			else if (control is TreeView)
-				(control as TreeView).BeginUpdate();
+			var actions = LookupUpdateDispatcher(control);
+			actions?[0].Invoke(control);
 		}
 
 		void ResumeLayout()
@@ -38,12 +76,8 @@ namespace System.Windows.Forms
 			if (control == null || control.IsDisposed)
 				return;
 
-			if (control is ListView)
-				(control as ListView).EndUpdate();
-			else if (control is ListBox)
-				(control as ListBox).EndUpdate();
-			else if (control is TreeView)
-				(control as TreeView).EndUpdate();
+			var actions = LookupUpdateDispatcher(control);
+			actions?[1].Invoke(control);
 		}
 
 

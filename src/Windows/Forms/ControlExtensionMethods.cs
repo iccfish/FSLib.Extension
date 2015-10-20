@@ -56,9 +56,9 @@ namespace System.Windows.Forms
 		/// </summary>
 		/// <param name="control"></param>
 		/// <returns></returns>
-		public static IDisposable CreateBatchOperationDispatcher(this Control control)
+		public static IDisposable CreateBatchOperationDispatcher<T>(this T control) where T :Control
 		{
-			return new ControlBatchOperationWrap(control);
+			return new ControlBatchOperationWrap<T>(control);
 		}
 
 		#region Navigation
