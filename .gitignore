@@ -16,3 +16,4 @@ _Bin.*
 *.pdsyncu
 *.ini
 VSDoc
+/src/*.csdat
