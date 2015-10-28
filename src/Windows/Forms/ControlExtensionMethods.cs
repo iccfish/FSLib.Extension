@@ -56,7 +56,7 @@ namespace System.Windows.Forms
 		/// </summary>
 		/// <param name="control"></param>
 		/// <returns></returns>
-		public static IDisposable CreateBatchOperationDispatcher<T>(this T control) where T :Control
+		public static IDisposable CreateBatchOperationDispatcher<T>(this T control) where T : Control
 		{
 			return new ControlBatchOperationWrap<T>(control);
 		}
@@ -500,6 +500,22 @@ namespace System.Windows.Forms
 		public static bool IsValueEmpty(this TextBox txt)
 		{
 			return txt == null || txt.Text.IsNullOrEmpty();
+		}
+
+		/// <summary>
+		/// 为控件启用常规快捷操作（如Ctrl+A等）
+		/// </summary>
+		/// <param name="txt"></param>
+		public static void EnableCommonShortCuts(this TextBox txt)
+		{
+			txt.PreviewKeyDown += (s, e) =>
+			{
+				if (e.Control)
+				{
+					if (e.KeyCode == Keys.A)
+						txt.SelectAll();
+				}
+			};
 		}
 
 		#endregion

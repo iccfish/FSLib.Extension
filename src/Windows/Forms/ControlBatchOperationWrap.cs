@@ -30,11 +30,11 @@ namespace System.Windows.Forms
 						data = null;
 						if (mbu != null && meu != null)
 						{
-							var mbui = Expression.Parameter(t);
+							var mbui = Expression.Parameter(t, "thisobj");
 							var mbue = Expression.Call(mbui, mbu);
 							var mbua = Expression.Lambda<Action<T>>(mbue, mbui).Compile();
 
-							var mbei = Expression.Parameter(t);
+							var mbei = Expression.Parameter(t, "thisobj");
 							var mbee = Expression.Call(mbei, meu);
 							var mbea = Expression.Lambda<Action<T>>(mbee, mbei).Compile();
 
