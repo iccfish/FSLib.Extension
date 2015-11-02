@@ -2,6 +2,7 @@
 {
 	using System.Linq;
 	using System.Reflection;
+	using FSLib.Attributes;
 
 	/// <summary>
 	/// 类型描述基类
@@ -114,13 +115,12 @@
 		{
 			get
 			{
-				var dnat = FindAttribute<System.ComponentModel.DisplayNameAttribute>();
-				_hasAliasName = dnat != null;
+				var dnat = FindAttribute<System.ComponentModel.DisplayNameAttribute>() ?? FindAttribute<DisplayNameWAttribute>();
+				HasAliasName = dnat != null;
 				return dnat == null ? this.Name : dnat.DisplayName;
 			}
 		}
 
-		private bool _hasAliasName;
 		/// <summary>
 		/// 获得或设置当前的名称是否是通过别名获得的
 		/// </summary>
