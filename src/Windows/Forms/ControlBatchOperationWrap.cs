@@ -24,8 +24,8 @@ namespace System.Windows.Forms
 					if (!_updateDispatcher.TryGetValue(t, out data))
 					{
 						//查找方法
-						var mbu = t.GetMethod("BeginUpdate", BindingFlags.Instance | BindingFlags.Public);
-						var meu = t.GetMethod("EndUpdate", BindingFlags.Instance | BindingFlags.Public);
+						var mbu = t.GetMethod("BeginUpdate", BindingFlags.Instance | BindingFlags.Public, null, new Type[0], new ParameterModifier[0]);
+						var meu = t.GetMethod("EndUpdate", BindingFlags.Instance | BindingFlags.Public, null, new Type[0], new ParameterModifier[0]);
 
 						data = null;
 						if (mbu != null && meu != null)
