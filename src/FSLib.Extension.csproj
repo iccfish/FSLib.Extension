@@ -73,6 +73,7 @@
     <Compile Include="FishLib\Description.cs" />
     <Compile Include="FishLib\Description`1.cs" />
     <Compile Include="FishLib\Diagnostics\CodeTimer.cs" />
+    <Compile Include="FishLib\Drawing\BrushUtility.cs" />
     <Compile Include="FishLib\GeneralEventArgs.cs" />
     <Compile Include="FishLib\IOUtility.cs" />
     <Compile Include="FishLib\LocalizeContext.cs" />
