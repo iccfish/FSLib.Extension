@@ -53,6 +53,7 @@
     <Compile Include="Data\OleDb\FSLibOleDbExtension.cs" />
     <Compile Include="Data\SqlClient\FSLib_SqlServerExtension.cs" />
     <Compile Include="Diagnostics\FishProcessExtension.cs" />
+    <Compile Include="FishLib\Attributes\DisplayNameWAttribute.cs" />
     <Compile Include="FsLibEnumExtension.cs" />
     <Compile Include="FishArrayExtension.cs" />
     <Compile Include="FishCollectionExtension.cs" />
