@@ -96,6 +96,32 @@ namespace System
 
 		#endregion
 
+		#region System.Drawing.Color
+
+		/// <summary>
+		/// 获得颜色的WEB RGB表示形式（如#000000）
+		/// </summary>
+		/// <param name="color">颜色</param>
+		/// <param name="upperCase">是否使用大写。默认为 <see langword="true" /></param>
+		/// <returns>对应的 <see langword="string" /></returns>
+		public static string ToWebRgbColor(this Color color, bool upperCase = true)
+		{
+			var format = upperCase ? "X2" : "x2";
+			return $"#{color.R.ToString(format)}{color.G.ToString(format)}{color.B.ToString(format)}";
+		}
+
+		/// <summary>
+		/// 获得颜色的WEB RGB表示形式（如 rgba(255,255,255,1)）
+		/// </summary>
+		/// <param name="color">颜色</param>
+		/// <returns>对应的 <see langword="string" /></returns>
+		public static string ToWebRgbaColor(this Color color)
+		{
+			return $"rgba({color.R},{color.G},{color.B},{(color.A / 255.0).ToString("#0.00")})";
+		}
+
+		#endregion
+
 		#region Reflection
 
 		/// <summary>
