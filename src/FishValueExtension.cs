@@ -20,6 +20,18 @@ namespace System
 		public static bool IsValueInRange(this int value, int minValue, int maxValue) { return value >= minValue && value <= maxValue; }
 
 		/// <summary>
+		/// 对数值进行上下限判定，返回限制范围内的数据
+		/// </summary>
+		/// <param name="value">当前值</param>
+		/// <param name="min">最小值。如果 <paramref name="value"/> 小于此值， 则会返回最小值</param>
+		/// <param name="max">最大值。如果 <paramref name="value"/> 大于此值， 则会返回最大值</param>
+		/// <returns></returns>
+		public static int LimitRange(this int value, int min, int max)
+		{
+			return value < min ? min : value > max ? max : value;
+		}
+
+		/// <summary>
 		/// 返回大于等于数字被指定值除的商的数字
 		/// </summary>
 		/// <param name="value">被除数</param>
