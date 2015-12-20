@@ -331,13 +331,14 @@ namespace System
 		/// </summary>
 		/// <param name="text">源字符串</param>
 		/// <param name="beginTag">开始特征字符串</param>
+		/// <param name="includeTag">是否包含标签本身，默认为 <see langword="true" /></param>
 		/// <param name="endTag">结束特征字符串</param>
 		/// <param name="beginIndex">开始索引</param>
 		/// <param name="comparison">比较类型</param>
 		/// <returns></returns>
-		public static string SearchStringTag(this string text, string beginTag, string endTag, int beginIndex = 0, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+		public static string SearchStringTag(this string text, string beginTag, string endTag, int beginIndex = 0, bool includeTag = true, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
 		{
-			return SearchStringTag(text, beginTag, endTag, ref beginIndex, comparison);
+			return SearchStringTag(text, beginTag, endTag, ref beginIndex, includeTag, comparison);
 		}
 
 		/// <summary>
@@ -346,30 +347,36 @@ namespace System
 		/// <param name="text">源字符串</param>
 		/// <param name="beginTag">开始特征字符串</param>
 		/// <param name="endTag">结束特征字符串</param>
-		/// <param name="beginIndex">开始索引</param>
+		/// <param name="beginIndex">开始索引。当搜索完成后，将会指向匹配结束后的下一个位置</param>
+		/// <param name="includeTag">是否包含标签本身，默认为 <see langword="true" /></param>
 		/// <param name="comparison">比较类型</param>
 		/// <returns></returns>
-		public static string SearchStringTag(this string text, string beginTag, string endTag, ref int beginIndex, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+		public static string SearchStringTag(this string text, string beginTag, string endTag, ref int beginIndex, bool includeTag = true, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
 		{
 			if (string.IsNullOrEmpty(text) || beginIndex >= text.Length)
 				return string.Empty;
 
 			var startIndex = beginIndex;
 			var endIndex = text.Length;
+			var tagStartEmpty = beginTag.IsNullOrEmpty();
+			var tagEndEmpty = endTag.IsNullOrEmpty();
 
-			if (!string.IsNullOrEmpty(beginTag))
+			if (!tagStartEmpty)
 				startIndex = text.IndexOf(beginTag, startIndex, comparison);
 			if (startIndex == -1)
 				return string.Empty;
 
-			if (!string.IsNullOrEmpty(endTag))
-				endIndex = text.IndexOf(endTag, startIndex + (!string.IsNullOrEmpty(beginTag) ? beginTag.Length : 1), comparison);
+			if (!tagEndEmpty)
+				endIndex = text.IndexOf(endTag, startIndex + (!tagStartEmpty ? beginTag.Length + 1 : 1), comparison);
 			if (endIndex == -1)
 				return string.Empty;
 
-			beginIndex = endIndex + (!string.IsNullOrEmpty(endTag) ? endTag.Length : 1);
+			beginIndex = endIndex + (!tagEndEmpty ? endTag.Length + 1 : 1);
 
-			return text.Substring(startIndex, endIndex - startIndex + (string.IsNullOrEmpty(endTag) ? 0 : endTag.Length));
+			return text.Substring(
+								 startIndex + (includeTag || tagStartEmpty ? 0 : beginTag.Length),
+								endIndex - startIndex - (includeTag || tagStartEmpty ? 0 : beginTag.Length) + (tagEndEmpty || !includeTag ? 0 : endTag.Length)
+				);
 		}
 
 
