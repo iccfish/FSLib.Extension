@@ -75,10 +75,12 @@ namespace System
 		public static readonly DateTime JsTicksStartBase = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).ToLocalTime();
 
 		/// <summary>
-		/// 获得 <paramref name="dt"/> 对应的Javascript时间刻度
+		/// 获得 <paramref name="dt" /> 对应的Javascript时间刻度
 		/// </summary>
 		/// <param name="dt">要表示的时间</param>
-		/// <returns>类型为 <see cref="T:System.Int64"/> 格式的数值</returns>
+		/// <returns>
+		/// 类型为 <see cref="T:System.Int64" /> 格式的数值
+		/// </returns>
 		public static long ToJsTicks(this DateTime dt)
 		{
 			return (long)(dt - JsTicksStartBase).TotalMilliseconds;

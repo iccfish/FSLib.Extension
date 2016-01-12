@@ -121,5 +121,9 @@ Library</b>”包。</para>
     <add key="VBdocman_comProperty"><![CDATA[-1]]></add>
     <add key="VBdocman_generateCsharpSyntax"><![CDATA[-1]]></add>
     <add key="VBdocman_comInterface"><![CDATA[-1]]></add>
+    <add key="VBdocman_supportedNetFrameworkClientProfile"><![CDATA[4, 3.5 SP1]]></add>
+    <add key="VBdocman_supportedPortableClassLibrary"><![CDATA[]]></add>
+    <add key="VBdocman_supportedNetForWindowsStoreApps"><![CDATA[]]></add>
+    <add key="VBdocman_supportedOthers"><![CDATA[]]></add>
   </appSettings>
 </configuration>
