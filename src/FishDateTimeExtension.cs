@@ -270,6 +270,29 @@ namespace System
 		}
 
 		/// <summary>
+		/// 转换Timespan为友好的显示方式
+		/// </summary>
+		/// <param name="ts"></param>
+		/// <returns></returns>
+		public static string ToFriendlyDisplayShort(this TimeSpan ts)
+		{
+			//天/时/分/秒/毫秒
+			var arr = new string[] { "", "", "", "", "" };
+			if (ts.Days > 0)
+				arr[0] = string.Format("{0}d", ts.Days);
+			if (ts.Hours > 0)
+				arr[1] = string.Format("{0}h", ts.Hours);
+			if (ts.Minutes > 0)
+				arr[2] = string.Format("{0}m", ts.Minutes);
+			if (ts.Seconds > 0)
+				arr[3] = string.Format("{0}s", ts.Seconds);
+			if (ts.Milliseconds > 0)
+				arr[4] = string.Format("{0}ms", ts.Milliseconds);
+
+			return arr.JoinAsString("");
+		}
+
+		/// <summary>
 		/// 计算指定的 <see cref="TimeSpan"/> 序列的和
 		/// </summary>
 		/// <param name="timespans"><see cref="TimeSpan"/> 序列</param>

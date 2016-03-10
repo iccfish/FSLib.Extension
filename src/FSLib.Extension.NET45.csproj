@@ -55,6 +55,7 @@
     <Compile Include="Data\FSLibCommonExtension.cs" />
     <Compile Include="Data\OleDb\FSLibOleDbExtension.cs" />
     <Compile Include="Data\SqlClient\FSLib_SqlServerExtension.cs" />
+    <Compile Include="FishDelegateExtension.cs" />
     <Compile Include="FishLib\ApplicationRunTimeContext.cs" />
     <Compile Include="FishLib\Attributes\DisplayNameWAttribute.cs" />
     <Compile Include="FishLib\Attributes\SRCategoryAttribute.cs" />
@@ -76,11 +77,14 @@
     <Compile Include="FishLib\Description.cs" />
     <Compile Include="FishLib\Description`1.cs" />
     <Compile Include="FishLib\Diagnostics\CodeTimer.cs" />
+    <Compile Include="FishLib\Drawing\BrushUtility.cs" />
     <Compile Include="FishLib\EnumUtility.cs" />
     <Compile Include="FishLib\GeneralEventArgs.cs" />
     <Compile Include="FishLib\IOUtility.cs" />
     <Compile Include="FishLib\LocalizeContext.cs" />
     <Compile Include="FishLib\MemberDescriptorBase.cs" />
+    <Compile Include="FishLib\PropertyChangingEventArgs.cs" />
+    <Compile Include="FishLib\PropertyChangingEventArgsBuilder.cs" />
     <Compile Include="FishLib\Reflection.cs" />
     <Compile Include="FishLib\StringNaturalComparer.cs" />
     <Compile Include="FishLib\StringNaturalComparerWin32.cs" />
