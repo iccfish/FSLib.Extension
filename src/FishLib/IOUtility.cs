@@ -1,348 +1,443 @@
-namespace System.FishLib
+ï»¿namespace System.FishLib
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Text.RegularExpressions;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
 
-	/// <summary>
-	/// ÎÄ¼ş²Ù×÷¸¨ÖúÀà
-	/// </summary>
-	/// <remarks>
-	/// ±¾¸¨Öú²Ù×÷ÀàµÄ×÷ÓÃÊÇÎªÁË¼ò»¯Ò»Ğ©´úÂë£¬Êµ¼ÊÉÏ¿¼ÂÇµ½³ÌĞòµÄĞÔÄÜÎÊÌâÊ±£¬¿ÉÄÜ»¹ÊÇÓÉ×ÔÒÑÀ´Õë¶Ô
-	/// ÌØ¶¨µÄFile Directory FileInfo DirectoryInfo Path Drive DriveInfoÀ´²Ù×÷¿ÉÄÜ¸üºÃ
-	/// </remarks>
-	public static class IOUtility
-	{
-		/// <summary>
-		/// »ñµÃÖ¸¶¨Ä¿Â¼ÏÂµÄËùÓĞÎÄ¼ş¡£´Ë·½·¨½«»áÌø¹ıÎŞ·¨·ÃÎÊµÄÎÄ¼ş¼Ğ
-		/// </summary>
-		/// <param name="path">Òª»ñµÃµÄÄ¿Â¼</param>
-		/// <returns>°üº¬ÎÄ¼şÃûµÄÊı×é</returns>
-		public static string[] GetAllFiles(string path)
-		{
-			if (path == null || path.IsNullOrEmpty())
-				throw new ArgumentNullException("path");
-			if (!Directory.Exists(path))
-				throw new DirectoryNotFoundException();
+    /// <summary>
+    /// æ–‡ä»¶æ“ä½œè¾…åŠ©ç±»
+    /// </summary>
+    /// <remarks>
+    /// æœ¬è¾…åŠ©æ“ä½œç±»çš„ä½œç”¨æ˜¯ä¸ºäº†ç®€åŒ–ä¸€äº›ä»£ç ï¼Œå®é™…ä¸Šè€ƒè™‘åˆ°ç¨‹åºçš„æ€§èƒ½é—®é¢˜æ—¶ï¼Œå¯èƒ½è¿˜æ˜¯ç”±è‡ªå·²æ¥é’ˆå¯¹
+    /// ç‰¹å®šçš„File Directory FileInfo DirectoryInfo Path Drive DriveInfoæ¥æ“ä½œå¯èƒ½æ›´å¥½
+    /// </remarks>
+    public static class IOUtility
+    {
+        /// <summary>
+        /// è·å¾—æŒ‡å®šç›®å½•ä¸‹çš„æ‰€æœ‰æ–‡ä»¶ã€‚æ­¤æ–¹æ³•å°†ä¼šè·³è¿‡æ— æ³•è®¿é—®çš„æ–‡ä»¶å¤¹
+        /// </summary>
+        /// <param name="path">è¦è·å¾—çš„ç›®å½•</param>
+        /// <returns>åŒ…å«æ–‡ä»¶åçš„æ•°ç»„</returns>
+        public static string[] GetAllFiles(string path)
+        {
+            if (path == null || path.IsNullOrEmpty())
+                throw new ArgumentNullException("path");
+            if (!Directory.Exists(path))
+                throw new DirectoryNotFoundException();
 
-			string[] files, folders;
-			try
-			{
-				files = Directory.GetFiles(path);
-				folders = Directory.GetDirectories(path);
-			}
-			catch (Exception)
-			{
-				return new string[]
-				{
-				};
-			}
+            string[] files, folders;
+            try
+            {
+                files = Directory.GetFiles(path);
+                folders = Directory.GetDirectories(path);
+            }
+            catch (Exception)
+            {
+                return new string[]
+                {
+                };
+            }
 
-			return files.Union(folders.SelectMany(GetAllFiles)).ToArray();
-		}
+            return files.Union(folders.SelectMany(GetAllFiles)).ToArray();
+        }
 
-		/// <summary>
-		/// ·µ»ØÃ»ÓĞÇ°×º·ûºÅµÄÀ©Õ¹Ãû
-		/// </summary>
-		/// <param name="path">Â·¾¶</param>
-		/// <returns>À©Õ¹Ãû</returns>
-		public static string GetExtensionWithoutDot(string path)
-		{
-			return Path.GetExtension(path).Trim('.');
-		}
+        /// <summary>
+        /// è¿”å›æ²¡æœ‰å‰ç¼€ç¬¦å·çš„æ‰©å±•å
+        /// </summary>
+        /// <param name="path">è·¯å¾„</param>
+        /// <returns>æ‰©å±•å</returns>
+        public static string GetExtensionWithoutDot(string path)
+        {
+            return Path.GetExtension(path).Trim('.');
+        }
 
-		/// <summary>
-		/// ½«Êı¾İÍêÈ«Ğ´ÈëÎÄ¼ş¡£µ±Ö¸¶¨Â·¾¶²»´æÔÚÊ±£¬»á×Ô¶¯´´½¨
-		/// </summary>
-		/// <param name="path">Â·¾¶</param>
-		/// <param name="data">Êı¾İ</param>
-		public static void WriteAllBytes(string path, byte[] data)
-		{
-			Directory.CreateDirectory(Path.GetDirectoryName(path));
-			File.WriteAllBytes(path, data);
-		}
+        /// <summary>
+        /// å°†æ•°æ®å®Œå…¨å†™å…¥æ–‡ä»¶ã€‚å½“æŒ‡å®šè·¯å¾„ä¸å­˜åœ¨æ—¶ï¼Œä¼šè‡ªåŠ¨åˆ›å»º
+        /// </summary>
+        /// <param name="path">è·¯å¾„</param>
+        /// <param name="data">æ•°æ®</param>
+        public static void WriteAllBytes(string path, byte[] data)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.WriteAllBytes(path, data);
+        }
 
-		/// <summary>
-		/// ½«Êı¾İÍêÈ«Ğ´ÈëÎÄ¼ş¡£µ±Ö¸¶¨Â·¾¶²»´æÔÚÊ±£¬»á×Ô¶¯´´½¨
-		/// </summary>
-		/// <param name="path">Â·¾¶</param>
-		public static void WriteAllText(string path, string content)
-		{
-			Directory.CreateDirectory(Path.GetDirectoryName(path));
-			File.WriteAllText(path, content);
-		}
+        /// <summary>
+        /// å°†æ•°æ®å®Œå…¨å†™å…¥æ–‡ä»¶ã€‚å½“æŒ‡å®šè·¯å¾„ä¸å­˜åœ¨æ—¶ï¼Œä¼šè‡ªåŠ¨åˆ›å»º
+        /// </summary>
+        /// <param name="path">è·¯å¾„</param>
+        public static void WriteAllText(string path, string content)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.WriteAllText(path, content);
+        }
 
-		/// <summary>
-		/// ½«Êı¾İÍêÈ«Ğ´ÈëÎÄ¼ş¡£µ±Ö¸¶¨Â·¾¶²»´æÔÚÊ±£¬»á×Ô¶¯´´½¨
-		/// </summary>
-		/// <param name="path">Â·¾¶</param>
-		public static void WriteAllLines(string path, string[] lines)
-		{
-			Directory.CreateDirectory(Path.GetDirectoryName(path));
-			File.WriteAllLines(path, lines);
-		}
+        /// <summary>
+        /// å°†æ•°æ®å®Œå…¨å†™å…¥æ–‡ä»¶ã€‚å½“æŒ‡å®šè·¯å¾„ä¸å­˜åœ¨æ—¶ï¼Œä¼šè‡ªåŠ¨åˆ›å»º
+        /// </summary>
+        /// <param name="path">è·¯å¾„</param>
+        public static void WriteAllLines(string path, string[] lines)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.WriteAllLines(path, lines);
+        }
 
-		/// <summary>
-		/// »ñµÃÖ¸¶¨Ä¿Â¼ÏÂµÄÎÄ¼ş£¬²¢¸ù¾İÖ¸¶¨µÄ¹ıÂË¹æÔò½øĞĞ¹ıÂË
-		/// </summary>
-		/// <param name="path">Òª¼ìË÷µÄÂ·¾¶</param>
-		/// <param name="searchPattern">¹ıÂË¹æÔò£¨ÕıÔò±í´ïÊ½£©</param>
-		/// <param name="option">ËÑË÷Ñ¡Ïî</param>
-		/// <returns><see cref="T:System.Array"/></returns>
-		public static string[] GetFiles(string path, string searchPattern, SearchOption option)
-		{
-			var reg = new Regex(searchPattern, RegexOptions.Singleline | RegexOptions.IgnoreCase);
-			return Directory.GetFiles(path, "*.*", option).Where(s => reg.IsMatch(s)).ToArray();
-		}
-
-
-		/// <summary>
-		/// ÎÄ¼şÊÇ·ñÖ»¶Á
-		/// </summary>
-		/// <param name="fullpath"></param>
-		/// <returns></returns>
-		public static bool FileIsReadOnly(string fullpath)
-		{
-			FileInfo file = new FileInfo(fullpath);
-			if ((file.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+        /// <summary>
+        /// è·å¾—æŒ‡å®šç›®å½•ä¸‹çš„æ–‡ä»¶ï¼Œå¹¶æ ¹æ®æŒ‡å®šçš„è¿‡æ»¤è§„åˆ™è¿›è¡Œè¿‡æ»¤
+        /// </summary>
+        /// <param name="path">è¦æ£€ç´¢çš„è·¯å¾„</param>
+        /// <param name="searchPattern">è¿‡æ»¤è§„åˆ™ï¼ˆæ­£åˆ™è¡¨è¾¾å¼ï¼‰</param>
+        /// <param name="option">æœç´¢é€‰é¡¹</param>
+        /// <returns><see cref="T:System.Array"/></returns>
+        public static string[] GetFiles(string path, string searchPattern, SearchOption option)
+        {
+            var reg = new Regex(searchPattern, RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            return Directory.GetFiles(path, "*.*", option).Where(s => reg.IsMatch(s)).ToArray();
+        }
 
 
-		/// <summary>
-		/// ÉèÖÃÎÄ¼şÊÇ·ñÖ»¶Á
-		/// </summary>
-		/// <param name="fullpath"></param>
-		/// <param name="flag">true±íÊ¾Ö»¶Á£¬·´Ö®</param>
-		public static void SetFileReadonly(string fullpath, bool flag)
-		{
-			FileInfo file = new FileInfo(fullpath);
-
-			if (flag)
-			{
-				// Ìí¼ÓÖ»¶ÁÊôĞÔ
-				file.Attributes |= FileAttributes.ReadOnly;
-			}
-			else
-			{
-				// ÒÆ³ıÖ»¶ÁÊôĞÔ
-				file.Attributes &= ~FileAttributes.ReadOnly;
-			}
-		}
+        /// <summary>
+        /// æ–‡ä»¶æ˜¯å¦åªè¯»
+        /// </summary>
+        /// <param name="fullpath"></param>
+        /// <returns></returns>
+        public static bool FileIsReadOnly(string fullpath)
+        {
+            FileInfo file = new FileInfo(fullpath);
+            if ((file.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
 
+        /// <summary>
+        /// è®¾ç½®æ–‡ä»¶æ˜¯å¦åªè¯»
+        /// </summary>
+        /// <param name="fullpath"></param>
+        /// <param name="flag">trueè¡¨ç¤ºåªè¯»ï¼Œåä¹‹</param>
+        public static void SetFileReadonly(string fullpath, bool flag)
+        {
+            FileInfo file = new FileInfo(fullpath);
 
-		/// <summary>
-		/// È¡ÎÄ¼ş×îºó´æ´¢Ê±¼ä
-		/// </summary>
-		/// <param name="fullpath"></param>
-		/// <returns></returns>
-		public static DateTime GetLastWriteTime(string fullpath)
-		{
-			FileInfo fi = new FileInfo(fullpath);
-			return fi.LastWriteTime;
-		}
+            if (flag)
+            {
+                // æ·»åŠ åªè¯»å±æ€§
+                file.Attributes |= FileAttributes.ReadOnly;
+            }
+            else
+            {
+                // ç§»é™¤åªè¯»å±æ€§
+                file.Attributes &= ~FileAttributes.ReadOnly;
+            }
+        }
 
 
 
-		/// <summary>
-		/// ¼ÆËãÒ»¸öÄ¿Â¼µÄ´óĞ¡
-		/// </summary>
-		/// <param name="di">Ö¸¶¨Ä¿Â¼</param>
-		/// <param name="includeSubDir">ÊÇ·ñ°üº¬×ÓÄ¿Â¼</param>
-		/// <returns></returns>
-		public static long CalculateDirectorySize(DirectoryInfo di, bool includeSubDir)
-		{
-			long totalSize = 0;
-
-			// ¼ì²éËùÓĞ£¨Ö±½Ó£©°üº¬µÄÎÄ¼ş
-			FileInfo[] files = di.GetFiles();
-			foreach (FileInfo file in files)
-			{
-				totalSize += file.Length;
-			}
-
-			// ¼ì²éËùÓĞ×ÓÄ¿Â¼£¬Èç¹ûincludeSubDir²ÎÊıÎªtrue
-			if (includeSubDir)
-			{
-				DirectoryInfo[] dirs = di.GetDirectories();
-				foreach (DirectoryInfo dir in dirs)
-				{
-					totalSize += CalculateDirectorySize(dir, includeSubDir);
-				}
-			}
-
-			return totalSize;
-		}
+        /// <summary>
+        /// å–æ–‡ä»¶æœ€åå­˜å‚¨æ—¶é—´
+        /// </summary>
+        /// <param name="fullpath"></param>
+        /// <returns></returns>
+        public static DateTime GetLastWriteTime(string fullpath)
+        {
+            FileInfo fi = new FileInfo(fullpath);
+            return fi.LastWriteTime;
+        }
 
 
 
-		/// <summary>
-		/// ¸´ÖÆÄ¿Â¼µ½Ä¿±êÄ¿Â¼
-		/// </summary>
-		/// <param name="source">Ô´Ä¿Â¼</param>
-		/// <param name="destination">Ä¿±êÄ¿Â¼</param>
-		public static void CopyDirectory(DirectoryInfo source, DirectoryInfo destination)
-		{
-			// Èç¹ûÁ½¸öÄ¿Â¼ÏàÍ¬£¬ÔòÎŞĞë¸´ÖÆ
-			if (destination.FullName.Equals(source.FullName))
-			{
-				return;
-			}
+        /// <summary>
+        /// è®¡ç®—ä¸€ä¸ªç›®å½•çš„å¤§å°
+        /// </summary>
+        /// <param name="di">æŒ‡å®šç›®å½•</param>
+        /// <param name="includeSubDir">æ˜¯å¦åŒ…å«å­ç›®å½•</param>
+        /// <returns></returns>
+        public static long CalculateDirectorySize(DirectoryInfo di, bool includeSubDir)
+        {
+            long totalSize = 0;
 
-			// Èç¹ûÄ¿±êÄ¿Â¼²»´æÔÚ£¬´´½¨Ëü
-			if (!destination.Exists)
-			{
-				destination.Create();
-			}
+            // æ£€æŸ¥æ‰€æœ‰ï¼ˆç›´æ¥ï¼‰åŒ…å«çš„æ–‡ä»¶
+            FileInfo[] files = di.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                totalSize += file.Length;
+            }
 
-			// ¸´ÖÆËùÓĞÎÄ¼ş
-			FileInfo[] files = source.GetFiles();
-			foreach (FileInfo file in files)
-			{
-				// ½«ÎÄ¼ş¸´ÖÆµ½Ä¿±êÄ¿Â¼
-				file.CopyTo(Path.Combine(destination.FullName, file.Name), true);
-			}
+            // æ£€æŸ¥æ‰€æœ‰å­ç›®å½•ï¼Œå¦‚æœincludeSubDirå‚æ•°ä¸ºtrue
+            if (includeSubDir)
+            {
+                DirectoryInfo[] dirs = di.GetDirectories();
+                foreach (DirectoryInfo dir in dirs)
+                {
+                    totalSize += CalculateDirectorySize(dir, includeSubDir);
+                }
+            }
 
-			// ´¦Àí×ÓÄ¿Â¼
-			DirectoryInfo[] dirs = source.GetDirectories();
-			foreach (DirectoryInfo dir in dirs)
-			{
-				string destinationDir = Path.Combine(destination.FullName, dir.Name);
-
-				// µİ¹é´¦Àí×ÓÄ¿Â¼
-				CopyDirectory(dir, new DirectoryInfo(destinationDir));
-			}
-		}
+            return totalSize;
+        }
 
 
-		/// <summary>
-		/// ºÏ²¢Á½¸öÂ·¾¶
-		/// </summary>
-		/// <param name="path1">Â·¾¶1</param>
-		/// <param name="path2">Â·¾¶2</param>
-		/// <param name="sourcePathIncludeFileName">Ö¸¶¨Â·¾¶1ÊÇ·ñ´øÓĞÎÄ¼şÃû¡£Èç¹ûÎªtrue£¬ÄÇÃ´»áÏÈ½«ÎÄ¼şÃûÈ¥³ı£¨È¡ÎÄ¼ş¼Ğ£©</param>
-		/// <returns>ºÏ²¢µÄÂ·¾¶</returns>
-		public static string CombinePath(string path1, string path2, bool sourcePathIncludeFileName = false)
-		{
-			var sep = Path.DirectorySeparatorChar;
-			var isWinOsPath = path1[1] == ':';
-			var newPath = "";
 
-			if (sourcePathIncludeFileName)
-				path1 = Path.GetDirectoryName(path1);
+        /// <summary>
+        /// å¤åˆ¶ç›®å½•åˆ°ç›®æ ‡ç›®å½•
+        /// </summary>
+        /// <param name="source">æºç›®å½•</param>
+        /// <param name="destination">ç›®æ ‡ç›®å½•</param>
+        public static void CopyDirectory(DirectoryInfo source, DirectoryInfo destination)
+        {
+            // å¦‚æœä¸¤ä¸ªç›®å½•ç›¸åŒï¼Œåˆ™æ— é¡»å¤åˆ¶
+            if (destination.FullName.Equals(source.FullName))
+            {
+                return;
+            }
 
-			if (path2.IsNullOrEmpty()) newPath = path1;
-			else if (path1.IsNullOrEmpty()) newPath = path2;
-			else if (path2[0] == sep)
-			{
-				if (isWinOsPath)
-				{
-					newPath = path1[0] + ":" + path2;
-				}
-				else
-					newPath = path2;
-			}
-			else
-			{
-				if (path1.Last() == sep) newPath = path1 + path2;
-				else newPath = path1 + sep + path2;
-			}
-			//¸ñÊ½»¯Â·¾¶
-			var stack = new Stack<string>();
-			var arrays = newPath.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
-			foreach (var item in arrays)
-			{
-				if (item == ".") continue;
-				if (item == "..")
-				{
-					if (stack.Count > 0) stack.Pop();
-					continue;
-				}
-				stack.Push(item);
-			}
-			var newPathArray = stack.ToArray();
-			Array.Reverse(newPathArray);
+            // å¦‚æœç›®æ ‡ç›®å½•ä¸å­˜åœ¨ï¼Œåˆ›å»ºå®ƒ
+            if (!destination.Exists)
+            {
+                destination.Create();
+            }
 
-			return newPathArray.Join(sep.ToString());
-		}
+            // å¤åˆ¶æ‰€æœ‰æ–‡ä»¶
+            FileInfo[] files = source.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                // å°†æ–‡ä»¶å¤åˆ¶åˆ°ç›®æ ‡ç›®å½•
+                file.CopyTo(Path.Combine(destination.FullName, file.Name), true);
+            }
 
-		/// <summary>
-		/// »ñµÃÏà¶ÔµØÖ·
-		/// </summary>
-		/// <param name="basePath">µ±Ç°µØÖ·</param>
-		/// <param name="secondPath">Òª×ª»»ÎªÏà¶ÔµØÖ·µÄÂ·¾¶</param>
-		/// <returns>Ïà¶ÔµØÖ·</returns>
-		public static string GetRelativePath(string basePath, string secondPath)
-		{
-			if (string.IsNullOrEmpty(secondPath) || string.IsNullOrEmpty(basePath) || char.ToLower(basePath[0]) != char.ToLower(secondPath[0]))
-				return secondPath;
+            // å¤„ç†å­ç›®å½•
+            DirectoryInfo[] dirs = source.GetDirectories();
+            foreach (DirectoryInfo dir in dirs)
+            {
+                string destinationDir = Path.Combine(destination.FullName, dir.Name);
 
-			var ps1 = basePath.Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries);
-			var ps2 = secondPath.Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries);
+                // é€’å½’å¤„ç†å­ç›®å½•
+                CopyDirectory(dir, new DirectoryInfo(destinationDir));
+            }
+        }
 
-			var upperBound = Math.Min(ps1.Length, ps2.Length);
-			var startIndex = Enumerable.Range(0, upperBound).FirstOrDefault(s => string.Compare(ps1[s], ps2[s], true) != 0);
 
-			if (startIndex == 0)
-				return secondPath;
-			if (ps1.Length == startIndex && ps2.Length <= startIndex)
-				return ".\\";
+        /// <summary>
+        /// åˆå¹¶ä¸¤ä¸ªè·¯å¾„
+        /// </summary>
+        /// <param name="path1">è·¯å¾„1</param>
+        /// <param name="path2">è·¯å¾„2</param>
+        /// <param name="sourcePathIncludeFileName">æŒ‡å®šè·¯å¾„1æ˜¯å¦å¸¦æœ‰æ–‡ä»¶åã€‚å¦‚æœä¸ºtrueï¼Œé‚£ä¹ˆä¼šå…ˆå°†æ–‡ä»¶åå»é™¤ï¼ˆå–æ–‡ä»¶å¤¹ï¼‰</param>
+        /// <returns>åˆå¹¶çš„è·¯å¾„</returns>
+        public static string CombinePath(string path1, string path2, bool sourcePathIncludeFileName = false)
+        {
+            var sep = Path.DirectorySeparatorChar;
+            var isWinOsPath = path1[1] == ':';
+            var newPath = "";
 
-			return string.Join(Path.DirectorySeparatorChar.ToString(), Enumerable.Repeat("..", ps1.Length - startIndex).Concat(ps2.Skip(startIndex)).ToArray());
-		}
+            if (sourcePathIncludeFileName)
+                path1 = Path.GetDirectoryName(path1);
 
-		/// <summary>
-		/// »ñµÃÓÃÓÚÏÔÊ¾µÄ¶ÌÂ·¾¶
-		/// </summary>
-		/// <param name="src"></param>
-		/// <param name="length"></param>
-		/// <returns></returns>
-		public static string GetShortDisplayPath(string src, int length)
-		{
-			if (string.IsNullOrEmpty(src)) return "";
+            if (path2.IsNullOrEmpty()) newPath = path1;
+            else if (path1.IsNullOrEmpty()) newPath = path2;
+            else if (path2[0] == sep)
+            {
+                if (isWinOsPath)
+                {
+                    newPath = path1[0] + ":" + path2;
+                }
+                else
+                    newPath = path2;
+            }
+            else
+            {
+                if (path1.Last() == sep) newPath = path1 + path2;
+                else newPath = path1 + sep + path2;
+            }
+            //æ ¼å¼åŒ–è·¯å¾„
+            var stack = new Stack<string>();
+            var arrays = newPath.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var item in arrays)
+            {
+                if (item == ".") continue;
+                if (item == "..")
+                {
+                    if (stack.Count > 0) stack.Pop();
+                    continue;
+                }
+                stack.Push(item);
+            }
+            var newPathArray = stack.ToArray();
+            Array.Reverse(newPathArray);
 
-			var fileName = Path.DirectorySeparatorChar + Path.GetFileName(src);
-			var directory = Path.GetDirectoryName(src);
+            return newPathArray.Join(sep.ToString());
+        }
 
-			var fileNameLength = fileName.Sum(s => s > 255 ? 2 : 1);
-			var restBytesCount = Math.Max(0, length - fileNameLength);
-			if (restBytesCount > 0) return directory.GetSubString(restBytesCount, "...") + fileName;
-			return fileName;
-		}
+        /// <summary>
+        /// è·å¾—ç›¸å¯¹åœ°å€
+        /// </summary>
+        /// <param name="basePath">å½“å‰åœ°å€</param>
+        /// <param name="secondPath">è¦è½¬æ¢ä¸ºç›¸å¯¹åœ°å€çš„è·¯å¾„</param>
+        /// <returns>ç›¸å¯¹åœ°å€</returns>
+        public static string GetRelativePath(string basePath, string secondPath)
+        {
+            if (string.IsNullOrEmpty(secondPath) || string.IsNullOrEmpty(basePath) || char.ToLower(basePath[0]) != char.ToLower(secondPath[0]))
+                return secondPath;
 
-		/// <summary>
-		/// ¸ù¾İÕıÔò±í´ïÊ½²éÕÒÎÄ¼ş
-		/// </summary>
-		/// <param name="path">²éÕÒÔ´Â·¾¶</param>
-		/// <param name="pattern">¹ıÂË±í´ïÊ½</param>
-		/// <param name="includeSubDirectory">ÊÇ·ñ°üÀ¨×ÓÎÄ¼ş¼Ğ</param>
-		/// <param name="applyFilerToPath">ÊÇ·ñ½«¹ıÂË±í´ïÊ½Ó¦ÓÃµ½ÍêÕûÂ·¾¶</param>
-		/// <returns></returns>
-		public static string[] RegFindFile(string path, string pattern, bool includeSubDirectory = true, bool applyFilerToPath = false)
-		{
-			var files = System.IO.Directory.GetFiles(path, "*.*", includeSubDirectory ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
-			pattern = "^" + pattern + "$";
+            var ps1 = basePath.Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries);
+            var ps2 = secondPath.Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries);
 
-			var query = files.AsQueryable();
-			if (applyFilerToPath)
-			{
-				query = query.Where(s => Regex.IsMatch(s, pattern));
-			}
-			else
-			{
-				query = query.Where(s => Regex.IsMatch(System.IO.Path.GetFileName(s), pattern));
-			}
+            var upperBound = Math.Min(ps1.Length, ps2.Length);
+            var startIndex = Enumerable.Range(0, upperBound).FirstOrDefault(s => string.Compare(ps1[s], ps2[s], true) != 0);
 
-			return query.ToArray();
-		}
-	}
+            if (startIndex == 0)
+                return secondPath;
+            if (ps1.Length == startIndex && ps2.Length <= startIndex)
+                return ".\\";
+
+            return string.Join(Path.DirectorySeparatorChar.ToString(), Enumerable.Repeat("..", ps1.Length - startIndex).Concat(ps2.Skip(startIndex)).ToArray());
+        }
+
+        /// <summary>
+        /// è·å¾—ç”¨äºæ˜¾ç¤ºçš„çŸ­è·¯å¾„
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string GetShortDisplayPath(string src, int length)
+        {
+            if (string.IsNullOrEmpty(src)) return "";
+
+            var fileName = Path.DirectorySeparatorChar + Path.GetFileName(src);
+            var directory = Path.GetDirectoryName(src);
+
+            var fileNameLength = fileName.Sum(s => s > 255 ? 2 : 1);
+            var restBytesCount = Math.Max(0, length - fileNameLength);
+            if (restBytesCount > 0) return directory.GetSubString(restBytesCount, "...") + fileName;
+            return fileName;
+        }
+
+        /// <summary>
+        /// æ ¹æ®æ­£åˆ™è¡¨è¾¾å¼æŸ¥æ‰¾æ–‡ä»¶
+        /// </summary>
+        /// <param name="path">æŸ¥æ‰¾æºè·¯å¾„</param>
+        /// <param name="pattern">è¿‡æ»¤è¡¨è¾¾å¼</param>
+        /// <param name="includeSubDirectory">æ˜¯å¦åŒ…æ‹¬å­æ–‡ä»¶å¤¹</param>
+        /// <param name="applyFilerToPath">æ˜¯å¦å°†è¿‡æ»¤è¡¨è¾¾å¼åº”ç”¨åˆ°å®Œæ•´è·¯å¾„</param>
+        /// <returns></returns>
+        public static string[] RegFindFile(string path, string pattern, bool includeSubDirectory = true, bool applyFilerToPath = false)
+        {
+            var files = System.IO.Directory.GetFiles(path, "*.*", includeSubDirectory ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+            pattern = "^" + pattern + "$";
+
+            var query = files.AsQueryable();
+            if (applyFilerToPath)
+            {
+                query = query.Where(s => Regex.IsMatch(s, pattern));
+            }
+            else
+            {
+                query = query.Where(s => Regex.IsMatch(System.IO.Path.GetFileName(s), pattern));
+            }
+
+            return query.ToArray();
+        }
+
+        [Flags]
+        public enum GetPathOptions
+        {
+            /// <summary>
+            /// æ— æ ‡è®°ä½
+            /// </summary>
+            None = 0,
+            /// <summary>
+            /// åŒ…å«å­æ–‡ä»¶å¤¹
+            /// </summary>
+            ScanSubDirectory = 1,
+            /// <summary>
+            /// åŒ…å«æ–‡ä»¶
+            /// </summary>
+            IncludeFile = 2,
+            /// <summary>
+            /// åŒ…å«æ–‡ä»¶å¤¹
+            /// </summary>
+            IncludeDirectory = 4,
+            /// <summary>
+            /// é»˜è®¤å€¼ï¼Œç­‰æ•ˆäº IncludeFile | ScanSubDirectory
+            /// </summary>
+            Default = IncludeFile | ScanSubDirectory
+        }
+
+        /// <summary>
+        /// è·å¾—æŒ‡å®šç›®å½•ä¸‹æ‰€æœ‰æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„ç›¸å¯¹è·¯å¾„
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="flags">æ ‡è®°ä½</param>
+        /// <returns></returns>
+        public static IEnumerable<string> GetDirectoryContainsByRelativePath(string path, GetPathOptions flags = GetPathOptions.Default) => GetDirectoryContainsByRelativePathInternal(string.Empty, path, flags);
+
+        /// <summary>
+        /// è·å¾—æŒ‡å®šç›®å½•ä¸‹æ‰€æœ‰æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„ç›¸å¯¹è·¯å¾„
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="flags">æ ‡è®°ä½</param>
+        /// <returns></returns>
+        internal static IEnumerable<string> GetDirectoryContainsByRelativePathInternal(string prefix, string path, GetPathOptions flags = GetPathOptions.Default)
+        {
+            if (path.IsNullOrEmpty())
+                throw new ArgumentException($"{nameof(path)} can not be null of empty.");
+            if (!Directory.Exists(path))
+                throw new DirectoryNotFoundException($"The directory {path} was not found.");
+
+            if ((flags & GetPathOptions.IncludeDirectory) != 0 && !prefix.IsNullOrEmpty())
+            {
+                yield return prefix + Path.DirectorySeparatorChar;
+            }
+
+            if ((flags & GetPathOptions.IncludeFile) != 0)
+            {
+                string[] files = null;
+                try
+                {
+                    files = Directory.GetFiles(path);
+                }
+                catch (Exception)
+                {
+                }
+
+                if (files != null)
+                {
+                    foreach (var file in files)
+                    {
+                        yield return Path.Combine(prefix, Path.GetFileName(file));
+                    }
+                }
+            }
+
+            if ((flags & GetPathOptions.ScanSubDirectory) != 0)
+            {
+                string[] subdirs = null;
+                try
+                {
+                    subdirs = Directory.GetDirectories(path);
+                }
+                catch (Exception)
+                {
+                }
+
+                if (subdirs != null)
+                {
+                    foreach (var subdir in subdirs)
+                    {
+                        foreach (var file in GetDirectoryContainsByRelativePathInternal(Path.Combine(prefix, Path.GetFileName(subdir)), subdir, flags))
+                        {
+                            yield return file;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
