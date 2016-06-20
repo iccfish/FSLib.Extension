@@ -203,6 +203,135 @@ namespace System
 			return -1;
 		}
 
+		/// <summary>
+		/// 在当前的数组中查找指定的匹配序列
+		/// </summary>
+		/// <param name="array">目标数组</param>
+		/// <param name="sequence">要搜索的目标</param>
+		/// <param name="startIndex">搜索起始索引</param>
+		/// <param name="comparer">比较器</param>
+		/// <typeparam name="T">当前数组类型</typeparam>
+		/// <returns>如果找到，则返回起始索引；否则返回-1</returns>
+		public static int FindSequence<T>(this T[] array, T[] sequence, int startIndex = 0, IEqualityComparer<T> comparer = null)
+		{
+
+			if (array == null || sequence == null || array.Length < sequence.Length + startIndex)
+				return -1;
+
+			if (comparer == null)
+				comparer = EqualityComparer<T>.Default;
+
+			var len = sequence.Length;
+			var limitLen = array.Length - sequence.Length;
+
+			for (var i = startIndex; i <= limitLen; i++)
+			{
+				var j = 0;
+				for (; j < len; j++)
+				{
+					if (!comparer.Equals(array[i], sequence[j]))
+						break;
+				}
+				if (j == len)
+					return i;
+			}
+
+			return -1;
+		}
+
+		/// <summary>
+		/// 在当前的数组中查找指定的匹配序列
+		/// </summary>
+		/// <param name="array">目标数组</param>
+		/// <param name="sequence">要搜索的目标</param>
+		/// <param name="startIndex">搜索起始索引</param>
+		/// <returns>如果找到，则返回起始索引；否则返回-1</returns>
+		public static int FindSequence(this byte[] array, byte[] sequence, int startIndex = 0)
+		{
+
+			if (array == null || sequence == null || array.Length < sequence.Length + startIndex)
+				return -1;
+
+			var len = sequence.Length;
+			var limitLen = array.Length - sequence.Length;
+
+			for (var i = startIndex; i <= limitLen; i++)
+			{
+				var j = 0;
+				for (; j < len; j++)
+				{
+					if (array[i] != sequence[j])
+						break;
+				}
+				if (j == len)
+					return i;
+			}
+
+			return -1;
+		}
+
+		/// <summary>
+		/// 在当前的数组中查找指定的匹配序列
+		/// </summary>
+		/// <param name="array">目标数组</param>
+		/// <param name="sequence">要搜索的目标</param>
+		/// <param name="startIndex">搜索起始索引</param>
+		/// <returns>如果找到，则返回起始索引；否则返回-1</returns>
+		public static int FindSequence(this int[] array, int[] sequence, int startIndex = 0)
+		{
+
+			if (array == null || sequence == null || array.Length < sequence.Length + startIndex)
+				return -1;
+
+			var len = sequence.Length;
+			var limitLen = array.Length - sequence.Length;
+
+			for (var i = startIndex; i <= limitLen; i++)
+			{
+				var j = 0;
+				for (; j < len; j++)
+				{
+					if (array[i] != sequence[j])
+						break;
+				}
+				if (j == len)
+					return i;
+			}
+
+			return -1;
+		}
+
+		/// <summary>
+		/// 在当前的数组中查找指定的匹配序列
+		/// </summary>
+		/// <param name="array">目标数组</param>
+		/// <param name="sequence">要搜索的目标</param>
+		/// <param name="startIndex">搜索起始索引</param>
+		/// <returns>如果找到，则返回起始索引；否则返回-1</returns>
+		public static int FindSequence(this char[] array, char[] sequence, int startIndex = 0)
+		{
+
+			if (array == null || sequence == null || array.Length < sequence.Length + startIndex)
+				return -1;
+
+			var len = sequence.Length;
+			var limitLen = array.Length - sequence.Length;
+
+			for (var i = startIndex; i <= limitLen; i++)
+			{
+				var j = 0;
+				for (; j < len; j++)
+				{
+					if (array[i] != sequence[j])
+						break;
+				}
+				if (j == len)
+					return i;
+			}
+
+			return -1;
+		}
+
 
 		#region byte[]
 
