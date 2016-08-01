@@ -6,20 +6,25 @@ namespace System.FishLib
 	using System.Linq;
 	using System.Text.RegularExpressions;
 
+	using Text;
+
 	/// <summary>
-	/// ÎÄ¼ş²Ù×÷¸¨ÖúÀà
+	/// æ–‡ä»¶æ“ä½œè¾…åŠ©ç±»
 	/// </summary>
 	/// <remarks>
-	/// ±¾¸¨Öú²Ù×÷ÀàµÄ×÷ÓÃÊÇÎªÁË¼ò»¯Ò»Ğ©´úÂë£¬Êµ¼ÊÉÏ¿¼ÂÇµ½³ÌĞòµÄĞÔÄÜÎÊÌâÊ±£¬¿ÉÄÜ»¹ÊÇÓÉ×ÔÒÑÀ´Õë¶Ô
-	/// ÌØ¶¨µÄFile Directory FileInfo DirectoryInfo Path Drive DriveInfoÀ´²Ù×÷¿ÉÄÜ¸üºÃ
+	/// æœ¬è¾…åŠ©æ“ä½œç±»çš„ä½œç”¨æ˜¯ä¸ºäº†ç®€åŒ–ä¸€äº›ä»£ç ï¼Œå®é™…ä¸Šè€ƒè™‘åˆ°ç¨‹åºçš„æ€§èƒ½é—®é¢˜æ—¶ï¼Œå¯èƒ½è¿˜æ˜¯ç”±è‡ªå·²æ¥é’ˆå¯¹
+	/// ç‰¹å®šçš„File Directory FileInfo DirectoryInfo Path Drive DriveInfoæ¥æ“ä½œå¯èƒ½æ›´å¥½
 	/// </remarks>
 	public static class IOUtility
 	{
+		private static HashSet<char> _invalidPathChars = Path.GetInvalidPathChars().ToHashSet();
+		private static HashSet<char> _invalidFileNameChars = Path.GetInvalidFileNameChars().ToHashSet();
+
 		/// <summary>
-		/// »ñµÃÖ¸¶¨Ä¿Â¼ÏÂµÄËùÓĞÎÄ¼ş¡£´Ë·½·¨½«»áÌø¹ıÎŞ·¨·ÃÎÊµÄÎÄ¼ş¼Ğ
+		/// è·å¾—æŒ‡å®šç›®å½•ä¸‹çš„æ‰€æœ‰æ–‡ä»¶ã€‚æ­¤æ–¹æ³•å°†ä¼šè·³è¿‡æ— æ³•è®¿é—®çš„æ–‡ä»¶å¤¹
 		/// </summary>
-		/// <param name="path">Òª»ñµÃµÄÄ¿Â¼</param>
-		/// <returns>°üº¬ÎÄ¼şÃûµÄÊı×é</returns>
+		/// <param name="path">è¦è·å¾—çš„ç›®å½•</param>
+		/// <returns>åŒ…å«æ–‡ä»¶åçš„æ•°ç»„</returns>
 		public static string[] GetAllFiles(string path)
 		{
 			if (path == null || path.IsNullOrEmpty())
@@ -44,20 +49,20 @@ namespace System.FishLib
 		}
 
 		/// <summary>
-		/// ·µ»ØÃ»ÓĞÇ°×º·ûºÅµÄÀ©Õ¹Ãû
+		/// è¿”å›æ²¡æœ‰å‰ç¼€ç¬¦å·çš„æ‰©å±•å
 		/// </summary>
-		/// <param name="path">Â·¾¶</param>
-		/// <returns>À©Õ¹Ãû</returns>
+		/// <param name="path">è·¯å¾„</param>
+		/// <returns>æ‰©å±•å</returns>
 		public static string GetExtensionWithoutDot(string path)
 		{
 			return Path.GetExtension(path).Trim('.');
 		}
 
 		/// <summary>
-		/// ½«Êı¾İÍêÈ«Ğ´ÈëÎÄ¼ş¡£µ±Ö¸¶¨Â·¾¶²»´æÔÚÊ±£¬»á×Ô¶¯´´½¨
+		/// å°†æ•°æ®å®Œå…¨å†™å…¥æ–‡ä»¶ã€‚å½“æŒ‡å®šè·¯å¾„ä¸å­˜åœ¨æ—¶ï¼Œä¼šè‡ªåŠ¨åˆ›å»º
 		/// </summary>
-		/// <param name="path">Â·¾¶</param>
-		/// <param name="data">Êı¾İ</param>
+		/// <param name="path">è·¯å¾„</param>
+		/// <param name="data">æ•°æ®</param>
 		public static void WriteAllBytes(string path, byte[] data)
 		{
 			Directory.CreateDirectory(Path.GetDirectoryName(path));
@@ -65,9 +70,9 @@ namespace System.FishLib
 		}
 
 		/// <summary>
-		/// ½«Êı¾İÍêÈ«Ğ´ÈëÎÄ¼ş¡£µ±Ö¸¶¨Â·¾¶²»´æÔÚÊ±£¬»á×Ô¶¯´´½¨
+		/// å°†æ•°æ®å®Œå…¨å†™å…¥æ–‡ä»¶ã€‚å½“æŒ‡å®šè·¯å¾„ä¸å­˜åœ¨æ—¶ï¼Œä¼šè‡ªåŠ¨åˆ›å»º
 		/// </summary>
-		/// <param name="path">Â·¾¶</param>
+		/// <param name="path">è·¯å¾„</param>
 		public static void WriteAllText(string path, string content)
 		{
 			Directory.CreateDirectory(Path.GetDirectoryName(path));
@@ -75,9 +80,9 @@ namespace System.FishLib
 		}
 
 		/// <summary>
-		/// ½«Êı¾İÍêÈ«Ğ´ÈëÎÄ¼ş¡£µ±Ö¸¶¨Â·¾¶²»´æÔÚÊ±£¬»á×Ô¶¯´´½¨
+		/// å°†æ•°æ®å®Œå…¨å†™å…¥æ–‡ä»¶ã€‚å½“æŒ‡å®šè·¯å¾„ä¸å­˜åœ¨æ—¶ï¼Œä¼šè‡ªåŠ¨åˆ›å»º
 		/// </summary>
-		/// <param name="path">Â·¾¶</param>
+		/// <param name="path">è·¯å¾„</param>
 		public static void WriteAllLines(string path, string[] lines)
 		{
 			Directory.CreateDirectory(Path.GetDirectoryName(path));
@@ -85,11 +90,11 @@ namespace System.FishLib
 		}
 
 		/// <summary>
-		/// »ñµÃÖ¸¶¨Ä¿Â¼ÏÂµÄÎÄ¼ş£¬²¢¸ù¾İÖ¸¶¨µÄ¹ıÂË¹æÔò½øĞĞ¹ıÂË
+		/// è·å¾—æŒ‡å®šç›®å½•ä¸‹çš„æ–‡ä»¶ï¼Œå¹¶æ ¹æ®æŒ‡å®šçš„è¿‡æ»¤è§„åˆ™è¿›è¡Œè¿‡æ»¤
 		/// </summary>
-		/// <param name="path">Òª¼ìË÷µÄÂ·¾¶</param>
-		/// <param name="searchPattern">¹ıÂË¹æÔò£¨ÕıÔò±í´ïÊ½£©</param>
-		/// <param name="option">ËÑË÷Ñ¡Ïî</param>
+		/// <param name="path">è¦æ£€ç´¢çš„è·¯å¾„</param>
+		/// <param name="searchPattern">è¿‡æ»¤è§„åˆ™ï¼ˆæ­£åˆ™è¡¨è¾¾å¼ï¼‰</param>
+		/// <param name="option">æœç´¢é€‰é¡¹</param>
 		/// <returns><see cref="T:System.Array"/></returns>
 		public static string[] GetFiles(string path, string searchPattern, SearchOption option)
 		{
@@ -99,7 +104,7 @@ namespace System.FishLib
 
 
 		/// <summary>
-		/// ÎÄ¼şÊÇ·ñÖ»¶Á
+		/// æ–‡ä»¶æ˜¯å¦åªè¯»
 		/// </summary>
 		/// <param name="fullpath"></param>
 		/// <returns></returns>
@@ -118,22 +123,22 @@ namespace System.FishLib
 
 
 		/// <summary>
-		/// ÉèÖÃÎÄ¼şÊÇ·ñÖ»¶Á
+		/// è®¾ç½®æ–‡ä»¶æ˜¯å¦åªè¯»
 		/// </summary>
 		/// <param name="fullpath"></param>
-		/// <param name="flag">true±íÊ¾Ö»¶Á£¬·´Ö®</param>
+		/// <param name="flag">trueè¡¨ç¤ºåªè¯»ï¼Œåä¹‹</param>
 		public static void SetFileReadonly(string fullpath, bool flag)
 		{
 			FileInfo file = new FileInfo(fullpath);
 
 			if (flag)
 			{
-				// Ìí¼ÓÖ»¶ÁÊôĞÔ
+				// æ·»åŠ åªè¯»å±æ€§
 				file.Attributes |= FileAttributes.ReadOnly;
 			}
 			else
 			{
-				// ÒÆ³ıÖ»¶ÁÊôĞÔ
+				// ç§»é™¤åªè¯»å±æ€§
 				file.Attributes &= ~FileAttributes.ReadOnly;
 			}
 		}
@@ -141,7 +146,7 @@ namespace System.FishLib
 
 
 		/// <summary>
-		/// È¡ÎÄ¼ş×îºó´æ´¢Ê±¼ä
+		/// å–æ–‡ä»¶æœ€åå­˜å‚¨æ—¶é—´
 		/// </summary>
 		/// <param name="fullpath"></param>
 		/// <returns></returns>
@@ -154,23 +159,23 @@ namespace System.FishLib
 
 
 		/// <summary>
-		/// ¼ÆËãÒ»¸öÄ¿Â¼µÄ´óĞ¡
+		/// è®¡ç®—ä¸€ä¸ªç›®å½•çš„å¤§å°
 		/// </summary>
-		/// <param name="di">Ö¸¶¨Ä¿Â¼</param>
-		/// <param name="includeSubDir">ÊÇ·ñ°üº¬×ÓÄ¿Â¼</param>
+		/// <param name="di">æŒ‡å®šç›®å½•</param>
+		/// <param name="includeSubDir">æ˜¯å¦åŒ…å«å­ç›®å½•</param>
 		/// <returns></returns>
 		public static long CalculateDirectorySize(DirectoryInfo di, bool includeSubDir)
 		{
 			long totalSize = 0;
 
-			// ¼ì²éËùÓĞ£¨Ö±½Ó£©°üº¬µÄÎÄ¼ş
+			// æ£€æŸ¥æ‰€æœ‰ï¼ˆç›´æ¥ï¼‰åŒ…å«çš„æ–‡ä»¶
 			FileInfo[] files = di.GetFiles();
 			foreach (FileInfo file in files)
 			{
 				totalSize += file.Length;
 			}
 
-			// ¼ì²éËùÓĞ×ÓÄ¿Â¼£¬Èç¹ûincludeSubDir²ÎÊıÎªtrue
+			// æ£€æŸ¥æ‰€æœ‰å­ç›®å½•ï¼Œå¦‚æœincludeSubDirå‚æ•°ä¸ºtrue
 			if (includeSubDir)
 			{
 				DirectoryInfo[] dirs = di.GetDirectories();
@@ -186,51 +191,51 @@ namespace System.FishLib
 
 
 		/// <summary>
-		/// ¸´ÖÆÄ¿Â¼µ½Ä¿±êÄ¿Â¼
+		/// å¤åˆ¶ç›®å½•åˆ°ç›®æ ‡ç›®å½•
 		/// </summary>
-		/// <param name="source">Ô´Ä¿Â¼</param>
-		/// <param name="destination">Ä¿±êÄ¿Â¼</param>
+		/// <param name="source">æºç›®å½•</param>
+		/// <param name="destination">ç›®æ ‡ç›®å½•</param>
 		public static void CopyDirectory(DirectoryInfo source, DirectoryInfo destination)
 		{
-			// Èç¹ûÁ½¸öÄ¿Â¼ÏàÍ¬£¬ÔòÎŞĞë¸´ÖÆ
+			// å¦‚æœä¸¤ä¸ªç›®å½•ç›¸åŒï¼Œåˆ™æ— é¡»å¤åˆ¶
 			if (destination.FullName.Equals(source.FullName))
 			{
 				return;
 			}
 
-			// Èç¹ûÄ¿±êÄ¿Â¼²»´æÔÚ£¬´´½¨Ëü
+			// å¦‚æœç›®æ ‡ç›®å½•ä¸å­˜åœ¨ï¼Œåˆ›å»ºå®ƒ
 			if (!destination.Exists)
 			{
 				destination.Create();
 			}
 
-			// ¸´ÖÆËùÓĞÎÄ¼ş
+			// å¤åˆ¶æ‰€æœ‰æ–‡ä»¶
 			FileInfo[] files = source.GetFiles();
 			foreach (FileInfo file in files)
 			{
-				// ½«ÎÄ¼ş¸´ÖÆµ½Ä¿±êÄ¿Â¼
+				// å°†æ–‡ä»¶å¤åˆ¶åˆ°ç›®æ ‡ç›®å½•
 				file.CopyTo(Path.Combine(destination.FullName, file.Name), true);
 			}
 
-			// ´¦Àí×ÓÄ¿Â¼
+			// å¤„ç†å­ç›®å½•
 			DirectoryInfo[] dirs = source.GetDirectories();
 			foreach (DirectoryInfo dir in dirs)
 			{
 				string destinationDir = Path.Combine(destination.FullName, dir.Name);
 
-				// µİ¹é´¦Àí×ÓÄ¿Â¼
+				// é€’å½’å¤„ç†å­ç›®å½•
 				CopyDirectory(dir, new DirectoryInfo(destinationDir));
 			}
 		}
 
 
 		/// <summary>
-		/// ºÏ²¢Á½¸öÂ·¾¶
+		/// åˆå¹¶ä¸¤ä¸ªè·¯å¾„
 		/// </summary>
-		/// <param name="path1">Â·¾¶1</param>
-		/// <param name="path2">Â·¾¶2</param>
-		/// <param name="sourcePathIncludeFileName">Ö¸¶¨Â·¾¶1ÊÇ·ñ´øÓĞÎÄ¼şÃû¡£Èç¹ûÎªtrue£¬ÄÇÃ´»áÏÈ½«ÎÄ¼şÃûÈ¥³ı£¨È¡ÎÄ¼ş¼Ğ£©</param>
-		/// <returns>ºÏ²¢µÄÂ·¾¶</returns>
+		/// <param name="path1">è·¯å¾„1</param>
+		/// <param name="path2">è·¯å¾„2</param>
+		/// <param name="sourcePathIncludeFileName">æŒ‡å®šè·¯å¾„1æ˜¯å¦å¸¦æœ‰æ–‡ä»¶åã€‚å¦‚æœä¸ºtrueï¼Œé‚£ä¹ˆä¼šå…ˆå°†æ–‡ä»¶åå»é™¤ï¼ˆå–æ–‡ä»¶å¤¹ï¼‰</param>
+		/// <returns>åˆå¹¶çš„è·¯å¾„</returns>
 		public static string CombinePath(string path1, string path2, bool sourcePathIncludeFileName = false)
 		{
 			var sep = Path.DirectorySeparatorChar;
@@ -256,7 +261,7 @@ namespace System.FishLib
 				if (path1.Last() == sep) newPath = path1 + path2;
 				else newPath = path1 + sep + path2;
 			}
-			//¸ñÊ½»¯Â·¾¶
+			//æ ¼å¼åŒ–è·¯å¾„
 			var stack = new Stack<string>();
 			var arrays = newPath.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
 			foreach (var item in arrays)
@@ -276,11 +281,11 @@ namespace System.FishLib
 		}
 
 		/// <summary>
-		/// »ñµÃÏà¶ÔµØÖ·
+		/// è·å¾—ç›¸å¯¹åœ°å€
 		/// </summary>
-		/// <param name="basePath">µ±Ç°µØÖ·</param>
-		/// <param name="secondPath">Òª×ª»»ÎªÏà¶ÔµØÖ·µÄÂ·¾¶</param>
-		/// <returns>Ïà¶ÔµØÖ·</returns>
+		/// <param name="basePath">å½“å‰åœ°å€</param>
+		/// <param name="secondPath">è¦è½¬æ¢ä¸ºç›¸å¯¹åœ°å€çš„è·¯å¾„</param>
+		/// <returns>ç›¸å¯¹åœ°å€</returns>
 		public static string GetRelativePath(string basePath, string secondPath)
 		{
 			if (string.IsNullOrEmpty(secondPath) || string.IsNullOrEmpty(basePath) || char.ToLower(basePath[0]) != char.ToLower(secondPath[0]))
@@ -301,7 +306,7 @@ namespace System.FishLib
 		}
 
 		/// <summary>
-		/// »ñµÃÓÃÓÚÏÔÊ¾µÄ¶ÌÂ·¾¶
+		/// è·å¾—ç”¨äºæ˜¾ç¤ºçš„çŸ­è·¯å¾„
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="length"></param>
@@ -320,12 +325,39 @@ namespace System.FishLib
 		}
 
 		/// <summary>
-		/// ¸ù¾İÕıÔò±í´ïÊ½²éÕÒÎÄ¼ş
+		/// ç§»é™¤æ— æ•ˆè·¯å¾„å­—ç¬¦
 		/// </summary>
-		/// <param name="path">²éÕÒÔ´Â·¾¶</param>
-		/// <param name="pattern">¹ıÂË±í´ïÊ½</param>
-		/// <param name="includeSubDirectory">ÊÇ·ñ°üÀ¨×ÓÎÄ¼ş¼Ğ</param>
-		/// <param name="applyFilerToPath">ÊÇ·ñ½«¹ıÂË±í´ïÊ½Ó¦ÓÃµ½ÍêÕûÂ·¾¶</param>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public static string RemoveInvalidPathChars(string path)
+		{
+			if (path.IsNullOrEmpty())
+				return path;
+
+			return new string(path.Where(s => !_invalidPathChars.Contains(s)).ToArray());
+		}
+
+		/// <summary>
+		/// ç§»é™¤æ— æ•ˆæ–‡ä»¶åå­—ç¬¦
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		public static string RemoveInvalidFileNameChars(string path)
+		{
+			if (path.IsNullOrEmpty())
+				return path;
+
+			return new string(path.Where(s => !_invalidFileNameChars.Contains(s)).ToArray());
+		}
+
+
+		/// <summary>
+		/// æ ¹æ®æ­£åˆ™è¡¨è¾¾å¼æŸ¥æ‰¾æ–‡ä»¶
+		/// </summary>
+		/// <param name="path">æŸ¥æ‰¾æºè·¯å¾„</param>
+		/// <param name="pattern">è¿‡æ»¤è¡¨è¾¾å¼</param>
+		/// <param name="includeSubDirectory">æ˜¯å¦åŒ…æ‹¬å­æ–‡ä»¶å¤¹</param>
+		/// <param name="applyFilerToPath">æ˜¯å¦å°†è¿‡æ»¤è¡¨è¾¾å¼åº”ç”¨åˆ°å®Œæ•´è·¯å¾„</param>
 		/// <returns></returns>
 		public static string[] RegFindFile(string path, string pattern, bool includeSubDirectory = true, bool applyFilerToPath = false)
 		{
