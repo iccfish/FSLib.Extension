@@ -711,7 +711,7 @@ namespace System.Windows.Forms
 		/// <param name="control"></param>
 		/// <param name="action"></param>
 		/// <returns></returns>
-		public static Action SaveInvoke(this Control control, Action action)
+		public static Action SafeInvoke(this Control control, Action action)
 		{
 			return () =>
 			{
@@ -730,7 +730,7 @@ namespace System.Windows.Forms
 		/// <param name="control"></param>
 		/// <param name="action"></param>
 		/// <returns></returns>
-		public static EventHandler SaveInvoke(this Control control, EventHandler action)
+		public static EventHandler SafeInvoke(this Control control, EventHandler action)
 		{
 			return (obj, ev) =>
 			{
@@ -747,7 +747,7 @@ namespace System.Windows.Forms
 		/// <param name="control"></param>
 		/// <param name="action"></param>
 		/// <returns></returns>
-		public static EventHandler<T> SaveInvoke<T>(this Control control, EventHandler<T> action) where T : EventArgs
+		public static EventHandler<T> SafeInvoke<T>(this Control control, EventHandler<T> action) where T : EventArgs
 		{
 			return (obj, ev) =>
 			{
@@ -766,7 +766,7 @@ namespace System.Windows.Forms
 		/// <param name="control"></param>
 		/// <param name="action"></param>
 		/// <returns></returns>
-		public static Action<T> SaveInvoke<T>(this Control control, Action<T> action) where T : EventArgs
+		public static Action<T> SafeInvoke<T>(this Control control, Action<T> action) where T : EventArgs
 		{
 			return (ev) =>
 			{
