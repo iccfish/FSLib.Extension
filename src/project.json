@@ -1,0 +1,150 @@
+{
+    "name": "extension.fishlee.net",
+    "title": "FSLib.Extension 通用扩展方法库",
+    "copyright": "Copyright © 木鱼  2014-2016",
+    "description": "包含大量为.NET编写的扩展方法和函数",
+    "version": "1.4.0.0",
+    "authors": [
+        "iFish"
+    ],
+    "packOptions": {
+        "tags": [
+            "extension"
+        ],
+        "summary": "A extension methods library for .net 3.5/4/4.5/core",
+        "releaseNotes": "增加了面向 .NET CORE 目标的库",
+        "owners": [ "iFish" ],
+        "iconUrl": "https://ssl-static.fishlee.net/resources/images/coquette/32x32/package.png",
+        "licenseUrl": "",
+        "files": {
+            "include": [
+                "content/*"
+            ]
+        },
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/iccfish/FSLib.Extension"
+        },
+        "requireLicenseAcceptance": false
+    },
+    "frameworks": {
+        "net35": {
+            "frameworkAssemblies": {
+                "System.Core": "3.5.0.0",
+                "System.Drawing": "2.0.0.0",
+                "System.Data": "2.0.0.0",
+                "System.Windows.Forms": "2.0.0.0",
+                "System.Xml": "2.0.0.0",
+                "System.Data.Linq": "3.5.0.0",
+                "System.Configuration": "2.0.0.0"
+            },
+            "buildOptions": {
+                "define": [
+                    "NET35"
+                ]
+            }
+        },
+        "net40": {
+            "frameworkAssemblies": {
+                "System.Core": "4.0.0.0",
+                "System.Drawing": "4.0.0.0",
+                "System.Data": "4.0.0.0",
+                "System.Windows.Forms": "4.0.0.0",
+                "System.Xml": "4.0.0.0",
+                "System.Data.Linq": "4.0.0.0",
+                "System.Configuration": "4.0.0.0"
+            },
+            "buildOptions": {
+                "define": [
+                    "NET40",
+                    "NET_GT_4"
+                ]
+            }
+        },
+        "net45": {
+            "frameworkAssemblies": {
+                "System.Configuration": "4.0.0.0",
+                "System.Core": "4.0.0.0",
+                "System.Data": "4.0.0.0",
+                "System.Data.Linq": "4.0.0.0",
+                "System.Drawing": "4.0.0.0",
+                "System.Windows.Forms": "4.0.0.0",
+                "System.Xml": "4.0.0.0"
+            },
+            "buildOptions": {
+                "define": [
+                    "NET45",
+                    "NET_GT_4",
+                    "NET_GT_45"
+                ]
+            }
+        },
+        "netstandard1.6": {
+            "imports": [
+                "dnxcore50"
+            ],
+            "dependencies": {
+                "NETStandard.Library": "1.6.0",
+                "System.ComponentModel": "4.0.1",
+                "System.ComponentModel.Primitives": "4.1.0",
+                "System.ComponentModel.TypeConverter": "4.1.0",
+                "System.Diagnostics.FileVersionInfo": "4.0.0",
+                "System.Diagnostics.Process": "4.1.0",
+                "System.Diagnostics.Tools": "4.0.1",
+                "System.ObjectModel": "4.0.12",
+                "System.Resources.ResourceManager": "4.0.1",
+                "System.Runtime": "4.1.0",
+                "System.Threading": "4.0.11",
+                "System.Threading.Tasks": "4.0.11",
+                "System.Threading.Tasks.Extensions": "4.0.0",
+                "System.Threading.Tasks.Parallel": "4.0.1",
+                "System.Threading.Thread": "4.0.0",
+                "System.Threading.ThreadPool": "4.0.10",
+                "System.Xml.XmlDocument": "4.0.1",
+                "System.Xml.XmlSerializer": "4.0.11"
+            },
+            "buildOptions": {
+                "compile": {
+                    "exclude": [
+                        "BinarySerializeHelper.cs",
+                        "Data/*",
+                        "FishLib/Diagnostics/CodeTimer.cs",
+                        "FishLib/Drawing/*",
+                        "FSLib_BinarySerializeExtension.cs",
+                        "Net/FSLib_Network_WebExtension.cs",
+                        "Properties/Resources*.cs",
+                        "Windows/*"
+                    ],
+                    "includeFiles": [
+                        "NetCore.FishTypeExtension.cs"
+                    ]
+                },
+                "define": [ "NET_CORE" ]
+            }
+        }
+    },
+    "configurations": {
+        "Release": {
+            "buildOptions": {
+                "define": [ "TRACE" ],
+                "optimize": true
+            }
+        },
+        "Debug": {
+            "buildOptions": {
+                "define": [ "DEBUG", "TRACE" ],
+                "optimize": false
+            }
+        }
+    },
+    "buildOptions": {
+        "keyFile": "ifish.snk",
+        "outputName": "FSLib.Extension",
+        "xmlDoc": true,
+        "compile": {
+            "exclude": [
+                "NetCore.FishTypeExtension.cs"
+            ]
+        }
+    }
+}

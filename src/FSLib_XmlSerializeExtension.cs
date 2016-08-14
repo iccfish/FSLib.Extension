@@ -5,15 +5,15 @@ namespace System
 	using Xml.Serialization;
 
 	/// <summary>
-	/// XMLĞòÁĞ»¯Ö§³ÖÀà
+	/// XMLåºåˆ—åŒ–æ”¯æŒç±»
 	/// </summary>
 	public static class FSLib_XmlSerializeExtension
 	{
 		/// <summary>
-		/// ĞòÁĞ»¯¶ÔÏóµ½ÎÄ¼ş
+		/// åºåˆ—åŒ–å¯¹è±¡åˆ°æ–‡ä»¶
 		/// </summary>
-		/// <param name="objectToSerialize">ÒªĞòÁĞ»¯µÄ¶ÔÏó</param>
-		/// <param name="fileName">±£´æµ½µÄÄ¿±êÎÄ¼ş</param>
+		/// <param name="objectToSerialize">è¦åºåˆ—åŒ–çš„å¯¹è±¡</param>
+		/// <param name="fileName">ä¿å­˜åˆ°çš„ç›®æ ‡æ–‡ä»¶</param>
 		public static void XmlSerilizeToFile(this object objectToSerialize, string fileName)
 		{
 			Directory.CreateDirectory(Path.GetDirectoryName(fileName));
@@ -21,15 +21,15 @@ namespace System
 			using (var stream = new FileStream(fileName, FileMode.Create))
 			{
 				objectToSerialize.XmlSerializeToStream(stream);
-				stream.Close();
+				stream.Dispose();
 			}
 		}
 
 		/// <summary>
-		/// ĞòÁĞ»¯¶ÔÏóÎªÎÄ±¾
+		/// åºåˆ—åŒ–å¯¹è±¡ä¸ºæ–‡æœ¬
 		/// </summary>
-		/// <param name="objectToSerialize">ÒªĞòÁĞ»¯µÄ¶ÔÏó</param>
-		/// <returns>±£´æĞÅÏ¢µÄ <see cref="T:System.String"/></returns>
+		/// <param name="objectToSerialize">è¦åºåˆ—åŒ–çš„å¯¹è±¡</param>
+		/// <returns>ä¿å­˜ä¿¡æ¯çš„ <see cref="T:System.String"/></returns>
 		public static string XmlSerializeToString(this object objectToSerialize)
 		{
 			if (objectToSerialize == null)
@@ -37,16 +37,16 @@ namespace System
 
 			using (var ms = objectToSerialize.XmlSerializeToStream())
 			{
-				ms.Close();
+				ms.Dispose();
 				return Text.Encoding.UTF8.GetString(ms.ToArray());
 			}
 		}
 
 		/// <summary>
-		/// ĞòÁĞ»¯Ö¸¶¨¶ÔÏóÎªÒ»¸öÄÚ´æÁ÷
+		/// åºåˆ—åŒ–æŒ‡å®šå¯¹è±¡ä¸ºä¸€ä¸ªå†…å­˜æµ
 		/// </summary>
-		/// <param name="objectToSerialize">ÒªĞòÁĞ»¯µÄ¶ÔÏó</param>
-		/// <returns>±£´æĞòÁĞ»¯ĞÅÏ¢µÄ <see cref="T:System.IO.MemoryStream"/></returns>
+		/// <param name="objectToSerialize">è¦åºåˆ—åŒ–çš„å¯¹è±¡</param>
+		/// <returns>ä¿å­˜åºåˆ—åŒ–ä¿¡æ¯çš„ <see cref="T:System.IO.MemoryStream"/></returns>
 		public static MemoryStream XmlSerializeToStream(this object objectToSerialize)
 		{
 			MemoryStream result;
@@ -60,10 +60,10 @@ namespace System
 		}
 
 		/// <summary>
-		/// ĞòÁĞ»¯Ö¸¶¨¶ÔÏóµ½Ö¸¶¨Á÷ÖĞ
+		/// åºåˆ—åŒ–æŒ‡å®šå¯¹è±¡åˆ°æŒ‡å®šæµä¸­
 		/// </summary>
-		/// <param name="objectToSerialize">ÒªĞòÁĞ»¯µÄ¶ÔÏó</param>
-		/// <param name="stream">Ä¿±êÁ÷</param>
+		/// <param name="objectToSerialize">è¦åºåˆ—åŒ–çš„å¯¹è±¡</param>
+		/// <param name="stream">ç›®æ ‡æµ</param>
 		public static void XmlSerializeToStream(this object objectToSerialize, Stream stream)
 		{
 			if (objectToSerialize == null || stream == null)
@@ -74,16 +74,16 @@ namespace System
 		}
 
 		/// <summary>
-		/// ´ÓÖ¸¶¨µÄ×Ö·û´®»òÎÄ¼şÖĞ·´ĞòÁĞ»¯¶ÔÏó
+		/// ä»æŒ‡å®šçš„å­—ç¬¦ä¸²æˆ–æ–‡ä»¶ä¸­ååºåˆ—åŒ–å¯¹è±¡
 		/// </summary>
-		/// <param name="type">Ä¿±êÀàĞÍ</param>
-		/// <param name="content">ÎÄ¼şÂ·¾¶»òXMLÎÄ±¾</param>
-		/// <returns>·´ĞòÁĞ»¯µÄ½á¹û</returns>
+		/// <param name="type">ç›®æ ‡ç±»å‹</param>
+		/// <param name="content">æ–‡ä»¶è·¯å¾„æˆ–XMLæ–‡æœ¬</param>
+		/// <returns>ååºåˆ—åŒ–çš„ç»“æœ</returns>
 		public static object XmlDeserialize(this Type type, string content)
 		{
 			content = content.Trim();
 
-			if (String.IsNullOrEmpty(content))
+			if (string.IsNullOrEmpty(content))
 				return null;
 			if (content[0] == '<')
 			{
@@ -103,28 +103,28 @@ namespace System
 		}
 
 		/// <summary>
-		/// ´ÓÎÄ¼şÖĞ·´ĞòÁĞ»¯Ö¸¶¨ÀàĞÍµÄ¶ÔÏó
+		/// ä»æ–‡ä»¶ä¸­ååºåˆ—åŒ–æŒ‡å®šç±»å‹çš„å¯¹è±¡
 		/// </summary>
-		/// <param name="objType">·´ĞòÁĞ»¯µÄ¶ÔÏóÀàĞÍ</param>
-		/// <param name="fileName">ÎÄ¼şÃû</param>
-		/// <returns>¶ÔÏó</returns>
+		/// <param name="objType">ååºåˆ—åŒ–çš„å¯¹è±¡ç±»å‹</param>
+		/// <param name="fileName">æ–‡ä»¶å</param>
+		/// <returns>å¯¹è±¡</returns>
 		public static object XmlDeserializeFromFile(string fileName, System.Type objType)
 		{
 			using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
 			{
 				object res = stream.XmlDeserialize(objType);
-				stream.Close();
+				stream.Dispose();
 				return res;
 			}
 		}
 
 
 		/// <summary>
-		/// ´ÓÁ÷ÖĞ·´ĞòÁĞ»¯³öÖ¸¶¨¶ÔÏóÀàĞÍµÄ¶ÔÏó
+		/// ä»æµä¸­ååºåˆ—åŒ–å‡ºæŒ‡å®šå¯¹è±¡ç±»å‹çš„å¯¹è±¡
 		/// </summary>
-		/// <param name="objType">¶ÔÏóÀàĞÍ</param>
-		/// <param name="stream">Á÷¶ÔÏó</param>
-		/// <returns>·´ĞòÁĞ½á¹û</returns>
+		/// <param name="objType">å¯¹è±¡ç±»å‹</param>
+		/// <param name="stream">æµå¯¹è±¡</param>
+		/// <returns>ååºåˆ—ç»“æœ</returns>
 		public static object XmlDeserialize(this Stream stream, System.Type objType)
 		{
 			var xso = new XmlSerializer(objType);
@@ -134,11 +134,11 @@ namespace System
 		}
 
 		/// <summary>
-		/// ´ÓÁ÷ÖĞ·´ĞòÁĞ»¯¶ÔÏó
+		/// ä»æµä¸­ååºåˆ—åŒ–å¯¹è±¡
 		/// </summary>
-		/// <typeparam name="T">¶ÔÏóÀàĞÍ</typeparam>
-		/// <param name="stream">Á÷¶ÔÏó</param>
-		/// <returns>·´ĞòÁĞ»¯½á¹û</returns>
+		/// <typeparam name="T">å¯¹è±¡ç±»å‹</typeparam>
+		/// <param name="stream">æµå¯¹è±¡</param>
+		/// <returns>ååºåˆ—åŒ–ç»“æœ</returns>
 		public static T XmlDeserialize<T>(this Stream stream) where T : class
 		{
 			T res = stream.XmlDeserialize(typeof(T)) as T;
@@ -147,9 +147,9 @@ namespace System
 		}
 
 		/// <summary>
-		/// ĞòÁĞ»¯ÎÄ±¾»òÎÄ¼şÎª¶ÔÏó
+		/// åºåˆ—åŒ–æ–‡æœ¬æˆ–æ–‡ä»¶ä¸ºå¯¹è±¡
 		/// </summary>
-		/// <returns>±£´æĞÅÏ¢µÄ <see cref="T:System.String"/></returns>
+		/// <returns>ä¿å­˜ä¿¡æ¯çš„ <see cref="T:System.String"/></returns>
 		public static T XmlDeserialize<T>(this string content) where T : class
 		{
 			return (T)typeof(T).XmlDeserialize(content);

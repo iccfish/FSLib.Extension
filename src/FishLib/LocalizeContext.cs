@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
+	using System.Reflection;
 	using System.Linq;
 
 	/// <summary>
@@ -50,6 +51,8 @@
 			return rm == null ? null : rm.GetString(key);
 		}
 
+#if !NET_CORE
+
 		/// <summary>
 		/// 从指定的强类型资源类中加载指定的字符串
 		/// </summary>
@@ -61,5 +64,6 @@
 			var rm = GetAttributeResourceManager(type);
 			return rm == null ? null : rm.GetStream(key);
 		}
+#endif
 	}
 }

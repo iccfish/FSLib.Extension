@@ -79,7 +79,7 @@
 		public static string GetLunisolarMonth(this ChineseLunisolarCalendar calendar, DateTime date)
 		{
 			var month = calendar.GetMonth(date);
-			var leapMonth = calendar.GetLeapMonth(calendar.GetYear(date));
+			var leapMonth = calendar.GetLeapMonth(calendar.GetYear(date), calendar.GetEra(date));
 			var isleep = leapMonth > 0 && leapMonth == month;
 
 			if (leapMonth > 0)

@@ -13,6 +13,7 @@
 	/// </summary>
 	public static class Reflection
 	{
+#if !NET_CORE
 		/// <summary>
 		/// 尝试加载程序集，如果加载失败，则返回NULL
 		/// </summary>
@@ -29,6 +30,8 @@
 				return null;
 			}
 		}
+
+#endif
 
 #if NET40
 		/// <summary>

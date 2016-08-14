@@ -3,7 +3,13 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Reflection;
 
+#if NET_CORE
+	using TypeInfo = System.Reflection.TypeInfo;
+#else
+	using TypeInfo = System.Type;
+#endif
 	/// <summary>
 	/// 工具类
 	/// </summary>
@@ -32,24 +38,25 @@
 		{
 			if (type == null) throw new ArgumentNullException("type");
 
-			var enumType = type;
+			var enumType = FishObjectExtension.GetTypeInfo(type);
 			if (enumType.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
 			{
-				enumType = enumType.GetGenericArguments()[0];
+				type = enumType.GetGenericArguments()[0];
+				enumType = FishObjectExtension.GetTypeInfo(type);
 			}
 			if (!enumType.IsEnum) throw new InvalidProgramException("Not an enum type.");
 
 			HashSet<string> result;
-			if (!_enumNameKeysCache.TryGetValue(enumType, out result))
+			if (!_enumNameKeysCache.TryGetValue(type, out result))
 			{
 				lock (_lockObject)
 				{
-					if (!_enumNameKeysCache.ContainsKey(enumType))
+					if (!_enumNameKeysCache.ContainsKey(type))
 					{
-						_enumNameKeysCache.Add(enumType, Enum.GetNames(enumType).ToHashSet(StringComparer.OrdinalIgnoreCase));
+						_enumNameKeysCache.Add(type, Enum.GetNames(type).ToHashSet(StringComparer.OrdinalIgnoreCase));
 					}
 				}
-				result = _enumNameKeysCache[enumType];
+				result = _enumNameKeysCache[type];
 			}
 
 			return result;

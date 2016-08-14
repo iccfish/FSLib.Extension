@@ -39,7 +39,7 @@ namespace System.FishExtension.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("System.FishExtension.Resources.SR", typeof(SR).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("System.FishExtension.Resources.SR",FishObjectExtension.GetTypeInfo(typeof(SR)).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

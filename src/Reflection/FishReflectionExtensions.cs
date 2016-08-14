@@ -20,7 +20,7 @@ namespace System.Reflection
 		/// <returns></returns>
 		public static bool HasInterface<T>(this Type t)
 		{
-			return t != null && t.GetInterface(typeof(T).FullName) != null;
+			return t != null && (FishObjectExtension.GetTypeInfo(t)).GetInterface(typeof(T).FullName) != null;
 		}
 
 		/// <summary>

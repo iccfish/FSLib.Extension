@@ -7,7 +7,7 @@ namespace System.IO
 {
 	using System.Runtime.InteropServices.ComTypes;
 	using System.Threading;
-#if NET_GT_4
+#if NET_GT_4 || NET_CORE
 	using Threading.Tasks;
 #endif
 
@@ -162,13 +162,11 @@ namespace System.IO
 			}
 		}
 
-		/// <summary>
-		/// 关闭当前流并释放与之关联的所有资源（如套接字和文件句柄）。
-		/// </summary>
-		public override void Close()
+		protected override void Dispose(bool disposing)
 		{
-			base.Close();
-			_innerStream.Close();
+			base.Dispose(disposing);
+
+			_innerStream.Dispose();
 		}
 
 		/// <summary>
@@ -195,6 +193,8 @@ namespace System.IO
 			OnPositionChanged();
 		}
 
+#if !NET_CORE
+
 		/// <summary>
 		/// 等待挂起的异步读取完成。 （考虑使用<see cref="M:System.IO.Stream.ReadAsync(System.Byte[],System.Int32,System.Int32)"/>进行替换；请参见“备注”部分。）
 		/// </summary>
@@ -219,7 +219,9 @@ namespace System.IO
 			OnPositionChanged();
 		}
 
-#if NET45
+#endif
+
+#if NET45 || NET_CORE
 
 		/// <summary>
 		/// 从当前流异步读取字节序列，将流中的位置向前移动读取的字节数，并监控取消请求。

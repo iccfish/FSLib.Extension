@@ -6,8 +6,6 @@
     using System.Linq;
     using System.Text.RegularExpressions;
 
-	using Text;
-
     /// <summary>
     /// 文件操作辅助类
     /// </summary>
@@ -17,9 +15,6 @@
     /// </remarks>
     public static class IOUtility
     {
-		private static HashSet<char> _invalidPathChars = Path.GetInvalidPathChars().ToHashSet();
-		private static HashSet<char> _invalidFileNameChars = Path.GetInvalidFileNameChars().ToHashSet();
-
         /// <summary>
         /// 获得指定目录下的所有文件。此方法将会跳过无法访问的文件夹
         /// </summary>
@@ -325,33 +320,6 @@
         }
 
         /// <summary>
-		/// 移除无效路径字符
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		public static string RemoveInvalidPathChars(string path)
-		{
-			if (path.IsNullOrEmpty())
-				return path;
-
-			return new string(path.Where(s => !_invalidPathChars.Contains(s)).ToArray());
-		}
-
-		/// <summary>
-		/// 移除无效文件名字符
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		public static string RemoveInvalidFileNameChars(string path)
-		{
-			if (path.IsNullOrEmpty())
-				return path;
-
-			return new string(path.Where(s => !_invalidFileNameChars.Contains(s)).ToArray());
-		}
-
-
-		/// <summary>
         /// 根据正则表达式查找文件
         /// </summary>
         /// <param name="path">查找源路径</param>
@@ -364,7 +332,7 @@
             var files = System.IO.Directory.GetFiles(path, "*.*", includeSubDirectory ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             pattern = "^" + pattern + "$";
 
-            var query = files.AsQueryable();
+            var query = files.AsEnumerable();
             if (applyFilerToPath)
             {
                 query = query.Where(s => Regex.IsMatch(s, pattern));

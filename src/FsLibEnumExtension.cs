@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using FSLib;
 
 // ReSharper disable once CheckNamespace
 namespace System
 {
 	using FishLib;
+	using System.Reflection;
 
 	/// <summary>
 	/// 枚举的扩展
@@ -27,7 +24,12 @@ namespace System
 		/// <returns></returns>
 		public static List<Description> GetEnumDescription(this Type type)
 		{
-			if (type == null || type.BaseType != typeof(Enum)) throw new InvalidOperationException();
+#if NET_CORE
+			var typeInfo = type?.GetTypeInfo();
+#else
+			var typeInfo = type;
+#endif
+			if (type == null || typeInfo.BaseType != typeof(Enum)) throw new InvalidOperationException();
 
 			var result = EnumDescriptionCache.GetValue(type);
 			if (result == null)
@@ -36,7 +38,7 @@ namespace System
 				{
 					if (result == null)
 					{
-						var fields = type.GetFields();
+						var fields = typeInfo.GetFields();
 						result = new List<Description>(fields.Length);
 
 						foreach (var f in fields)
@@ -58,7 +60,6 @@ namespace System
 				}
 			}
 
-
 			return result;
 		}
 
@@ -68,9 +69,10 @@ namespace System
 		/// <returns></returns>
 		public static List<DescriptionGeneric<T>> GetEnumDescription<T>()
 		{
-			var type = typeof(T);
+			var type = FishObjectExtension.GetTypeInfo(typeof(T));
 
-			if (type.BaseType != typeof(Enum)) throw new InvalidOperationException();
+			if (type.BaseType != typeof(Enum))
+				throw new InvalidOperationException();
 
 			var fields = type.GetFields();
 			var list = new List<DescriptionGeneric<T>>(fields.Length);

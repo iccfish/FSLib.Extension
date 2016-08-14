@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.FishExtension;
 using System.FishExtension.Resources;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace System
 {
@@ -421,7 +417,7 @@ namespace System
 		{
 			if (key == null) throw new ArgumentNullException();
 
-			var md5 = System.Security.Cryptography.MD5CryptoServiceProvider.Create();
+			var md5 = Security.Cryptography.MD5.Create();
 			var has = md5.ComputeHash(encoding.GetBytes(key));
 			return BitConverter.ToString(has).Replace("-", "").ToUpper();
 		}
@@ -826,6 +822,8 @@ namespace System
 
 		#endregion
 
+#if !NET_CORE
+
 		#region ToPoint
 
 		/// <summary>
@@ -845,6 +843,8 @@ namespace System
 		}
 
 		#endregion
+
+#endif
 
 		#region 对象扩展
 
@@ -897,7 +897,7 @@ namespace System
 			using (var sw = new System.IO.StreamWriter(gzip, System.Text.Encoding.UTF8))
 			{
 				sw.Write(source);
-				sw.Close();
+				sw.Dispose();
 				return ms.ToArray();
 			}
 		}
@@ -933,6 +933,8 @@ namespace System
 
 		#endregion
 
+#if !NET_CORE
+
 		#region 其它对象到字符串转换
 
 		/// <summary>
@@ -948,5 +950,7 @@ namespace System
 		}
 
 		#endregion
+
+#endif
 	}
 }

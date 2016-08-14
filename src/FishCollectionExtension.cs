@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
 
 namespace System
 {
@@ -13,6 +10,7 @@ namespace System
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	public static class FishCollectionExtension
 	{
+#if !NET_CORE
 		#region NameValueCollection
 
 		/// <summary>
@@ -68,6 +66,7 @@ namespace System
 
 
 		#endregion
+#endif
 
 		#region 列表
 

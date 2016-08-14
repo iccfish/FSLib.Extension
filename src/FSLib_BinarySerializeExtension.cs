@@ -5,16 +5,16 @@ namespace System
 	using Runtime.Serialization.Formatters.Binary;
 
 	/// <summary>
-	/// XMLĞòÁĞ»¯Ö§³ÖÀà
+	/// XMLåºåˆ—åŒ–æ”¯æŒç±»
 	/// </summary>
 	public static class FSLib_BinarySerializeExtension
 	{
 
 		/// <summary>
-		/// ĞòÁĞ»¯¶ÔÏóµ½ÎÄ¼ş
+		/// åºåˆ—åŒ–å¯¹è±¡åˆ°æ–‡ä»¶
 		/// </summary>
-		/// <param name="ObjectToSerilize">ÒªĞòÁĞ»¯µÄ¶ÔÏó</param>
-		/// <param name="FileName">±£´æµ½µÄÎÄ¼şÂ·¾¶</param>
+		/// <param name="ObjectToSerilize">è¦åºåˆ—åŒ–çš„å¯¹è±¡</param>
+		/// <param name="FileName">ä¿å­˜åˆ°çš„æ–‡ä»¶è·¯å¾„</param>
 		public static void SerializeToFile(this object ObjectToSerialize, string FileName)
 		{
 			if (ObjectToSerialize == null || String.IsNullOrEmpty(FileName))
@@ -23,15 +23,15 @@ namespace System
 			using (FileStream stream = new FileStream(FileName, FileMode.Create))
 			{
 				SerializeToStream(ObjectToSerialize, stream);
-				stream.Close();
+				stream.Dispose();
 			}
 		}
 
 		/// <summary>
-		/// ĞòÁĞ»¯¶ÔÏóµ½×Ö½ÚÊı×é
+		/// åºåˆ—åŒ–å¯¹è±¡åˆ°å­—èŠ‚æ•°ç»„
 		/// </summary>
-		/// <param name="objectToSerialize">ÒªĞòÁĞ»¯µÄ¶ÔÏó</param>
-		/// <returns>·µ»Ø´´½¨ºóµÄ×Ö½ÚÊı×é</returns>
+		/// <param name="objectToSerialize">è¦åºåˆ—åŒ–çš„å¯¹è±¡</param>
+		/// <returns>è¿”å›åˆ›å»ºåçš„å­—èŠ‚æ•°ç»„</returns>
 		public static byte[] SerializeToBytes(this object objectToSerialize)
 		{
 			byte[] result = null;
@@ -41,7 +41,7 @@ namespace System
 			using (var ms = new MemoryStream())
 			{
 				objectToSerialize.SerializeToStream(ms);
-				ms.Close();
+				ms.Dispose();
 				result = ms.ToArray();
 			}
 
@@ -49,10 +49,10 @@ namespace System
 		}
 
 		/// <summary>
-		/// ĞòÁĞ»¯¶ÔÏóµ½Á÷
+		/// åºåˆ—åŒ–å¯¹è±¡åˆ°æµ
 		/// </summary>
-		/// <param name="objectToSerialize">ÒªĞòÁĞ»¯µÄ¶ÔÏó</param>
-		/// <param name="stream">±£´æ¶ÔÏóĞÅÏ¢µÄÁ÷</param>
+		/// <param name="objectToSerialize">è¦åºåˆ—åŒ–çš„å¯¹è±¡</param>
+		/// <param name="stream">ä¿å­˜å¯¹è±¡ä¿¡æ¯çš„æµ</param>
 		public static void SerializeToStream(this object objectToSerialize, Stream stream)
 		{
 			if (objectToSerialize == null || stream == null)
@@ -63,10 +63,10 @@ namespace System
 		}
 
 		/// <summary>
-		/// ´ÓÁ÷ÖĞ·´ĞòÁĞ»¯¶ÔÏó
+		/// ä»æµä¸­ååºåˆ—åŒ–å¯¹è±¡
 		/// </summary>
-		/// <param name="stream">Á÷</param>
-		/// <returns>·´ĞòÁĞ»¯µÄ¶ÔÏó</returns>
+		/// <param name="stream">æµ</param>
+		/// <returns>ååºåˆ—åŒ–çš„å¯¹è±¡</returns>
 		public static object DeserializeFromStream(this Stream stream)
 		{
 			object result = null;

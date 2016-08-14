@@ -4,9 +4,12 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+#if !NET_CORE
 using System.Drawing;
 using System.Drawing.Imaging;
+#endif
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace System
@@ -19,6 +22,7 @@ namespace System
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	public static class FishObjectExtension
 	{
+#if !NET_CORE
 		#region System.Drawing.Image
 
 		/// <summary>
@@ -122,7 +126,15 @@ namespace System
 
 		#endregion
 
-		#region Reflection
+#endif
+
+#region Reflection
+
+#if NET_CORE
+		internal static TypeInfo GetTypeInfo(Type type) => type.GetTypeInfo();
+#else
+		internal static Type GetTypeInfo(Type type) => type;
+#endif
 
 		/// <summary>
 		/// 根据指定的自定义属性来过滤类型列表
@@ -132,7 +144,7 @@ namespace System
 		/// <returns>查找到的结果</returns>
 		public static Dictionary<Type, T[]> GetFilteredTypeWithCustomerAttribute<T>(this Assembly assembly)
 		{
-			var dic = assembly.GetTypes().ToDictionary(s => s, s => s.GetCustomAttributes(typeof(T), true).Cast<T>().ToArray());
+			var dic = assembly.GetTypes().ToDictionary(s => s, s => GetTypeInfo(s).GetCustomAttributes(typeof(T), true).Cast<T>().ToArray());
 			dic.Keys.Where(s => dic[s].Length == 0).ToArray().ForEach(s => dic.Remove(s));
 			return dic;
 		}
@@ -157,7 +169,7 @@ namespace System
 		/// <returns>查找到的结果</returns>
 		public static Dictionary<MethodInfo, T[]> GetFilteredMethodWithCustomerAttribute<T>(this Type type, BindingFlags flags)
 		{
-			var dic = type.GetMethods(flags).ToDictionary(s => s, s => s.GetCustomAttributes(typeof(T), true).Cast<T>().ToArray());
+			var dic = GetTypeInfo(type).GetMethods(flags).ToDictionary(s => s, s => s.GetCustomAttributes(typeof(T), true).Cast<T>().ToArray());
 			dic.Keys.Where(s => dic[s].Length == 0).ToArray().ForEach(s => dic.Remove(s));
 			return dic;
 		}
@@ -182,7 +194,7 @@ namespace System
 		/// <returns>查找到的结果</returns>
 		public static Dictionary<PropertyInfo, T[]> GetFilteredPropertyWithCustomerAttribute<T>(this Type type, BindingFlags flags)
 		{
-			var dic = type.GetProperties(flags).ToDictionary(s => s, s => s.GetCustomAttributes(typeof(T), true).Cast<T>().ToArray());
+			var dic = GetTypeInfo(type).GetProperties(flags).ToDictionary(s => s, s => s.GetCustomAttributes(typeof(T), true).Cast<T>().ToArray());
 			dic.Keys.Where(s => dic[s].Length == 0).ToArray().ForEach(s => dic.Remove(s));
 			return dic;
 		}
@@ -217,6 +229,8 @@ namespace System
 			return System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
 		}
 
+#if !NET_CORE
+
 		/// <summary>
 		/// 对类型列表进行过滤。
 		/// </summary>
@@ -224,11 +238,11 @@ namespace System
 		/// <param name="typeList">要过滤的类型列表</param>
 		/// <param name="imp">对应的类型</param>
 		/// <returns>过滤后的类型列表</returns>
+		[Obsolete("This method was meaning less and will be removed soon.")]
 		public static IEnumerable<Type> FilterType<T>(this IEnumerable<Type> typeList)
 		{
 			return FilterType<T>(typeList, false);
 		}
-
 		/// <summary>
 		/// 对类型列表进行过滤。
 		/// </summary>
@@ -237,10 +251,11 @@ namespace System
 		/// <param name="imp">对应的类型</param>
 		/// <param name="ignoreAttribute">是否忽略自定义属性；如果为 true，则传入自定义属性时，不会按照自定义属性过滤</param>
 		/// <returns>过滤后的类型列表</returns>
+		[Obsolete("This method was meaning less and will be removed soon.")]
 		public static IEnumerable<Type> FilterType<T>(this IEnumerable<Type> typeList, bool ignoreAttribute)
 		{
 			var t = typeof(T);
-
+			
 			if (t.IsInterface)
 			{
 				return typeList.Where(s => s.GetInterface(t.FullName) != null);
@@ -257,15 +272,21 @@ namespace System
 			return typeList;
 		}
 
+#endif
+#if !NET_CORE
+
 		/// <summary>
 		/// 获得类的完整名称（含程序集名称）
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
+		[Obsolete("This method will be removed soon and not intend to use. Using `type.AssemblyQualifiedName` instead.")]
 		public static string GetTypeFullNameWithAssembly(this Type type)
 		{
 			return type.FullName + ", " + System.IO.Path.GetFileNameWithoutExtension(type.Assembly.Location);
 		}
+
+#endif
 
 		/// <summary>
 		/// 获得自定义属性
@@ -295,6 +316,8 @@ namespace System
 			return type.GetCustomAttributes(typeof(T), false).Cast<T>().ToArray();
 		}
 
+#if !NET_CORE
+
 		/// <summary>
 		/// 获得程序集是否是调试版本编译的
 		/// </summary>
@@ -309,9 +332,11 @@ namespace System
 			return !debugAttributes.IsEmpty() && debugAttributes[0].IsJITTrackingEnabled;
 		}
 
-		#endregion
+#endif
 
-		#region Common
+#endregion
+
+#region Common
 
 		/// <summary>
 		/// 将对象选择为字符串并进行格式化
@@ -467,9 +492,9 @@ namespace System
 			return src.Where(s => s != null).Select(s => s.ToString()).Join(seperator);
 		}
 
-		#endregion
+#endregion
 
-		#region Regex
+#region Regex
 
 		/// <summary>
 		/// 获得一个匹配结果中指定分组的值
@@ -482,9 +507,9 @@ namespace System
 			return match == null || !match.Success || match.Groups.Count <= index ? null : match.Groups[index].Value;
 		}
 
-		#endregion
+#endregion
 
-		#region IEnumerable
+#region IEnumerable
 
 		/// <summary>
 		/// 对两个序列进行合并。如果其中一个是null，则返回另一个
@@ -565,9 +590,9 @@ namespace System
 			return result;
 		}
 
-		#endregion
+#endregion
 
-		#region Uri
+#region Uri
 
 		/// <summary>
 		/// 获得指定地址中的文件名
@@ -598,9 +623,9 @@ namespace System
 		}
 
 
-		#endregion
+#endregion
 
-		#region Stream
+#region Stream
 
 		/// <summary>
 		/// 从流中读入一个 <see cref="T:System.Int16"/>
@@ -864,9 +889,9 @@ namespace System
 			return stream;
 		}
 
-		#endregion
+#endregion
 
-		#region 其它
+#region 其它
 
 		/// <summary>
 		/// 对指定的数据进行条件判断，如果符合要求则执行
@@ -942,12 +967,12 @@ namespace System
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region 转换
+#region 转换
 
 
-		#endregion
+#endregion
 		/// <summary>
 		/// True if object is value type.
 		/// </summary>

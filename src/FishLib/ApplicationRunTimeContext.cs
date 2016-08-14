@@ -34,7 +34,7 @@ namespace System.FishLib
 		/// </summary>
 		public static bool IsLinux { get; private set; }
 
-
+#if !NET_CORE
 		/// <summary>
 		/// 获得当前进程的主模块
 		/// </summary>
@@ -62,5 +62,6 @@ namespace System.FishLib
 			var path = GetProcessMainModule()?.FileName;
 			return string.IsNullOrEmpty(path) ? null : Path.GetDirectoryName(path);
 		}
+#endif
 	}
 }

@@ -1,8 +1,3 @@
-using System.Diagnostics;
-using System.Data;
-using System.Collections;
-using Microsoft.VisualBasic;
-using System.Collections.Generic;
 using System;
 using System.IO;
 
@@ -14,31 +9,31 @@ namespace System
 namespace FSLib.IO.SerializeHelper
 {
 	/// <summary>
-	/// ¶ş½øÖÆĞòÁĞ»¯¸¨ÖúÀà
+	/// äºŒè¿›åˆ¶åºåˆ—åŒ–è¾…åŠ©ç±»
 	/// </summary>
 	public static class BinarySerializeHelper
 	{
 
 		/// <summary>
-		/// ´ÓÎÄ¼şÖĞ·´ĞòÁĞ»¯¶ÔÏó
+		/// ä»æ–‡ä»¶ä¸­ååºåˆ—åŒ–å¯¹è±¡
 		/// </summary>
-		/// <param name="FileName">ÎÄ¼şÃû</param>
-		/// <returns>Ô­¶ÔÏó</returns>
+		/// <param name="FileName">æ–‡ä»¶å</param>
+		/// <returns>åŸå¯¹è±¡</returns>
 		public static object DeserializeFromFile(string FileName)
 		{
 			using (FileStream stream = new FileStream(FileName, FileMode.Open))
 			{
 				object res = stream.DeserializeFromStream();
-				stream.Close();
+				stream.Dispose();
 				return res;
 			}
 		}
 
 		/// <summary>
-		/// ´Ó×Ö½ÚÊı×éÖĞ·´ĞòÁĞ»¯
+		/// ä»å­—èŠ‚æ•°ç»„ä¸­ååºåˆ—åŒ–
 		/// </summary>
-		/// <param name="array">×Ö½ÚÊı×é</param>
-		/// <returns>ĞòÁĞ»¯½á¹û</returns>
+		/// <param name="array">å­—èŠ‚æ•°ç»„</param>
+		/// <returns>åºåˆ—åŒ–ç»“æœ</returns>
 		public static object DeserialzieFromBytes(byte[] array)
 		{
 			object result = null;
@@ -51,7 +46,7 @@ namespace FSLib.IO.SerializeHelper
 				ms.Seek(0, SeekOrigin.Begin);
 
 				result = ms.DeserializeFromStream();
-				ms.Close();
+				ms.Dispose();
 			}
 
 			return result;

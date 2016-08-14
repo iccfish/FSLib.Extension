@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+#if !NET_CORE
 using System.Drawing;
 using System.ComponentModel;
+#endif
+using System.Security.Cryptography;
 
 namespace System
 {
 	/// <summary>
 	/// 对数组的扩展方法
 	/// </summary>
-	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+#if !NET_CORE
+[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+#endif
 	public static class FishArrayExtension
 	{
 		/// <summary>
@@ -345,6 +350,8 @@ namespace System
 			return Convert.ToBase64String(array);
 		}
 
+#if !NET_CORE
+
 		/// <summary>
 		/// 将指定的字节数组转换为Image图像对象
 		/// </summary>
@@ -360,7 +367,7 @@ namespace System
 					ms.Seek(0, System.IO.SeekOrigin.Begin);
 
 					var img = Image.FromStream(ms);
-					ms.Close();
+					ms.Dispose();
 
 					return img;
 				}
@@ -370,6 +377,8 @@ namespace System
 				return null;
 			}
 		}
+
+#endif
 
 		/// <summary>
 		/// 将指定的数值转换为字节组
@@ -903,7 +912,7 @@ namespace System
 		/// <returns></returns>
 		public static byte[] MD5(this byte[] source)
 		{
-			var md5 = System.Security.Cryptography.MD5CryptoServiceProvider.Create();
+			var md5 = System.Security.Cryptography.MD5.Create();
 			return md5.ComputeHash(source);
 		}
 
@@ -924,7 +933,7 @@ namespace System
 		/// <returns></returns>
 		public static byte[] Sha1(this byte[] source)
 		{
-			var sha1 = System.Security.Cryptography.SHA1CryptoServiceProvider.Create();
+			var sha1 = SHA1.Create();
 			return sha1.ComputeHash(source);
 		}
 
@@ -949,7 +958,7 @@ namespace System
 			using (var gzip = new System.IO.Compression.GZipStream(ms, CompressionMode.Compress))
 			{
 				gzip.Write(source);
-				gzip.Close();
+				gzip.Dispose();
 				return ms.ToArray();
 			}
 		}
@@ -971,7 +980,7 @@ namespace System
 				{
 					msout.Write(buffer, 0, count);
 				}
-				msout.Close();
+				msout.Dispose();
 
 				return msout.ToArray();
 			}

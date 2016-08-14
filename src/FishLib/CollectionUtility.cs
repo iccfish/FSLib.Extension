@@ -68,7 +68,12 @@ namespace System.FishLib
 		public static byte[] GetRandomBytesBuffer(int length)
 		{
 			var buffer = new byte[length];
+
+#if NET_CORE
+			var generator = RandomNumberGenerator.Create();
+#else
 			var generator = new RNGCryptoServiceProvider();
+#endif
 			generator.GetBytes(buffer);
 
 			return buffer;
