@@ -3,7 +3,7 @@
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly xdt:Transform="Remove"
-          xdt:Locator="Condition(./_defaultNamespace:assemblyIdentity/@name='FSLib.Network')" >
+          xdt:Locator="Condition(./_defaultNamespace:assemblyIdentity/@name='FSLib.Extension')" >
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
