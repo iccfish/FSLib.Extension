@@ -27,7 +27,7 @@
 		<assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
 			<dependentAssembly xdt:Transform="Insert">
 				<assemblyIdentity name="FSLib.Extension" publicKeyToken="61d6a007a0eb6994"  />
-				<bindingRedirect oldVersion="1.0.0.0-1.4.2.0" newVersion="1.4.2.0" />
+				<bindingRedirect oldVersion="1.0.0.0-1.4.3.0" newVersion="1.4.3.0" />
 			</dependentAssembly>
 		</assemblyBinding>
 	</runtime>
