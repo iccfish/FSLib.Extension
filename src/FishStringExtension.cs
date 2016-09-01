@@ -774,11 +774,14 @@ namespace System
 		/// 转换字符串为双精度数.如果转换失败,则返回 0.0
 		/// </summary>
 		/// <param name="value">要转换的字符串</param>
+		/// <param name="defaultValue">默认值，默认为 0.0</param>
+		/// <param name="styles">分析的格式</param>
+		/// <param name="formatProvider">区域信息</param>
 		/// <returns>转换后的 <see cref="System.Double"/></returns>
 		public static double ToDouble(this string value, double defaultValue = 0.0, NumberStyles styles = NumberStyles.Any, IFormatProvider formatProvider = null)
 		{
 			double temp;
-			return double.TryParse(value, styles, formatProvider, out temp) ? temp : 0.0;
+			return double.TryParse(value, styles, formatProvider, out temp) ? temp : defaultValue;
 		}
 
 
