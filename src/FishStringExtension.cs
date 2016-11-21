@@ -424,6 +424,48 @@ namespace System
 
 		#endregion
 
+
+		#region SHA1
+
+		/// <summary>
+		/// 计算指定字符串的SHA1值
+		/// </summary>
+		/// <param name="key">要计算Hash的字符串</param>
+		/// <returns>字符串的Hash</returns>
+		public static string SHA1(this string key)
+		{
+			return key.SHA1(System.Text.Encoding.UTF8);
+		}
+
+		/// <summary>
+		/// 计算指定字符串的SHA1值
+		/// </summary>
+		/// <param name="key">要计算Hash的字符串</param>
+		/// <param name="encoding">计算Hash的编码方法</param>
+		/// <returns>字符串的Hash</returns>
+		public static string SHA1(this string key, string encoding)
+		{
+			return key.SHA1(System.Text.Encoding.GetEncoding(encoding));
+		}
+
+		/// <summary>
+		/// 计算指定字符串的SHA1值
+		/// </summary>
+		/// <param name="key">要计算Hash的字符串</param>
+		/// <param name="encoding">计算Hash的编码方法</param>
+		/// <returns>字符串的Hash</returns>
+		public static string SHA1(this string key, System.Text.Encoding encoding)
+		{
+			if (key == null) throw new ArgumentNullException();
+
+			var md5 = Security.Cryptography.SHA1.Create();
+			var has = md5.ComputeHash(encoding.GetBytes(key));
+			return BitConverter.ToString(has).Replace("-", "").ToUpper();
+		}
+
+		#endregion
+
+
 		#region ToInt32
 
 		/// <summary>
