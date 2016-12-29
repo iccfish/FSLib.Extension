@@ -128,7 +128,7 @@ namespace System
 
 #endif
 
-#region Reflection
+		#region Reflection
 
 #if NET_CORE
 		internal static TypeInfo GetTypeInfo(Type type) => type.GetTypeInfo();
@@ -255,7 +255,7 @@ namespace System
 		public static IEnumerable<Type> FilterType<T>(this IEnumerable<Type> typeList, bool ignoreAttribute)
 		{
 			var t = typeof(T);
-			
+
 			if (t.IsInterface)
 			{
 				return typeList.Where(s => s.GetInterface(t.FullName) != null);
@@ -334,9 +334,9 @@ namespace System
 
 #endif
 
-#endregion
+		#endregion
 
-#region Common
+		#region Common
 
 		/// <summary>
 		/// 将对象选择为字符串并进行格式化
@@ -492,9 +492,9 @@ namespace System
 			return src.Where(s => s != null).Select(s => s.ToString()).Join(seperator);
 		}
 
-#endregion
+		#endregion
 
-#region Regex
+		#region Regex
 
 		/// <summary>
 		/// 获得一个匹配结果中指定分组的值
@@ -507,9 +507,9 @@ namespace System
 			return match == null || !match.Success || match.Groups.Count <= index ? null : match.Groups[index].Value;
 		}
 
-#endregion
+		#endregion
 
-#region IEnumerable
+		#region IEnumerable
 
 		/// <summary>
 		/// 对两个序列进行合并。如果其中一个是null，则返回另一个
@@ -590,9 +590,9 @@ namespace System
 			return result;
 		}
 
-#endregion
+		#endregion
 
-#region Uri
+		#region Uri
 
 		/// <summary>
 		/// 获得指定地址中的文件名
@@ -623,9 +623,9 @@ namespace System
 		}
 
 
-#endregion
+		#endregion
 
-#region Stream
+		#region Stream
 
 		/// <summary>
 		/// 从流中读入一个 <see cref="T:System.Int16"/>
@@ -702,13 +702,18 @@ namespace System
 		/// </summary>
 		/// <param name="stream">要读取的流</param>
 		/// <param name="length">读取的字节长度</param>
+		/// <param name="lengthRequired">是否要求指定的字节数，如果读取不到，则抛出异常</param>
 		/// <returns>缓冲数组</returns>
-		public static byte[] ReadBuffer(this Stream stream, int length)
+		public static byte[] ReadBuffer(this Stream stream, int length, bool lengthRequired = true)
 		{
 			var count = 0;
 
 
-			return stream.ReadBuffer(length, out count);
+			var buffer = stream.ReadBuffer(length, out count);
+			if (count < length && lengthRequired)
+				throw new EndOfStreamException();
+
+			return buffer;
 		}
 
 		/// <summary>
@@ -721,7 +726,13 @@ namespace System
 		public static byte[] ReadBuffer(this Stream stream, int length, out int readedBytesCount)
 		{
 			var buffer = new byte[length];
-			readedBytesCount = stream.Read(buffer, 0, buffer.Length);
+			var count = 0;
+			readedBytesCount = 0;
+
+			while (readedBytesCount < length && (count = stream.Read(buffer, readedBytesCount, buffer.Length - readedBytesCount)) > 0)
+			{
+				readedBytesCount += count;
+			}
 
 			return buffer;
 		}
@@ -889,9 +900,9 @@ namespace System
 			return stream;
 		}
 
-#endregion
+		#endregion
 
-#region 其它
+		#region 其它
 
 		/// <summary>
 		/// 对指定的数据进行条件判断，如果符合要求则执行
@@ -967,12 +978,12 @@ namespace System
 			}
 		}
 
-#endregion
+		#endregion
 
-#region 转换
+		#region 转换
 
 
-#endregion
+		#endregion
 		/// <summary>
 		/// True if object is value type.
 		/// </summary>
