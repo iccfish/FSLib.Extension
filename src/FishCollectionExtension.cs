@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace System
 {
+	using Collections.Concurrent;
+
 	/// <summary>
 	/// 集合类的扩展方法
 	/// </summary>
@@ -273,20 +275,18 @@ namespace System
 		/// <returns>返回要查找的对象</returns>
 		public static TValue GetValue<Tkey, TValue>(this Dictionary<Tkey, TValue> dic, Tkey key, Func<Tkey, TValue> initialValueFunc)
 		{
-			if (dic.ContainsKey(key))
-				return dic[key];
+			TValue value;
 
-			var value = default(TValue);
-			if (initialValueFunc == null)
-				return default(TValue);
-
-			lock (dic)
+			if (!dic.TryGetValue(key, out value) && initialValueFunc != null)
 			{
-				if (!dic.ContainsKey(key))
-					dic.Add(key, value = initialValueFunc(key));
+				lock (dic)
+				{
+					if (!dic.TryGetValue(key, out value))
+						dic.Add(key, value = initialValueFunc(key));
+				}
 			}
 
-			return dic[key];
+			return value;
 		}
 
 		/// <summary>
