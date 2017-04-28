@@ -1,0 +1,135 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Description>包含大量为.NET编写的扩展方法和函数</Description>
+		<Copyright>Copyright © 木鱼  2014-2017</Copyright>
+		<AssemblyTitle>FSLib.Extension 通用扩展方法库</AssemblyTitle>
+		<VersionPrefix>1.4.3.0</VersionPrefix>
+		<Authors>iFish</Authors>
+		<!--
+    
+    dotnet cli 构建工具暂时无法支持 .net 3.5 以及以下平台而添加的
+    net35 dropped.
+    -->
+		<TargetFrameworks>net40;net45;netstandard1.6</TargetFrameworks>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<AssemblyName>FSLib.Extension</AssemblyName>
+		<AssemblyOriginatorKeyFile>ifish.snk</AssemblyOriginatorKeyFile>
+		<SignAssembly>true</SignAssembly>
+		<PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+		<PackageId>src</PackageId>
+		<PackageTags>extension</PackageTags>
+		<PackageReleaseNotes>增加了面向 .NET CORE 目标的库</PackageReleaseNotes>
+		<PackageIconUrl>https://ssl-static.fishlee.net/resources/images/coquette/32x32/package.png</PackageIconUrl>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/iccfish/FSLib.Extension</RepositoryUrl>
+		<PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+		<NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
+		<GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+		<GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+		<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+		<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+		<GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="NetCore.FishTypeExtension.cs" />
+		<None Update="content\**\*">
+			<Pack>true</Pack>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
+		<Reference Include="System.Core" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Xml" />
+		<Reference Include="System.Data.Linq" />
+		<Reference Include="System.Configuration" />
+		<Reference Include="System" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+		<Reference Include="System.Core" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Xml" />
+		<Reference Include="System.Data.Linq" />
+		<Reference Include="System.Configuration" />
+		<Reference Include="System" />
+		<Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+		<Reference Include="System.Configuration" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Data.Linq" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Xml" />
+		<Reference Include="System" />
+		<Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
+		<DefineConstants>$(DefineConstants);NET35</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
+		<DefineConstants>$(DefineConstants);NET40;NET_GT_4</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+		<DefineConstants>$(DefineConstants);NET45;NET_GT_4;NET_GT_45</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+		<DefineConstants>$(DefineConstants);NET_CORE</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+		<PackageReference Include="System.ComponentModel" Version="4.0.1" />
+		<PackageReference Include="System.ComponentModel.Primitives" Version="4.1.0" />
+		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.1.0" />
+		<PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.0.0" />
+		<PackageReference Include="System.Diagnostics.Process" Version="4.1.0" />
+		<PackageReference Include="System.Diagnostics.Tools" Version="4.0.1" />
+		<PackageReference Include="System.ObjectModel" Version="4.0.12" />
+		<PackageReference Include="System.Resources.ResourceManager" Version="4.0.1" />
+		<PackageReference Include="System.Runtime" Version="4.1.0" />
+		<PackageReference Include="System.Threading" Version="4.0.11" />
+		<PackageReference Include="System.Threading.Tasks" Version="4.0.11" />
+		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.0.0" />
+		<PackageReference Include="System.Threading.Tasks.Parallel" Version="4.0.1" />
+		<PackageReference Include="System.Threading.Thread" Version="4.0.0" />
+		<PackageReference Include="System.Threading.ThreadPool" Version="4.0.10" />
+		<PackageReference Include="System.Xml.XmlDocument" Version="4.0.1" />
+		<PackageReference Include="System.Xml.XmlSerializer" Version="4.0.11" />
+		<Compile Remove="BinarySerializeHelper.cs;Data\**\*;FishLib\Diagnostics\CodeTimer.cs;FishLib\Drawing\*;FSLib_BinarySerializeExtension.cs;Net\FSLib_Network_WebExtension.cs;Properties\Resources*.cs;Windows\**\*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="FishExtension\Resources\SR.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>SR.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="FishExtension\Resources\SR.en.resx">
+	    <DependentUpon>SR.resx</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="FishExtension\Resources\SR.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>SR.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+</Project>

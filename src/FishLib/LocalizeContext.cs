@@ -27,11 +27,15 @@
 		{
 			if (type == null) return null;
 
-			
+
 			var rm = _resourceDictionary.GetValue(type);
 			if (rm == null)
 			{
+#if NET_CORE
+				var prop = type.GetTypeInfo().GetProperty("ResourceManager", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+#else
 				var prop = type.GetProperty("ResourceManager", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+#endif
 				rm = (System.Resources.ResourceManager)prop.GetValue(null, null);
 				_resourceDictionary.Add(type, rm);
 			}

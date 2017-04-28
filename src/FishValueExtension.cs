@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.FishExtension.Resources;
 using System.Linq;
 using System.Text;
 
 namespace System
 {
+	using FSLib.Extension.FishExtension.Resources;
+
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	public static class FishValueExtension
 	{

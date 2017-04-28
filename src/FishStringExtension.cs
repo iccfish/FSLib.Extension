@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.FishExtension;
-using System.FishExtension.Resources;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -8,6 +7,8 @@ using System.Text.RegularExpressions;
 
 namespace System
 {
+	using FSLib.Extension.FishExtension.Resources;
+
 	/// <summary>
 	/// 包含了与字符串相关的一些常用扩展方法
 	/// </summary>

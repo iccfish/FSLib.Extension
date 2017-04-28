@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.FishExtension.Resources;
 using System.Linq;
 using System.Text;
 
 namespace System
 {
+	using FSLib.Extension.FishExtension.Resources;
+
 	/// <summary>
 	/// 日期时间扩展类
 	/// </summary>
