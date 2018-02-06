@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -562,7 +562,7 @@ namespace System.Windows.Forms
 				throw new ArgumentNullException("validationFunc");
 			var callback = new Action(() =>
 			{
-				pbTarget.Image = validationFunc(txt) ? System.Properties.Resources.tick_16 : System.Properties.Resources.block_16;
+				pbTarget.Image = validationFunc(txt) ? FSLib.Extension.Properties.Resources.tick_16 : FSLib.Extension.Properties.Resources.block_16;
 			});
 			callback();
 			txt.TextChanged += (s, e) => callback();
