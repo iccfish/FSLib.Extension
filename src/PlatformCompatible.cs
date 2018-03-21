@@ -5,7 +5,7 @@ using System.Text;
 
 namespace System
 {
-#if NET40
+#if NET40 || NET35
 	static class CompatibleMethods
 	{
 		public static Type GetTypeInfo(this Type type) => type;

@@ -4,8 +4,6 @@ using System.Linq;
 
 namespace System
 {
-	using Collections.Concurrent;
-
 	/// <summary>
 	/// 集合类的扩展方法
 	/// </summary>
