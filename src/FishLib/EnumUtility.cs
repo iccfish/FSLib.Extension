@@ -1,4 +1,4 @@
-﻿namespace System.FishLib
+namespace System.FishLib
 {
 	using System;
 	using System.Collections.Generic;
@@ -53,7 +53,7 @@
 				{
 					if (!_enumNameKeysCache.ContainsKey(type))
 					{
-						_enumNameKeysCache.Add(type, Enum.GetNames(type).ToHashSet(StringComparer.OrdinalIgnoreCase));
+						_enumNameKeysCache.Add(type, Enum.GetNames(type).MapToHashSet(StringComparer.OrdinalIgnoreCase));
 					}
 				}
 				result = _enumNameKeysCache[type];

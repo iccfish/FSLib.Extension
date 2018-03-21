@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("鱼的后花园")]
 [assembly: AssemblyProduct("FSLib.Extension 通用扩展方法库")]
-[assembly: AssemblyCopyright("Copyright © 木鱼  2014-2016")]
+[assembly: AssemblyCopyright("Copyright © 木鱼  2014-2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

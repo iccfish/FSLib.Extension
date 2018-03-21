@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
@@ -434,7 +434,7 @@ namespace System
 		/// <typeparam name="T">可枚举类型</typeparam>
 		/// <param name="source">源</param>
 		/// <returns></returns>
-		public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
+		public static HashSet<T> MapToHashSet<T>(this IEnumerable<T> source)
 		{
 			return new HashSet<T>(source);
 		}
@@ -446,7 +446,7 @@ namespace System
 		/// <param name="source">源</param>
 		/// <param name="comparer">要使用的比较器</param>
 		/// <returns><see cref="T:System.Collections.Generic.HashSet{T}"/></returns>
-		public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer)
+		public static HashSet<T> MapToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer)
 		{
 			return new HashSet<T>(source, comparer);
 		}

@@ -11,15 +11,15 @@
     dotnet cli 构建工具暂时无法支持 .net 3.5 以及以下平台而添加的
     net35 dropped.
     -->
-		<TargetFrameworks>net40;net45;netstandard1.6</TargetFrameworks>
+		<TargetFrameworks>netstandard1.6;net40;net45</TargetFrameworks>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<AssemblyName>FSLib.Extension</AssemblyName>
 		<AssemblyOriginatorKeyFile>ifish.snk</AssemblyOriginatorKeyFile>
 		<SignAssembly>true</SignAssembly>
 		<PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
-		<PackageId>src</PackageId>
+		<PackageId>extension.fishlee.net</PackageId>
 		<PackageTags>extension</PackageTags>
-		<PackageReleaseNotes>增加了面向 .NET CORE 目标的库</PackageReleaseNotes>
+		<PackageReleaseNotes>微调了部分函数的兼容性，比如 ToHashSet 在比较新的CLR中已经提供了同名函数</PackageReleaseNotes>
 		<PackageIconUrl>https://ssl-static.fishlee.net/resources/images/coquette/32x32/package.png</PackageIconUrl>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/iccfish/FSLib.Extension</RepositoryUrl>
@@ -33,6 +33,9 @@
 		<GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
 		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<Version>1.4.4</Version>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageProjectUrl>https://blog.fishlee.net</PackageProjectUrl>
 	</PropertyGroup>
 
 	<ItemGroup>

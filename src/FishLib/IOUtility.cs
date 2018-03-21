@@ -1,4 +1,4 @@
-﻿namespace System.FishLib
+namespace System.FishLib
 {
 	using System;
 	using System.Collections.Generic;
@@ -15,8 +15,8 @@
 	/// </remarks>
 	public static class IOUtility
 	{
-		private static HashSet<char> _invalidPathChars=Path.GetInvalidPathChars().ToHashSet();
-		private static HashSet<char> _invalidFileNames=Path.GetInvalidFileNameChars().ToHashSet();
+		private static HashSet<char> _invalidPathChars=Path.GetInvalidPathChars().MapToHashSet();
+		private static HashSet<char> _invalidFileNames=Path.GetInvalidFileNameChars().MapToHashSet();
 
 		/// <summary>
 		/// 移除路径中无效的路径字符
