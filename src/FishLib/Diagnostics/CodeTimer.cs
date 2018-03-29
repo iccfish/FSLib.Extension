@@ -1,4 +1,4 @@
-﻿namespace System.FishLib.Diagnostics
+namespace System.FishLib.Diagnostics
 {
 	using System;
 	using System.Linq;
@@ -127,6 +127,21 @@
 		public ulong ThreadCycleCount { get; set; }
 
 		/// <summary>
+		/// 总内存
+		/// </summary>
+		public long TotalMemoryBefore { get; set; }
+
+		/// <summary>
+		/// 总内存
+		/// </summary>
+		public long TotalMemoryAfter { get; set; }
+
+		/// <summary>
+		/// 总内存
+		/// </summary>
+		public long TotalMemory { get; set; }
+
+		/// <summary>
 		/// 线程计数(以100ns为单位)
 		/// </summary>
 		public long CPUTimer { get; set; }
@@ -135,7 +150,12 @@
 		/// 经过的时间
 		/// </summary>
 		public TimeSpan ElapsedTime { get; private set; }
-
+		public long Timer1 { get => _timer1; }
+		public long Timer2 { get => _timer2; }
+		public int[] GcBefore { get => _gcBefore;}
+		public int[] GcAfter { get => _gcAfter; }
+		public ulong Cycle1 { get => _cycle1; }
+		public ulong Cycle2 { get => _cycle2; }
 
 		ulong _cycle1, _cycle2;
 		long _timer1, _timer2;
@@ -148,12 +168,13 @@
 		internal void GetSnapshotBefore()
 		{
 			GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
-			_gcBefore = new int[GC.MaxGeneration];
-			for (var i = 0; i < _gcBefore.Length; i++) _gcBefore[i] = GC.CollectionCount(i);
+			_gcBefore = Enumerable.Range(0, GC.MaxGeneration).Select(s => GC.CollectionCount(s)).ToArray();
 
 			var thread = CodeTimerNativeApi.GetCurrentThread();
 			_timer1 = CodeTimerNativeApi.GetCurrentThreadTimes(thread);
 			if (IsSupportCycle) CodeTimerNativeApi.QueryThreadCycleTime(thread, ref _cycle1);
+			TotalMemoryBefore = GC.GetTotalMemory(false);
+
 			_stopWatch = new System.Diagnostics.Stopwatch();
 			_stopWatch.Start();
 		}
@@ -166,17 +187,18 @@
 			var thread = CodeTimerNativeApi.GetCurrentThread();
 			_timer2 = CodeTimerNativeApi.GetCurrentThreadTimes(thread);
 			if (IsSupportCycle) CodeTimerNativeApi.QueryThreadCycleTime(thread, ref _cycle2);
+			TotalMemoryAfter = GC.GetTotalMemory(false);
 
 			_stopWatch.Stop();
 			this.ElapsedTime = _stopWatch.Elapsed;
 
-			_gcAfter = new int[GC.MaxGeneration];
-			for (var i = 0; i < _gcBefore.Length; i++) _gcBefore[i] = GC.CollectionCount(i);
+			_gcAfter = Enumerable.Range(0, GC.MaxGeneration).Select(s => GC.CollectionCount(s)).ToArray();
 
 			GCCount = _gcAfter.Select((a, i) => a - _gcBefore[i]).ToArray();
 			if (IsSupportCycle) ThreadCycleCount = _cycle2 - _cycle1;
 			CPUTimer = _timer2 - _timer1;
 			GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+			TotalMemory = TotalMemoryAfter - TotalMemoryBefore;
 		}
 	}
 
