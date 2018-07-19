@@ -531,6 +531,71 @@ namespace System
 			eles.ForEach(queue.Enqueue);
 		}
 
+		/// <summary>
+		/// 获得指定序列中所有长度（从1到序列长度）的排列组合结果
+		/// </summary>
+		/// <typeparam name="T[]">序列类型</typeparam>
+		/// <param name="src">源序列</param>
+		/// <returns>
+		/// 所有长度（从1到序列长度）的排列组合结果
+		/// </returns>
+		public static IEnumerable<T[]> GetAllCombinations<T>(this IEnumerable<T> src)
+		{
+			var list = src.ToArray();
+			var pos = Enumerable.Range(0, list.Length).ToArray();
+
+			for (int i = 0; i <= pos.Length; i++)
+			{
+				foreach (var ret in GetAllCombinations(pos, i, null))
+					yield return ret.Select(s => list[s]).ToArray();
+			}
+		}
+
+
+		/// <summary>
+		/// 获得指定序列中指定长度的排列组合结果
+		/// </summary>
+		/// <typeparam name="T[]">序列类型</typeparam>
+		/// <param name="src">源序列</param>
+		/// <param name="length">添加要求的结果序列长度</param>
+		/// <returns>
+		/// 指定长度的排列组合结果
+		/// </returns>
+		public static IEnumerable<T[]> GetAllCombinations<T>(this IEnumerable<T> src, int length)
+		{
+			var list = src.ToArray();
+			var pos = Enumerable.Range(0, list.Length).ToArray();
+
+			foreach (var ret in GetAllCombinations(pos, length, null))
+				yield return ret.Select(s => list[s]).ToArray();
+		}
+
+		static IEnumerable<int[]> GetAllCombinations(int[] src, int length, HashSet<int> pos)
+		{
+			if (pos == null)
+				pos = new HashSet<int>();
+
+			for (int i = 0; i < src.Length; i++)
+			{
+				if (!pos.Add(i))
+					continue;
+
+				if (pos.Count < length)
+				{
+					foreach (var ret in GetAllCombinations(src, length, pos))
+					{
+						yield return ret;
+					}
+				}
+				else
+				{
+					yield return pos.ToArray();
+				}
+
+				pos.Remove(i);
+			}
+		}
+
 		#endregion
 
 		#region HashSet`1
