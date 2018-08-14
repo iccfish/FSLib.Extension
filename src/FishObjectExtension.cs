@@ -14,7 +14,13 @@ using System.Text.RegularExpressions;
 
 namespace System
 {
+	using ComponentModel;
+
 	using FishExtension;
+
+	using FishLib;
+
+	using Linq.Expressions;
 
 	/// <summary>
 	/// 对象扩展
@@ -76,6 +82,25 @@ namespace System
 
 			ImageCodecInfo myImageCodecInfo = (from p in ImageCodecInfo.GetImageEncoders() where p.MimeType == "image/jpeg" select p).Single<ImageCodecInfo>();
 			image.Save(path, myImageCodecInfo, parameters);
+		}
+
+		/// <summary>
+		/// 使用指定的图片质量将图片保存到指定位置为JPEG图片
+		/// </summary>
+		/// <param name="image">要保存的图片</param>
+		/// <param name="quality">质量</param>
+		public static MemoryStream SaveAsJpeg(this Image image, int quality = 90)
+		{
+			EncoderParameters parameters = new EncoderParameters(1);
+			parameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, ((long)quality));
+
+			ImageCodecInfo myImageCodecInfo = (from p in ImageCodecInfo.GetImageEncoders() where p.MimeType == "image/jpeg" select p).Single<ImageCodecInfo>();
+			var ms = new MemoryStream();
+			image.Save(ms, myImageCodecInfo, parameters);
+
+			ms.Seek(0, SeekOrigin.Begin);
+
+			return ms;
 		}
 
 		/// <summary>
@@ -984,6 +1009,7 @@ namespace System
 
 
 		#endregion
+
 		/// <summary>
 		/// True if object is value type.
 		/// </summary>
@@ -1008,6 +1034,64 @@ namespace System
 				default:
 					return false;
 			}
+		}
+
+		/// <summary>
+		/// 添加一个支持属性过滤的事件捕捉句柄
+		/// </summary>
+		/// <typeparam name="TObj">目标类型</typeparam>
+		/// <typeparam name="TProp">属性类型</typeparam>
+		/// <param name="obj">对象</param>
+		/// <param name="exp">表达式</param>
+		/// <param name="handler">事件</param>
+		/// <returns>返回一个可以用来取消挂载事件的 <see cref="Action"/></returns>
+		public static Action AddPropertyChangingEventHandler<TObj, TProp>(this TObj obj, Expression<Func<TObj, TProp>> exp, EventHandler<PropertyChangingEventArgs> handler)
+			where TObj : INotifyPropertyChanging
+		{
+			var propName = exp.GetExpressionAccessedMemberName();
+			if (propName.IsNullOrEmpty())
+				throw new InvalidOperationException("Unable to figure out which property.");
+
+			if (handler == null)
+				throw new ArgumentNullException(nameof(handler));
+
+			var callback = new PropertyChangingEventHandler((sender, e) =>
+			{
+				if (e.PropertyName == propName)
+					handler(sender, e);
+			});
+			obj.PropertyChanging += callback;
+
+			return () => obj.PropertyChanging -= callback;
+		}
+
+		/// <summary>
+		/// 添加一个支持属性过滤的事件捕捉句柄
+		/// </summary>
+		/// <typeparam name="TObj">目标类型</typeparam>
+		/// <typeparam name="TProp">属性类型</typeparam>
+		/// <param name="obj">对象</param>
+		/// <param name="exp">表达式</param>
+		/// <param name="handler">事件</param>
+		/// <returns>返回一个可以用来取消挂载事件的 <see cref="Action"/></returns>
+		public static Action AddPropertyChangedEventHandler<TObj, TProp>(this TObj obj, Expression<Func<TObj, TProp>> exp, EventHandler<PropertyChangedEventArgs> handler)
+			where TObj : INotifyPropertyChanged
+		{
+			var propName = exp.GetExpressionAccessedMemberName();
+			if (propName.IsNullOrEmpty())
+				throw new InvalidOperationException("Unable to figure out which property.");
+
+			if (handler == null)
+				throw new ArgumentNullException(nameof(handler));
+
+			var callback = new PropertyChangedEventHandler((sender, e) =>
+			{
+				if (e.PropertyName == propName)
+					handler(sender, e);
+			});
+			obj.PropertyChanged += callback;
+
+			return () => obj.PropertyChanged -= callback;
 		}
 	}
 
