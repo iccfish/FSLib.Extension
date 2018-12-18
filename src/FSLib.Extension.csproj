@@ -18,7 +18,7 @@
 		<PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
 		<PackageId>extension.fishlee.net</PackageId>
 		<PackageTags>extension</PackageTags>
-		<PackageReleaseNotes>微调了部分函数的兼容性，比如 ToHashSet 在比较新的CLR中已经提供了同名函数；添加回了对.NET3.5的支持。</PackageReleaseNotes>
+		<PackageReleaseNotes>修正了部分函数；针对NET FULL增加了部分Drawing命名空间的函数；移动 System.FishLib 命名空间到 FSLib.Extension.FishLib。</PackageReleaseNotes>
 		<PackageIconUrl>https://ssl-static.fishlee.net/resources/images/coquette/32x32/package.png</PackageIconUrl>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/iccfish/FSLib.Extension</RepositoryUrl>
