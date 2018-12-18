@@ -1,12 +1,10 @@
-﻿namespace System.FishLib
+﻿namespace FSLib.Extension.FishLib
 {
 	using System;
+	using System.Globalization;
 	using System.Linq;
+	using System.Linq.Expressions;
 	using System.Reflection;
-
-	using Globalization;
-
-	using Linq.Expressions;
 
 	/// <summary>
 	/// 反射辅助类
@@ -33,7 +31,7 @@
 
 #endif
 
-#if NET40
+#if NET_GT_4
 		/// <summary>
 		/// 动态构造委托
 		/// </summary>

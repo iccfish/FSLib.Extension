@@ -1,5 +1,7 @@
-﻿namespace System.FishLib
+﻿namespace FSLib.Extension.FishLib
 {
+	using System;
+
 	/// <summary>
 	/// Promise事件参数
 	/// </summary>

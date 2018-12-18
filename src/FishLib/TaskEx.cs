@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-#if NET_GT_4
-namespace System.FishLib
+﻿#if NET_GT_4
+namespace FSLib.Extension.FishLib
 {
-	using System.ComponentModel;
+	using System;
+	using System.Linq;
 	using System.Threading;
 	using System.Threading.Tasks;
 

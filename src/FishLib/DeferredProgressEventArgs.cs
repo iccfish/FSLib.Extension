@@ -1,5 +1,7 @@
-namespace System.FishLib
+namespace FSLib.Extension.FishLib
 {
+	using System;
+
 	/// <summary>
 	/// 进度事件数据
 	/// </summary>

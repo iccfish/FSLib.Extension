@@ -1,4 +1,4 @@
-﻿namespace System.FishLib.Attributes
+﻿namespace FSLib.Extension.FishLib.Attributes
 {
 	using System;
 	using System.Linq;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FSLib.Attributes
+namespace FSLib.Extension.FishLib.Attributes
 {
 	/// <summary>
 	///

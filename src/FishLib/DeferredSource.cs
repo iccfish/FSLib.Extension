@@ -1,5 +1,6 @@
-namespace System.FishLib
+namespace FSLib.Extension.FishLib
 {
+	using System;
 	using System.Threading;
 
 	public abstract class DeferredSource<T>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace System.FishLib.AnimationAlgorithms
+namespace FSLib.Extension.FishLib.AnimationAlgorithms
 {
 	using System.Reflection;
 

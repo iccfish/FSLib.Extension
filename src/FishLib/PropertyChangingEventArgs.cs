@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace System.FishLib
+namespace FSLib.Extension.FishLib
 {
 	/// <summary>
 	/// 属性正在变化事件类

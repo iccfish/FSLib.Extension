@@ -1,4 +1,4 @@
-namespace System.FishLib.AnimationAlgorithms
+namespace FSLib.Extension.FishLib.AnimationAlgorithms
 {
 	/// <summary>
 	/// Mirror

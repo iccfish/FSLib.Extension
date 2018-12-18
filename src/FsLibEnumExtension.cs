@@ -4,7 +4,7 @@ using System.ComponentModel;
 // ReSharper disable once CheckNamespace
 namespace System
 {
-	using FishLib;
+	using FSLib.Extension.FishLib;
 	using System.Reflection;
 
 	/// <summary>

@@ -1,8 +1,10 @@
-﻿namespace System.FishLib
+﻿namespace FSLib.Extension.FishLib
 {
+	using System;
 	using System.Linq;
 	using System.Reflection;
-	using FSLib.Attributes;
+
+	using Attributes;
 
 	/// <summary>
 	/// 类型描述基类

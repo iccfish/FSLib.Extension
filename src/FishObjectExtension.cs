@@ -18,8 +18,6 @@ namespace System
 
 	using FishExtension;
 
-	using FishLib;
-
 	using Linq.Expressions;
 
 	/// <summary>

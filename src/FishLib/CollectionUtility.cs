@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace System.FishLib
+namespace FSLib.Extension.FishLib
 {
-	using Security.Cryptography;
+	using System.Security.Cryptography;
 
 	/// <summary>
 	/// 集合辅助类
