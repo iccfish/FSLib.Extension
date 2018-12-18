@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+// ReSharper disable once CheckNamespace
 namespace System
 {
 	using FSLib.Extension.FishExtension.Resources;
@@ -45,7 +46,7 @@ namespace System
 			return (int)Math.Ceiling(value * 1.0 / divideBy);
 		}
 
-		readonly static string[] SizeDefinitions = new[] {
+		static readonly string[] SizeDefinitions = new[] {
 		SR.Size_Bytes,
 		SR.Size_KB,
 		SR.Size_MB,

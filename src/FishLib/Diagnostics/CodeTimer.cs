@@ -1,3 +1,5 @@
+#if !NETSTANDARD1_6 && !NETSTANDARD2_0
+
 namespace System.FishLib.Diagnostics
 {
 	using System;
@@ -92,7 +94,7 @@ namespace System.FishLib.Diagnostics
 	/// </summary>
 	public class CodeTimerResult
 	{
-		#region 静态函数
+#region 静态函数
 
 		static CodeTimerResult()
 		{
@@ -104,7 +106,7 @@ namespace System.FishLib.Diagnostics
 		public static bool IsSupportCycle { get; private set; }
 
 
-		#endregion
+#endregion
 
 
 		public CodeTimerResult()
@@ -207,7 +209,7 @@ namespace System.FishLib.Diagnostics
 	/// </summary>
 	internal static class CodeTimerNativeApi
 	{
-		#region Native API
+#region Native API
 
 		[DllImport("kernel32.dll", SetLastError = true)]
 		internal static extern bool GetThreadTimes(IntPtr hThread, out long lpCreationTime, out long lpExitTime, out long lpKernelTime, out long lpUserTime);
@@ -219,7 +221,7 @@ namespace System.FishLib.Diagnostics
 		[return: MarshalAs(UnmanagedType.Bool)]
 		internal static extern bool QueryThreadCycleTime(IntPtr threadHandle, ref ulong cycleTime);
 
-		#endregion
+#endregion
 
 		/// <summary>
 		/// 获得线程本地计数
@@ -234,3 +236,4 @@ namespace System.FishLib.Diagnostics
 		}
 	}
 }
+#endif

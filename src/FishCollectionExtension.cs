@@ -615,5 +615,149 @@ namespace System
 		}
 
 		#endregion
+
+		#region Deconstruct
+
+		public static void Deconstruct<T>(this IEnumerable<T> source, out T first)
+		{
+			first = source.First();
+		}
+
+		public static void Deconstruct<T>(this IEnumerable<T> source, out T first, out T second)
+		{
+			var args = source.Take(2).ToArray();
+			first = args[0];
+			second = args[1];
+		}
+
+		public static void Deconstruct<T>(this IEnumerable<T> source, out T first, out T second, out T third)
+		{
+			var args = source.Take(2).ToArray();
+			first = args[0];
+			second = args[1];
+			third = args[2];
+		}
+
+		public static void Deconstruct<T>(this IEnumerable<T> source, out T first, out T second, out T third, out T forth)
+		{
+			var args = source.Take(2).ToArray();
+			first = args[0];
+			second = args[1];
+			third = args[2];
+			forth = args[3];
+		}
+
+		public static void Deconstruct<T>(this IEnumerable<T> source, out T first, out T second, out T third, out T forth, out T fifth)
+		{
+			var args = source.Take(2).ToArray();
+			first = args[0];
+			second = args[1];
+			third = args[2];
+			forth = args[3];
+			fifth = args[4];
+		}
+
+		public static void Deconstruct<T>(this IEnumerable<T> source, out T first, out T second, out T third, out T forth, out T fifth, out T sixth)
+		{
+			var args = source.Take(2).ToArray();
+			first = args[0];
+			second = args[1];
+			third = args[2];
+			forth = args[3];
+			fifth = args[4];
+			sixth = args[5];
+		}
+
+		public static void Deconstruct<T>(this T[] args, out T first)
+		{
+			first = args[0];
+		}
+
+		public static void Deconstruct<T>(this T[] args, out T first, out T second)
+		{
+			first = args[0];
+			second = args[1];
+		}
+
+		public static void Deconstruct<T>(this T[] args, out T first, out T second, out T third)
+		{
+			first = args[0];
+			second = args[1];
+			third = args[2];
+		}
+
+		public static void Deconstruct<T>(this T[] args, out T first, out T second, out T third, out T forth)
+		{
+			first = args[0];
+			second = args[1];
+			third = args[2];
+			forth = args[3];
+		}
+
+		public static void Deconstruct<T>(this T[] args, out T first, out T second, out T third, out T forth, out T fifth)
+		{
+			first = args[0];
+			second = args[1];
+			third = args[2];
+			forth = args[3];
+			fifth = args[4];
+		}
+
+		public static void Deconstruct<T>(this T[] args, out T first, out T second, out T third, out T forth, out T fifth, out T sixth)
+		{
+			first = args[0];
+			second = args[1];
+			third = args[2];
+			forth = args[3];
+			fifth = args[4];
+			sixth = args[5];
+		}
+
+		public static void Deconstruct<T>(this IList<T> args, out T first)
+		{
+			first = args[0];
+		}
+
+		public static void Deconstruct<T>(this IList<T> args, out T first, out T second)
+		{
+			first = args[0];
+			second = args[1];
+		}
+
+		public static void Deconstruct<T>(this IList<T> args, out T first, out T second, out T third)
+		{
+			first = args[0];
+			second = args[1];
+			third = args[2];
+		}
+
+		public static void Deconstruct<T>(this IList<T> args, out T first, out T second, out T third, out T forth)
+		{
+			first = args[0];
+			second = args[1];
+			third = args[2];
+			forth = args[3];
+		}
+
+		public static void Deconstruct<T>(this IList<T> args, out T first, out T second, out T third, out T forth, out T fifth)
+		{
+			first = args[0];
+			second = args[1];
+			third = args[2];
+			forth = args[3];
+			fifth = args[4];
+		}
+
+		public static void Deconstruct<T>(this IList<T> args, out T first, out T second, out T third, out T forth, out T fifth, out T sixth)
+		{
+			first = args[0];
+			second = args[1];
+			third = args[2];
+			forth = args[3];
+			fifth = args[4];
+			sixth = args[5];
+		}
+
+		#endregion
 	}
 }

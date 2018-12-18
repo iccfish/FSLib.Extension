@@ -1,3 +1,4 @@
+#if NETCLR
 namespace System
 {
 	using IO;
@@ -80,3 +81,4 @@ namespace System
 		}
 	}
 }
+#endif

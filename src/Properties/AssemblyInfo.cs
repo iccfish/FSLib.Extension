@@ -5,14 +5,14 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("FSLib.Extension 通用扩展方法库")]
-[assembly: AssemblyDescription("包含大量为.NET编写的扩展方法和函数")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("鱼的后花园")]
-[assembly: AssemblyProduct("FSLib.Extension 通用扩展方法库")]
-[assembly: AssemblyCopyright("Copyright © 木鱼  2014-2018")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+//[assembly: AssemblyTitle("FSLib.Extension 通用扩展方法库")]
+//[assembly: AssemblyDescription("包含大量为.NET编写的扩展方法和函数")]
+//[assembly: AssemblyConfiguration("")]
+//[assembly: AssemblyCompany("鱼的后花园")]
+//[assembly: AssemblyProduct("FSLib.Extension 通用扩展方法库")]
+//[assembly: AssemblyCopyright("Copyright © 木鱼  2014-2018")]
+//[assembly: AssemblyTrademark("")]
+//[assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 使此程序集中的类型
 // 对 COM 组件不可见。  如果需要从 COM 访问此程序集中的类型，
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // 可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”: 
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.6.0")]
-[assembly: AssemblyFileVersion("1.4.6.0")]
+//[assembly: AssemblyVersion("1.4.6.0")]
+//[assembly: AssemblyFileVersion("1.4.6.0")]

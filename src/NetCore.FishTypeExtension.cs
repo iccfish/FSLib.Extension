@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if NET_CORE
+using System.IO;
 
 namespace System.Reflection
 {
@@ -58,3 +59,4 @@ namespace System.Reflection
 	}
 
 }
+#endif
