@@ -18,3 +18,4 @@ _Bin.*
 VSDoc
 /src/*.csdat
 *.lock.json
+.vs/
