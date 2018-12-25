@@ -9,7 +9,7 @@ namespace FSLib.Extension.FishLib
 	/// <summary>
 	/// 对 <see cref="Task"/> 的扩展方法
 	/// </summary>
-	public class TaskEx
+	public class TaskExtension
 	{
 		/// <summary>
 		/// 竞争运行一组任务，直到有一个完成或全部失败
