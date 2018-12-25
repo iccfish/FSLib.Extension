@@ -76,7 +76,7 @@ namespace FSLib.Extension.FishLib
 		{
 			var enumDesc = value.GetType().GetEnumDescription();
 
-			return enumDesc.FirstOrDefault(s => ((int)s.Value & (int)(object)value) > 0).SelectValue(s => s.DisplayName) ?? "";
+			return enumDesc.FirstOrDefault(s => (!s.IsFlag && (int)s.Value == (int)(object)value) || (s.IsFlag && ((int)s.Value & (int)(object)value) > 0)).SelectValue(s => s.DisplayName) ?? "";
 		}
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace FSLib.Extension.FishLib
 		{
 			var enumDesc = value.GetType().GetEnumDescription();
 
-			return enumDesc.Where(s => ((int)s.Value & (int)(object)value) > 0).Select(s => s.DisplayName).ToArray();
+			return enumDesc.Where(s => (!s.IsFlag && (int)s.Value == (int)(object)value) || (s.IsFlag && ((int)s.Value & (int)(object)value) > 0)).Select(s => s.DisplayName).ToArray();
 		}
 
 
