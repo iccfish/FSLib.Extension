@@ -2,15 +2,10 @@
 
 	<PropertyGroup>
 		<Description>包含大量为.NET编写的扩展方法和函数</Description>
-		<Copyright>Copyright © 木鱼  2014-2018</Copyright>
+		<Copyright>Copyright © 木鱼  2014-2019</Copyright>
 		<AssemblyTitle>FSLib.Extension 通用扩展方法库</AssemblyTitle>
 		<Authors>iFish</Authors>
-		<!--
-	
-	dotnet cli 构建工具暂时无法支持 .net 3.5 以及以下平台而添加的
-	net35 dropped.
-	-->
-		<TargetFrameworks>netstandard1.6;netstandard2.0;net35;net40;net45;net46;net47</TargetFrameworks>
+		<TargetFrameworks>net40;net45;net46;net47;net35;netstandard1.6.1;netstandard2.0;</TargetFrameworks>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<AssemblyName>FSLib.Extension</AssemblyName>
 		<AssemblyOriginatorKeyFile>ifish.snk</AssemblyOriginatorKeyFile>
@@ -24,7 +19,7 @@
 		<RepositoryUrl>https://github.com/iccfish/FSLib.Extension</RepositoryUrl>
 		<PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
 		<NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
-		<Version>1.5.1</Version>
+		<Version>1.6.3</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageProjectUrl>https://blog.fishlee.net</PackageProjectUrl>
 		<RootNamespace>FSLib.Extension</RootNamespace>
@@ -58,12 +53,10 @@
 		<Reference Include="System.Configuration" />
 		<Reference Include="System" />
 		<Reference Include="Microsoft.CSharp" />
-		<PackageReference Include="Microsoft.Bcl">
-			<Version>1.1.10</Version>
-		</PackageReference>
-		<PackageReference Include="Microsoft.Bcl.Async">
-			<Version>1.0.168</Version>
-		</PackageReference>
+		<PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
+		<PackageReference Include="Microsoft.Bcl" Version="1.1.10" />
+		<PackageReference Include="Microsoft.Bcl.Build" Version="1.0.21" />
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net45' OR '$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net47' ">
@@ -76,78 +69,38 @@
 		<Reference Include="System.Xml" />
 		<Reference Include="System" />
 		<Reference Include="Microsoft.CSharp" />
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
-		<DefineConstants>$(DefineConstants);NETCLR</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
-		<DefineConstants>$(DefineConstants);NETCLR;NET_GT_4</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
-		<DefineConstants>$(DefineConstants);NETCLR;NET_GT_4;NET_GT_45</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
-		<DefineConstants>$(DefineConstants);NETCLR;NET_GT_4;NET_GT_45;NET_GT_46</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
-		<DefineConstants>$(DefineConstants);NETCLR;NET_GT_4;NET_GT_45;NET_GT_46;NET_GT_47</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-		<DefineConstants>$(DefineConstants);NET_CORE</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<DefineConstants>$(DefineConstants);NET_CORE</DefineConstants>
-	</PropertyGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-		<PackageReference Include="System.ComponentModel" Version="4.0.1" />
-		<PackageReference Include="System.ComponentModel.Primitives" Version="4.1.0" />
-		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.1.0" />
-		<PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.0.0" />
-		<PackageReference Include="System.Diagnostics.Process" Version="4.1.0" />
-		<PackageReference Include="System.Diagnostics.Tools" Version="4.0.1" />
-		<PackageReference Include="System.ObjectModel" Version="4.0.12" />
-		<PackageReference Include="System.Resources.ResourceManager" Version="4.0.1" />
-		<PackageReference Include="System.Runtime" Version="4.1.0" />
-		<PackageReference Include="System.Threading" Version="4.0.11" />
-		<PackageReference Include="System.Threading.Tasks" Version="4.0.11" />
-		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.0.0" />
-		<PackageReference Include="System.Threading.Tasks.Parallel" Version="4.0.1" />
-		<PackageReference Include="System.Threading.Thread" Version="4.0.0" />
-		<PackageReference Include="System.Threading.ThreadPool" Version="4.0.10" />
-		<PackageReference Include="System.Xml.XmlDocument" Version="4.0.1" />
-		<PackageReference Include="System.Xml.XmlSerializer" Version="4.0.11" />
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6.1' ">
+		<PackageReference Include="System.ComponentModel" Version="4.3.0" />
+		<PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
+		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+		<PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.3.0" />
+		<PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+		<PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
+		<PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+		<PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
+		<PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />
+		<PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<PackageReference Include="System.ComponentModel" Version="4.0.1" />
-		<PackageReference Include="System.ComponentModel.Primitives" Version="4.1.0" />
-		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.1.0" />
-		<PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.0.0" />
-		<PackageReference Include="System.Diagnostics.Process" Version="4.1.0" />
-		<PackageReference Include="System.Diagnostics.Tools" Version="4.0.1" />
-		<PackageReference Include="System.ObjectModel" Version="4.0.12" />
-		<PackageReference Include="System.Resources.ResourceManager" Version="4.0.1" />
-		<PackageReference Include="System.Runtime" Version="4.1.0" />
-		<PackageReference Include="System.Threading" Version="4.0.11" />
-		<PackageReference Include="System.Threading.Tasks" Version="4.0.11" />
-		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.0.0" />
-		<PackageReference Include="System.Threading.Tasks.Parallel" Version="4.0.1" />
-		<PackageReference Include="System.Threading.Thread" Version="4.0.0" />
-		<PackageReference Include="System.Threading.ThreadPool" Version="4.0.10" />
-		<PackageReference Include="System.Xml.XmlDocument" Version="4.0.1" />
-		<PackageReference Include="System.Xml.XmlSerializer" Version="4.0.11" />
+		<PackageReference Include="System.ComponentModel" Version="4.3.0" />
+		<PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
+		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+		<PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.3.0" />
+		<PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+		<PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
+		<PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+		<PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
+		<PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="FishExtension\Resources\SR.Designer.cs">
+	  <Compile Update="FishLib\SR.Designer.cs">
 		<DesignTime>True</DesignTime>
 		<AutoGen>True</AutoGen>
 		<DependentUpon>SR.resx</DependentUpon>
@@ -160,10 +113,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="FishExtension\Resources\SR.en.resx">
+	  <EmbeddedResource Update="FishLib\SR.en.resx">
 		<DependentUpon>SR.resx</DependentUpon>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="FishExtension\Resources\SR.resx">
+	  <EmbeddedResource Update="FishLib\SR.resx">
 		<Generator>ResXFileCodeGenerator</Generator>
 		<LastGenOutput>SR.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
@@ -173,7 +126,7 @@
 	  </EmbeddedResource>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard1.6'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard1.6.1'">
 		<Compile Remove="Properties\Resources*.cs;Windows\**\*;Data\**\*;Net\FSLib_Network_WebExtension.cs;"></Compile>
 		<EmbeddedResource Remove="Properties\Resources.resx"></EmbeddedResource>
 	</ItemGroup>

@@ -9,7 +9,7 @@ namespace System.Windows.Forms
 {
 	using Drawing;
 
-	using FishExtension;
+	using FSLib.Extension;
 
 	using Linq.Expressions;
 	using Reflection;
@@ -49,6 +49,25 @@ namespace System.Windows.Forms
 			control.Location = loc;
 
 			return control;
+		}
+
+		/// <summary>
+		/// 将控件尺寸设置为期望的尺寸
+		/// </summary>
+		/// <param name="control"></param>
+		/// <returns></returns>
+		public static Size SetToPreferredSize(this Control control)
+		{
+			var size = control.PreferredSize;
+			if (size.IsEmpty)
+			{
+				control.CreateControl();
+				size = control.PreferredSize;
+			}
+
+			control.Size = size;
+
+			return size;
 		}
 
 		/// <summary>
@@ -574,7 +593,7 @@ namespace System.Windows.Forms
 
 			if (string.IsNullOrEmpty(sourcePropertyName) || string.IsNullOrEmpty(controlPropertyName))
 				return;
-			
+
 			control.DataBindings.Add(controlPropertyName, source, sourcePropertyName, formatEnabled, updateMode, nullValue, formatString, formatProvider);
 		}
 
@@ -784,9 +803,7 @@ namespace System.Windows.Forms
 		{
 			return (obj, ev) =>
 			{
-				if (control.IsDisposed)
-					action(obj, ev);
-				if (control == null || !control.InvokeRequired)
+				if (control?.IsDisposed != false || !control.InvokeRequired)
 					action(obj, ev);
 				else
 					control.Invoke(action, obj, ev);
@@ -803,9 +820,7 @@ namespace System.Windows.Forms
 		{
 			return (ev) =>
 			{
-				if (control.IsDisposed)
-					action(ev);
-				if (control == null || !control.InvokeRequired)
+				if (control?.IsDisposed != false || !control.InvokeRequired)
 					action(ev);
 				else
 					control.Invoke(action, ev);
