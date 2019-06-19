@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FSLib.Extension.FishLib
+namespace FSLib.Extension
 {
 	using System.Diagnostics;
 	using System.IO;
@@ -34,7 +34,7 @@ namespace FSLib.Extension.FishLib
 		/// </summary>
 		public static bool IsLinux { get; private set; }
 
-#if !NET_CORE
+#if !NETSTANDARD1_6_1 && !NETSTANDARD2_0 && !NETSTANDARD3_0
 		/// <summary>
 		/// 获得当前进程的主模块
 		/// </summary>

@@ -1,11 +1,11 @@
-namespace FSLib.Extension.FishLib
+namespace FSLib.Extension
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Reflection;
 
-#if NET_CORE
+#if NETSTANDARD1_6_1 || NETSTANDARD2_0 || NETSTANDARD3_0
 	using TypeInfo = System.Reflection.TypeInfo;
 #else
 	using TypeInfo = System.Type;

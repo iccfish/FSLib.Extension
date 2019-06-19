@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.FishExtension;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,8 @@ using System.Text.RegularExpressions;
 
 namespace System
 {
-	using FSLib.Extension.FishExtension.Resources;
+	using FSLib.Extension;
+	using FSLib.Extension.FishLib;
 
 	/// <summary>
 	/// 包含了与字符串相关的一些常用扩展方法
@@ -146,7 +146,7 @@ namespace System
 			else return string.Format(value, args);
 		}
 
-		static readonly Regex _emailReg = new Regex(@"^\w+[\.\-_0-9a-z]+@[0-9a-z]+([\-_\.][0-9a-z]+)*\.[a-z]{2,3}$", RegexOptions.IgnoreCase);
+		static readonly Regex _emailReg = new Regex(@"^\w+[\.\-_0-9a-z]*@[0-9a-z]+([\-_\.][0-9a-z]+)*\.[a-z]{2,3}$", RegexOptions.IgnoreCase);
 
 		/// <summary>
 		/// 判断一个字符串是否是邮件地址
@@ -868,7 +868,7 @@ namespace System
 
 		#endregion
 
-#if !NET_CORE
+#if !NETSTANDARD1_6_1 && !NETSTANDARD2_0 && !NETSTANDARD3_0
 
 		#region ToPoint
 
@@ -979,7 +979,7 @@ namespace System
 
 		#endregion
 
-#if !NET_CORE
+#if !NETSTANDARD1_6_1 && !NETSTANDARD2_0 && !NETSTANDARD3_0
 
 		#region 其它对象到字符串转换
 

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace FSLib.Extension.FishLib.AnimationAlgorithms
+namespace FSLib.Extension.AnimationAlgorithms
 {
 	/// <summary>
 	/// 位置算法基类

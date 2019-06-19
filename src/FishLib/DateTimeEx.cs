@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FSLib.Extension.FishLib
+namespace FSLib.Extension
 {
 	/// <summary>
 	/// 对时间的一些辅助工具方法

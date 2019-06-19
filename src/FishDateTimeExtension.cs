@@ -5,7 +5,7 @@ using System.Text;
 
 namespace System
 {
-	using FSLib.Extension.FishExtension.Resources;
+	using FSLib.Extension.FishLib;
 
 	/// <summary>
 	/// 日期时间扩展类

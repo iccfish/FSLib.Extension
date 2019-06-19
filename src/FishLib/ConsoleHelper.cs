@@ -1,8 +1,7 @@
-﻿namespace FSLib.Extension.FishLib
+﻿namespace FSLib.Extension
 {
 	using System;
 	using System.Collections.Generic;
-	using System.FishExtension;
 	using System.Linq;
 	using System.Text.RegularExpressions;
 

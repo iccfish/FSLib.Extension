@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FSLib.Extension.FishLib
+namespace FSLib.Extension
 {
 	using System.Security.Cryptography;
 
@@ -69,7 +69,7 @@ namespace FSLib.Extension.FishLib
 		{
 			var buffer = new byte[length];
 
-#if NET_CORE
+#if NETSTANDARD1_6_1 || NETSTANDARD2_0 || NETSTANDARD3_0
 			var generator = RandomNumberGenerator.Create();
 #else
 			var generator = new RNGCryptoServiceProvider();

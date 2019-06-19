@@ -1,4 +1,4 @@
-#if NETCLR
+#if NET20 || NET35 || NET40 || NET45 || NET46 || NET47
 namespace System
 {
 	using IO;

@@ -1,6 +1,6 @@
-#if !NETSTANDARD1_6 && !NETSTANDARD2_0
+#if !NETSTANDARD1_6_1 && !NETSTANDARD2_0
 
-namespace FSLib.Extension.FishLib.Diagnostics
+namespace FSLib.Extension.Diagnostics
 {
 	using System;
 	using System.Linq;

@@ -1,6 +1,6 @@
 using System;
 
-namespace FSLib.Extension.FishLib.AnimationAlgorithms
+namespace FSLib.Extension.AnimationAlgorithms
 {
 	/// <summary>
 	/// EaseInQuadÀ„∑®

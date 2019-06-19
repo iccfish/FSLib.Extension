@@ -1,4 +1,4 @@
-namespace FSLib.Extension.FishLib
+namespace FSLib.Extension
 {
 	using System.Linq;
 	using System.Reflection;

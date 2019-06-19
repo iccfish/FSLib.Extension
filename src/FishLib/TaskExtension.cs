@@ -1,5 +1,5 @@
-﻿#if NET_GT_4
-namespace FSLib.Extension.FishLib
+﻿#if NET40 || NET45 || NET46 || NET47
+namespace FSLib.Extension
 {
 	using System;
 	using System.Linq;
@@ -18,7 +18,7 @@ namespace FSLib.Extension.FishLib
 		/// <param name="factory"></param>
 		/// <param name="count"></param>
 		/// <returns></returns>
-		public static async Task<T> RunTaskVie<T>(Func<CancellationToken, int, Task<T>> factory, int count)
+		public static Task<T> RunTaskVie<T>(Func<CancellationToken, int, Task<T>> factory, int count)
 		{
 			var tcs = new TaskCompletionSource<T>();
 			var cts = new CancellationTokenSource();
@@ -62,7 +62,7 @@ namespace FSLib.Extension.FishLib
 				task.Start();
 			}
 
-			return await tcs.Task;
+			return tcs.Task;
 		}
 	}
 }

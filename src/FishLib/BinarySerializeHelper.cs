@@ -1,9 +1,9 @@
-#if NETCLR
+#if NET20 || NET35 || NET40 || NET45 || NET46 || NET47
 using System;
 using System.IO;
 
 
-namespace FSLib.Extension.FishLib
+namespace FSLib.Extension
 {
 	/// <summary>
 	/// 二进制序列化辅助类

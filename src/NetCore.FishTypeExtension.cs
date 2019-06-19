@@ -1,4 +1,4 @@
-﻿#if NET_CORE
+﻿#if NETSTANDARD1_6_1 || NETSTANDARD2_0 || NETSTANDARD3_0
 using System.IO;
 
 namespace System.Reflection

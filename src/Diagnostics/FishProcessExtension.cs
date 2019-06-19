@@ -46,7 +46,7 @@
 			p.Exited += (s, e) =>
 			{
 				//TODO 在.NET CORE下，目前没有能中止线程的方法
-#if !NET_CORE
+#if !NETSTANDARD1_6_1 && !NETSTANDARD2_0 && !NETSTANDARD3_0
 				//等待线程退出
 				KillThread(inputThread);
 				KillThread(outputThread);
@@ -57,7 +57,7 @@
 			return p;
 		}
 
-#if !NET_CORE
+#if !NETSTANDARD1_6_1 && !NETSTANDARD2_0 && !NETSTANDARD3_0
 		/// <summary>
 		/// 强行终止线程
 		/// </summary>

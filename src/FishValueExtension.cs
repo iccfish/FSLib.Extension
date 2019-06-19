@@ -6,7 +6,7 @@ using System.Text;
 // ReSharper disable once CheckNamespace
 namespace System
 {
-	using FSLib.Extension.FishExtension.Resources;
+	using FSLib.Extension.FishLib;
 
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	public static class FishValueExtension
@@ -46,12 +46,13 @@ namespace System
 			return (int)Math.Ceiling(value * 1.0 / divideBy);
 		}
 
-		static readonly string[] SizeDefinitions = new[] {
-		SR.Size_Bytes,
-		SR.Size_KB,
-		SR.Size_MB,
-		SR.Size_GB,
-		SR.Size_TB
+		private static readonly string[] SizeDefinitions = new[]
+		{
+			SR.Size_Bytes,
+			SR.Size_KB,
+			SR.Size_MB,
+			SR.Size_GB,
+			SR.Size_TB
 		};
 
 		/// <summary>

@@ -4,8 +4,9 @@ using System.ComponentModel;
 // ReSharper disable once CheckNamespace
 namespace System
 {
-	using FSLib.Extension.FishLib;
 	using System.Reflection;
+
+	using FSLib.Extension;
 
 	using Linq;
 
@@ -26,7 +27,7 @@ namespace System
 		/// <returns></returns>
 		public static List<Description> GetEnumDescription(this Type type)
 		{
-#if NET_CORE
+#if NETSTANDARD1_6_1 || NETSTANDARD2_0 || NETSTANDARD3_0
 			var typeInfo = type?.GetTypeInfo();
 #else
 			var typeInfo = type;

@@ -10,7 +10,7 @@ namespace System
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	public static class FishCollectionExtension
 	{
-#if !NET_CORE
+#if !NETSTANDARD1_6_1 && !NETSTANDARD2_0 && !NETSTANDARD3_0
 		#region NameValueCollection
 
 		/// <summary>
