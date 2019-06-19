@@ -15,4 +15,4 @@ sed -i -r "s/newVersion=\"[0-9\.]+\"/newVersion=\"$version\"/" src/content/Web.c
 sed -i -r "s/oldVersion=\"[0-9\.-]+\"/oldVersion=\"1.0.0.0-$version\"/" src/content/Web.config.install.xdt
 
 echo 更新完成！
-read
+read x
