@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -166,7 +166,7 @@ namespace System.IO
 				return null;
 
 			var end = stream as MemoryStream;
-			if (end != null)
+			if (end?.Position == 0)
 				return end;
 
 			var ms = new MemoryStream();

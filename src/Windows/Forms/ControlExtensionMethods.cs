@@ -631,7 +631,7 @@ namespace System.Windows.Forms
 		/// <returns></returns>
 		public static bool IsHandleAvailable(this Control control)
 		{
-			return control != null && !(control.IsDisposed || control.Disposing);
+			return control != null && !(control.IsDisposed || control.Disposing) && control.IsHandleCreated;
 		}
 
 		/// <summary>

@@ -19,7 +19,7 @@
 		<RepositoryUrl>https://github.com/iccfish/FSLib.Extension</RepositoryUrl>
 		<PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
 		<NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
-		<Version>1.6.3</Version>
+		<Version>1.6.4</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageProjectUrl>https://blog.fishlee.net</PackageProjectUrl>
 		<RootNamespace>FSLib.Extension</RootNamespace>
