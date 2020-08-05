@@ -1,133 +1,130 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<Description>包含大量为.NET编写的扩展方法和函数</Description>
-		<Copyright>Copyright © 木鱼  2014-2019</Copyright>
-		<AssemblyTitle>FSLib.Extension 通用扩展方法库</AssemblyTitle>
-		<Authors>iFish</Authors>
-		<TargetFrameworks>net40;net45;net46;net47;net35;netstandard1.6.1;netstandard2.0;</TargetFrameworks>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<AssemblyName>FSLib.Extension</AssemblyName>
-		<AssemblyOriginatorKeyFile>ifish.snk</AssemblyOriginatorKeyFile>
-		<SignAssembly>true</SignAssembly>
-		<PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
-		<PackageId>extension.fishlee.net</PackageId>
-		<PackageTags>extension</PackageTags>
-		<PackageReleaseNotes>修正了部分函数；针对NET FULL增加了部分Drawing命名空间的函数；移动 System.FishLib 命名空间到 FSLib.Extension.FishLib；修正包重定向。</PackageReleaseNotes>
-		<PackageIconUrl>https://ssl-static.fishlee.net/resources/images/coquette/32x32/package.png</PackageIconUrl>
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/iccfish/FSLib.Extension</RepositoryUrl>
-		<PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
-		<NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
-		<Version>1.6.4</Version>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageProjectUrl>https://blog.fishlee.net</PackageProjectUrl>
-		<RootNamespace>FSLib.Extension</RootNamespace>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<Product>FSLib.Extension 通用扩展方法库</Product>
-		<Company>鱼的后花园</Company>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<Content Include="content\**\*" PackagePath="%(Identity)" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
-		<Reference Include="System.Core" />
-		<Reference Include="System.Drawing" />
-		<Reference Include="System.Data" />
-		<Reference Include="System.Windows.Forms" />
-		<Reference Include="System.Xml" />
-		<Reference Include="System.Data.Linq" />
-		<Reference Include="System.Configuration" />
-		<Reference Include="System" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-		<Reference Include="System.Core" />
-		<Reference Include="System.Drawing" />
-		<Reference Include="System.Data" />
-		<Reference Include="System.Windows.Forms" />
-		<Reference Include="System.Xml" />
-		<Reference Include="System.Data.Linq" />
-		<Reference Include="System.Configuration" />
-		<Reference Include="System" />
-		<Reference Include="Microsoft.CSharp" />
-		<PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
-		<PackageReference Include="Microsoft.Bcl" Version="1.1.10" />
-		<PackageReference Include="Microsoft.Bcl.Build" Version="1.0.21" />
-		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net45' OR '$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net47' ">
-		<Reference Include="System.Configuration" />
-		<Reference Include="System.Core" />
-		<Reference Include="System.Data" />
-		<Reference Include="System.Data.Linq" />
-		<Reference Include="System.Drawing" />
-		<Reference Include="System.Windows.Forms" />
-		<Reference Include="System.Xml" />
-		<Reference Include="System" />
-		<Reference Include="Microsoft.CSharp" />
-		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6.1' ">
-		<PackageReference Include="System.ComponentModel" Version="4.3.0" />
-		<PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
-		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
-		<PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.3.0" />
-		<PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
-		<PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
-		<PackageReference Include="System.Threading.Thread" Version="4.3.0" />
-		<PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
-		<PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />
-		<PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
-		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<PackageReference Include="System.ComponentModel" Version="4.3.0" />
-		<PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
-		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
-		<PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.3.0" />
-		<PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
-		<PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
-		<PackageReference Include="System.Threading.Thread" Version="4.3.0" />
-		<PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
-		<PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
-		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="FishLib\SR.Designer.cs">
-		<DesignTime>True</DesignTime>
-		<AutoGen>True</AutoGen>
-		<DependentUpon>SR.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Properties\Resources.Designer.cs">
-		<DesignTime>True</DesignTime>
-		<AutoGen>True</AutoGen>
-		<DependentUpon>Resources.resx</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Update="FishLib\SR.en.resx">
-		<DependentUpon>SR.resx</DependentUpon>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="FishLib\SR.resx">
-		<Generator>ResXFileCodeGenerator</Generator>
-		<LastGenOutput>SR.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Properties\Resources.resx">
-		<Generator>ResXFileCodeGenerator</Generator>
-		<LastGenOutput>Resources.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard1.6.1'">
-		<Compile Remove="Properties\Resources*.cs;Windows\**\*;Data\**\*;Net\FSLib_Network_WebExtension.cs;"></Compile>
-		<EmbeddedResource Remove="Properties\Resources.resx"></EmbeddedResource>
-	</ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+  <PropertyGroup>
+    <Description>包含大量为.NET编写的扩展方法和函数</Description>
+    <Copyright>Copyright © 木鱼  2014-2019</Copyright>
+    <AssemblyTitle>FSLib.Extension 通用扩展方法库</AssemblyTitle>
+    <Authors>iFish</Authors>
+    <TargetFrameworks>net40;net45;net46;net47;net35;netstandard1.6.1;netstandard2.0;</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>FSLib.Extension</AssemblyName>
+    <AssemblyOriginatorKeyFile>ifish.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <PackageId>extension.fishlee.net</PackageId>
+    <PackageTags>extension</PackageTags>
+    <PackageReleaseNotes>修正了部分函数；针对NET FULL增加了部分Drawing命名空间的函数；移动 System.FishLib 命名空间到 FSLib.Extension.FishLib；修正包重定向。</PackageReleaseNotes>
+    <PackageIconUrl>https://ssl-static.fishlee.net/resources/images/coquette/32x32/package.png</PackageIconUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/iccfish/FSLib.Extension</RepositoryUrl>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
+    <Version>1.6.4</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://blog.fishlee.net</PackageProjectUrl>
+    <RootNamespace>FSLib.Extension</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Product>FSLib.Extension 通用扩展方法库</Product>
+    <Company>鱼的后花园</Company>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="content\**\*" PackagePath="%(Identity)" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
+    <PackageReference Include="Microsoft.Bcl" Version="1.1.10" />
+    <PackageReference Include="Microsoft.Bcl.Build" Version="1.0.21" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' OR '$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net47' ">
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6.1' ">
+    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+    <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+    <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="FishLib\SR.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SR.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="FishLib\SR.en.resx">
+      <DependentUpon>SR.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FishLib\SR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard1.6.1'">
+    <Compile Remove="Properties\Resources*.cs;Windows\**\*;Data\**\*;Net\FSLib_Network_WebExtension.cs;">
+    </Compile>
+    <EmbeddedResource Remove="Properties\Resources.resx">
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
