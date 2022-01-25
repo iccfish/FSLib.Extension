@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Text;
 #if !NETSTANDARD1_6_1 && !NETSTANDARD2_0 && !NETSTANDARD3_0
 using System.Drawing;
 using System.Drawing.Imaging;
 #endif
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace System
 {
 	using ComponentModel;
-
-	using FSLib.Extension;
 
 	using Linq.Expressions;
 
@@ -26,7 +21,8 @@ namespace System
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	public static class FishObjectExtension
 	{
-#if !NETSTANDARD1_6_1 && !NETSTANDARD2_0 && !NETSTANDARD3_0
+#if NETFRAMEWORK
+
 		#region System.Drawing.Image
 
 		/// <summary>

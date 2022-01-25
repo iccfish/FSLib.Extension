@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -343,7 +342,7 @@ namespace System
 			return Convert.ToBase64String(array);
 		}
 
-#if !NETSTANDARD1_6_1 && !NETSTANDARD2_0 && !NETSTANDARD3_0
+#if NETFRAMEWORK
 
 		/// <summary>
 		/// 将指定的字节数组转换为Image图像对象
