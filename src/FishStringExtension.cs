@@ -371,9 +371,9 @@ namespace System
 			beginIndex = endIndex + (!tagEndEmpty ? endTag.Length + 1 : 1);
 
 			return text.Substring(
-								 startIndex + (includeTag || tagStartEmpty ? 0 : beginTag.Length),
-								endIndex - startIndex - (includeTag || tagStartEmpty ? 0 : beginTag.Length) + (tagEndEmpty || !includeTag ? 0 : endTag.Length)
-				);
+				startIndex + (includeTag || tagStartEmpty ? 0 : beginTag.Length),
+				endIndex - startIndex - (includeTag || tagStartEmpty ? 0 : beginTag.Length) + (tagEndEmpty || !includeTag ? 0 : endTag.Length)
+			);
 		}
 
 

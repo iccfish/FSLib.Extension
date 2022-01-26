@@ -132,7 +132,7 @@ namespace System
 		/// <returns>代表当月第一天的 <see cref="T:System.DateTime"/></returns>
 		public static DateTime GetMonthStart(this DateTime dt)
 		{
-			return dt.AddDays(-DateTime.Now.Day + 1);
+			return dt.Date.AddDays(-DateTime.Now.Day + 1);
 		}
 
 		/// <summary>
