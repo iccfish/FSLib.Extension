@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Copyright>Copyright © 木鱼  2014-2024</Copyright>
+    <AssemblyTitle>FSLib.Extension 通用扩展方法库</AssemblyTitle>
+    <Authors>iFish</Authors>
+    <TargetFrameworks>net40;net45;net46;net47;net35;netstandard1.6.1;netstandard2.0;net5.0;net6.0</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>false</ImplicitUsings>
+    <globalUsings>false</globalUsings>
+    <Title>FSLib.Extension.Json</Title>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="extension.fishlee.net" Version="1.6.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>

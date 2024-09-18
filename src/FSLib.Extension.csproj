@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
 	<PropertyGroup>
 		<Description>包含大量为.NET编写的扩展方法和函数</Description>
-		<Copyright>Copyright © 木鱼  2014-2022</Copyright>
+		<Copyright>Copyright © 木鱼  2014-2024</Copyright>
 		<AssemblyTitle>FSLib.Extension 通用扩展方法库</AssemblyTitle>
 		<Authors>iFish</Authors>
 		<TargetFrameworks>net40;net45;net46;net47;net35;netstandard1.6.1;netstandard2.0;net5.0;net6.0</TargetFrameworks>
@@ -18,7 +18,7 @@
 		<RepositoryUrl>https://github.com/iccfish/FSLib.Extension</RepositoryUrl>
 		<PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
 		<NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
-		<Version>1.6.7</Version>
+		<Version>1.6.8</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageProjectUrl>https://blog.iccfish.com</PackageProjectUrl>
 		<RootNamespace>FSLib.Extension</RootNamespace>
