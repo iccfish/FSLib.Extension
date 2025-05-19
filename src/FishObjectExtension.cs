@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,7 +40,7 @@ namespace System
 		/// </summary>
 		/// <param name="image">要转换的图像</param>
 		/// <returns>转换后的字节数组</returns>
-		public static byte[] ToBytes(this Image image, System.Drawing.Imaging.ImageFormat format)
+		public static byte[] ToBytes(this Image image, ImageFormat format)
 		{
 			if (image == null) return null;
 
@@ -89,7 +89,7 @@ namespace System
 			parameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, ((long)quality));
 
 			ImageCodecInfo myImageCodecInfo = (from p in ImageCodecInfo.GetImageEncoders() where p.MimeType == "image/jpeg" select p).Single<ImageCodecInfo>();
-			var ms = new MemoryStream();
+			var            ms               = new MemoryStream();
 			image.Save(ms, myImageCodecInfo, parameters);
 
 			ms.Seek(0, SeekOrigin.Begin);
@@ -262,6 +262,7 @@ namespace System
 		{
 			return FilterType<T>(typeList, false);
 		}
+
 		/// <summary>
 		/// 对类型列表进行过滤。
 		/// </summary>
@@ -321,6 +322,7 @@ namespace System
 
 			return type.GetCustomAttributes(typeof(T), inherit).Cast<T>().ToArray();
 		}
+
 		/// <summary>
 		/// 获得自定义属性
 		/// </summary>
@@ -539,9 +541,8 @@ namespace System
 		/// <returns>合并后的序列</returns>
 		public static IEnumerable<T> UnionWith<T>(this IEnumerable<T> source, IEnumerable<T> second)
 		{
-			if (source == null ^ second == null) return second == null ? source : second;
+			if (source    == null ^ second == null) return second == null ? source : second;
 			return source == null ? null : source.Union(second);
-
 		}
 
 		/// <summary>
@@ -553,7 +554,7 @@ namespace System
 		/// <param name="executor">执行器</param>
 		public static void PagedExecute<T>(this IEnumerable<T> source, int pagesize, Action<int, IEnumerable<T>> executor)
 		{
-			var count = source.Count();
+			var count     = source.Count();
 			var pagecount = count.CeilingDivide(pagesize);
 
 			for (int i = 0; i < pagecount; i++)
@@ -586,8 +587,8 @@ namespace System
 				comparer = EqualityComparer<TKey>.Default;
 
 			var emptyValue = default(TKey);
-			var array = src.ToArray();
-			var dicCache = array.ToDictionary(keySelector, comparer);
+			var array      = src.ToArray();
+			var dicCache   = array.ToDictionary(keySelector, comparer);
 
 			var result = array.Where(s => comparer.Equals(parentSelector(s), emptyValue)).ToArray();
 			array.ForEach(s =>
@@ -622,7 +623,7 @@ namespace System
 		{
 			if (uri == null) return string.Empty;
 
-			var path = uri.LocalPath;
+			var path  = uri.LocalPath;
 			var index = path.LastIndexOf("/");
 			return index == -1 ? path : path.Substring(index + 1);
 		}
@@ -640,7 +641,6 @@ namespace System
 			if (m.Success) return m.Value;
 			else return uri.Host;
 		}
-
 
 		#endregion
 
@@ -677,6 +677,28 @@ namespace System
 		public static void ExecuteIfNotEmpty(this string value, Action<string> action)
 		{
 			if (!string.IsNullOrEmpty(value)) action(value);
+		}
+
+		/// <summary>
+		/// 如果为空则抛出异常
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="name"></param>
+		/// <exception cref="ArgumentNullException"></exception>
+		public static void ThrowIfNull(this object value, string name = "object")
+		{
+			if (value == null) throw new ArgumentNullException(name);
+		}
+
+		/// <summary>
+		/// 如果为空则抛出异常
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="name"></param>
+		/// <exception cref="ArgumentNullException"></exception>
+		public static void ThrowIfNull<T>(this T value, string name = "object") where T : class
+		{
+			if (value == null) throw new ArgumentNullException(name);
 		}
 
 		/// <summary>
@@ -724,7 +746,6 @@ namespace System
 		#endregion
 
 		#region 转换
-
 
 		#endregion
 
@@ -780,13 +801,14 @@ namespace System
 					handler(sender, e);
 			});
 			Action unsub = () => obj.PropertyChanging -= callback;
-			var dv = host?.GetType().GetTypeInfo().GetEvent("Disposed");
+			var    dv    = host?.GetType().GetTypeInfo().GetEvent("Disposed");
 			if (dv != null)
 			{
-				dv.AddEventHandler(host, new EventHandler(((sender, args) =>
-				{
-					unsub();
-				})));
+				dv.AddEventHandler(host,
+					new EventHandler(((sender, args) =>
+					{
+						unsub();
+					})));
 			}
 
 			return unsub;
@@ -820,17 +842,17 @@ namespace System
 			obj.PropertyChanged += callback;
 
 			Action unsub = () => obj.PropertyChanged -= callback;
-			var dv = host?.GetType().GetTypeInfo().GetEvent("Disposed");
+			var    dv    = host?.GetType().GetTypeInfo().GetEvent("Disposed");
 			if (dv != null)
 			{
-				dv.AddEventHandler(host, new EventHandler(((sender, args) =>
-				{
-					unsub();
-				})));
+				dv.AddEventHandler(host,
+					new EventHandler(((sender, args) =>
+					{
+						unsub();
+					})));
 			}
 
 			return unsub;
 		}
 	}
-
 }

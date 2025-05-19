@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -24,8 +24,8 @@ namespace System
 		/// <returns></returns>
 		public static byte ToHexByte(this char code)
 		{
-			if (code >= 'A' && code <= 'F') return (byte)(10 + (code - 'A'));
-			if (code >= 'a' && code <= 'f') return (byte)(10 + (code - 'a'));
+			if (code >= 'A' && code <= 'F') return (byte)(10   + (code - 'A'));
+			if (code >= 'a' && code <= 'f') return (byte)(10   + (code - 'a'));
 			if (code >= '0' && code <= '9') return (byte)(code - '0');
 			return 0;
 		}
@@ -42,6 +42,43 @@ namespace System
 		public static bool IsNullOrEmpty(this string str)
 		{
 			return string.IsNullOrEmpty(str);
+		}
+
+#if !NET35
+		/// <summary>
+		/// 判断当前字符串是否为空或为空白字符
+		/// </summary>
+		/// <param name="str">字符串</param>
+		/// <returns>true表示字符串为空或长度为零</returns>
+		public static bool IsNullOrWhiteSpace(this string str)
+		{
+			return string.IsNullOrWhiteSpace(str);
+		}
+
+		/// <summary>
+		/// 判断当前字符串是否为空或为空白字符，是则抛出异常
+		/// </summary>
+		/// <param name="str">字符串</param>
+		/// <param name="name">参数名</param>
+		/// <returns>true为空或长度为零</returns>
+		public static void ThrowIfNullOrWhiteSpace(this string str, string name = "str")
+		{
+			if (string.IsNullOrWhiteSpace(str))
+				throw new ArgumentOutOfRangeException(name);
+		}
+
+#endif
+
+		/// <summary>
+		/// 判断当前字符串是否为空或长度为零，为空则抛出异常
+		/// </summary>
+		/// <param name="str">字符串</param>
+		/// <param name="name">参数名</param>
+		/// <returns>true为空或长度为零</returns>
+		public static void ThrowIfNullOrEmpty(this string str, string name = "str")
+		{
+			if (string.IsNullOrEmpty(str))
+				throw new ArgumentOutOfRangeException(name);
 		}
 
 		/// <summary>
@@ -87,12 +124,13 @@ namespace System
 		{
 			if (value.IsNullOrEmpty()) return string.Empty;
 
-			return ExpressConvertor.Replace(value, (s) =>
-			{
-				if (s.Value == "\r") return "\\r";
-				if (s.Value == "\n") return "\\n";
-				return string.Concat("\\", s.Value);
-			});
+			return ExpressConvertor.Replace(value,
+				(s) =>
+				{
+					if (s.Value == "\r") return "\\r";
+					if (s.Value == "\n") return "\\n";
+					return string.Concat("\\", s.Value);
+				});
 		}
 
 		static readonly Regex ExpressReConvertor = new Regex(@"\\(r|n|'|""|\|/|u([a-fA-F0-9]{4}))");
@@ -106,18 +144,20 @@ namespace System
 		{
 			if (value.IsNullOrEmpty()) return string.Empty;
 
-			return ExpressReConvertor.Replace(value, (s) =>
-			{
-				var key = s.Groups[1].Value;
-
-				if (key == "r") return "\r";
-				if (key == "n") return "\n";
-				if (key[0] == 'u')
+			return ExpressReConvertor.Replace(value,
+				(s) =>
 				{
-					return ((char)s.Groups[2].Value.ToInt32(style: NumberStyles.AllowHexSpecifier)).ToString();
-				}
-				return key;
-			});
+					var key = s.Groups[1].Value;
+
+					if (key == "r") return "\r";
+					if (key == "n") return "\n";
+					if (key[0] == 'u')
+					{
+						return ((char)s.Groups[2].Value.ToInt32(style: NumberStyles.AllowHexSpecifier)).ToString();
+					}
+
+					return key;
+				});
 		}
 
 		/// <summary>
@@ -140,9 +180,9 @@ namespace System
 		[StringFormatMethod("value")]
 		public static string FormatWith(this string value, params object[] args)
 		{
-			if (value == null) throw new ArgumentNullException("value");
+			if (value             == null) throw new ArgumentNullException("value");
 			else if (value.Length == 0) return string.Empty;
-			else if (args.Length == 0) return value;
+			else if (args.Length  == 0) return value;
 			else return string.Format(value, args);
 		}
 
@@ -180,6 +220,7 @@ namespace System
 		{
 			return GetSubString(value, byteLength, string.Empty);
 		}
+
 		/// <summary>
 		/// 按照字节截取字符串
 		/// </summary>
@@ -197,8 +238,8 @@ namespace System
 			if (tailLength > 0) byteLength -= tailLength;
 			if (byteLength < 1) throw new ArgumentException(SR.StringExtract_GetSubString_LengthError);
 
-			var currentLength = 0;
-			var wordPosition = 0;
+			var currentLength                                                               = 0;
+			var wordPosition                                                                = 0;
 			while (currentLength < byteLength && wordPosition < value.Length) currentLength += value[wordPosition++] > 255 ? 2 : 1;
 			if (wordPosition == value.Length) return value;
 			else return value.Substring(0, wordPosition) + tailString;
@@ -247,6 +288,7 @@ namespace System
 		{
 			return ToBytes(value, null);
 		}
+
 		/// <summary>
 		/// 转换为字节数组
 		/// </summary>
@@ -255,8 +297,7 @@ namespace System
 		/// <returns>结果字节数组</returns>
 		public static byte[] ToBytes(this string value, Encoding encoding)
 		{
-			return value.IsNullOrEmpty() ? new byte[] { } :
-				(encoding ?? Encoding.Unicode).GetBytes(value);
+			return value.IsNullOrEmpty() ? new byte[] { } : (encoding ?? Encoding.Unicode).GetBytes(value);
 		}
 
 		/// <summary>
@@ -353,10 +394,10 @@ namespace System
 			if (string.IsNullOrEmpty(text) || beginIndex >= text.Length)
 				return string.Empty;
 
-			var startIndex = beginIndex;
-			var endIndex = text.Length;
+			var startIndex    = beginIndex;
+			var endIndex      = text.Length;
 			var tagStartEmpty = beginTag.IsNullOrEmpty();
-			var tagEndEmpty = endTag.IsNullOrEmpty();
+			var tagEndEmpty   = endTag.IsNullOrEmpty();
 
 			if (!tagStartEmpty)
 				startIndex = text.IndexOf(beginTag, startIndex, comparison);
@@ -371,17 +412,14 @@ namespace System
 			beginIndex = endIndex + (!tagEndEmpty ? endTag.Length + 1 : 1);
 
 			return text.Substring(
-				startIndex + (includeTag || tagStartEmpty ? 0 : beginTag.Length),
+				startIndex                                                                  + (includeTag  || tagStartEmpty ? 0 : beginTag.Length),
 				endIndex - startIndex - (includeTag || tagStartEmpty ? 0 : beginTag.Length) + (tagEndEmpty || !includeTag ? 0 : endTag.Length)
 			);
 		}
 
-
 		#endregion
 
 		#region 流操作
-
-
 
 		#endregion
 
@@ -503,7 +541,7 @@ namespace System
 		{
 			if (string.IsNullOrEmpty(value)) return new int[0];
 			return value.Split(StringSpliter, StringSplitOptions.RemoveEmptyEntries)
-				.Select(s => s.ToInt32(style: style, provider: provider)).ToArray();
+						.Select(s => s.ToInt32(style: style, provider: provider)).ToArray();
 		}
 
 		#endregion
@@ -807,7 +845,6 @@ namespace System
 			return TimeSpan.Zero;
 		}
 #endif
-
 
 		#endregion
 

@@ -33,7 +33,6 @@ FSLib.Extension库是一个用于.NET的扩展函数库，所提供的函数和�
 > 现在的源码已部分应用C#6语法特性，因此需要VisualStudio2015才能安全顺利地编译。
 > 由于本库是一个历史沿用时间很久的库，因此比较杂乱，欢迎Fork并修正后Pull Request。
 
-> 自 v1.4 开始，项目已经启用 .NET CORE 的项目格式（project.json），如果您想成功编译所有的源码，可能需要至少 Visual Studio 2015。
 
 ### 4.源码&文档
 

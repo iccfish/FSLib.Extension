@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +11,95 @@ namespace System
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	public static class FishValueExtension
 	{
+		/// <summary>
+		/// 要求值为正数
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="name"></param>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		public static void RequirePositive(this int value, string name = "value")
+		{
+			if (value <= 0)
+				throw new ArgumentOutOfRangeException(name);
+		}
+
+		/// <summary>
+		/// 要求值为正数
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="name"></param>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		public static void RequirePositive(this long value, string name = "value")
+		{
+			if (value <= 0)
+				throw new ArgumentOutOfRangeException(name);
+		}
+
+		/// <summary>
+		/// 要求值为负数
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="name"></param>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		public static void RequireNegative(this int value, string name = "value")
+		{
+			if (value >= 0)
+				throw new ArgumentOutOfRangeException(name);
+		}
+
+		/// <summary>
+		/// 要求值为负数
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="name"></param>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		public static void RequireNegative(this long value, string name = "value")
+		{
+			if (value >= 0)
+				throw new ArgumentOutOfRangeException(name);
+		}
+
+		/// <summary>
+		/// 判断两个数值是否接近（小于指定误差）
+		/// </summary>
+		/// <param name="first">第一个数字</param>
+		/// <param name="second">第二个数字</param>
+		/// <param name="delta">偏差，小于此值视为相同</param>
+		/// <returns></returns>
+		public static bool AlmostEqual(this double first, double second, double delta)
+		{
+			return Math.Abs(first - second) < delta;
+		}
+
+		/// <summary>
+		/// 判断两个数值是否接近（小于指定误差）
+		/// </summary>
+		/// <param name="first">第一个数字</param>
+		/// <param name="second">第二个数字</param>
+		/// <param name="delta">偏差，小于此值视为相同</param>
+		/// <returns></returns>
+		public static bool AlmostEqual(this decimal first, decimal second, decimal delta)
+		{
+			return Math.Abs(first - second) < delta;
+		}
+
+		/// <summary>
+		/// 判断两个数值是否接近（小于指定误差）
+		/// </summary>
+		/// <param name="first">第一个数字</param>
+		/// <param name="second">第二个数字</param>
+		/// <param name="digits">小数点精度，默认为5位，在此之后四舍五入，为0则视为相同</param>
+		/// <returns></returns>
+		public static bool AlmostEqual(this double first, double second, int digits = 5) => Math.Round(first - second, digits + 1) == 0;
+
+		/// <summary>
+		/// 判断两个数值是否接近（小于指定误差）
+		/// </summary>
+		/// <param name="first">第一个数字</param>
+		/// <param name="second">第二个数字</param>
+		/// <param name="digits">小数点精度，默认为5位，在此之后四舍五入，为0则视为相同</param>
+		/// <returns></returns>
+		public static bool AlmostEqual(this decimal first, decimal second, int digits = 5) => Math.Round(first - second, digits + 1) == 0;
 
 		/// <summary>
 		/// 判断一个数值是否在指定范围内
@@ -189,7 +278,7 @@ namespace System
 		{
 			if (string.IsNullOrEmpty(value)) return null;
 
-			if (value == "1" || string.Compare("true", value, true) == 0) return true;
+			if (value == "1" || string.Compare("true", value, true)  == 0) return true;
 			if (value == "0" || string.Compare("false", value, true) == 0) return false;
 
 			return null;
@@ -328,6 +417,7 @@ namespace System
 		}
 
 		#region INT的压缩
+
 		static readonly string _numberCode = GetInitialCodeString();
 
 		/// <summary>
@@ -348,7 +438,7 @@ namespace System
 		/// <returns>压缩后的字符串</returns>
 		public static string CompressToString(this uint value)
 		{
-			var map = new List<char>();
+			var map  = new List<char>();
 			var step = (uint)_numberCode.Length;
 
 			while (value > 0)
@@ -368,19 +458,18 @@ namespace System
 		/// <returns>解压后的 <see cref="T:System.Int32"/></returns>
 		public static int DecompressToInt(this string value)
 		{
-			var array = value.Select(s => _numberCode.IndexOf(s)).Reverse().ToArray();
+			var array  = value.Select(s => _numberCode.IndexOf(s)).Reverse().ToArray();
 			int result = 0;
-			var step = 1;
+			var step   = 1;
 			for (int i = 0; i < array.Length; i++)
 			{
 				result += array[i] * step;
-				step *= _numberCode.Length;
+				step   *= _numberCode.Length;
 			}
 
 			return result;
 		}
 
 		#endregion
-
 	}
 }
